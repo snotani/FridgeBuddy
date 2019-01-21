@@ -6,11 +6,19 @@ class add_screen extends StatefulWidget {
 }
 
 class _add_screenState extends State<add_screen> {
-
   // Var that will be used in the drop down menu
-  var _fridgeLocation = ["Select fridge","Pendle","Bowland", "others"];
+  var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "others"];
   var _currentFridgeLocation = ("Select fridge");
-  var _Shop = ["Select shop", "Greggs", "Spar", "Go Burrito" , "Sultan" , "Subway" , "Wok in" , "Central" ];
+  var _Shop = [
+    "Select shop",
+    "Greggs",
+    "Spar",
+    "Go Burrito",
+    "Sultan",
+    "Subway",
+    "Wok in",
+    "Central"
+  ];
   var _currentShop = ("Select shop");
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
@@ -18,7 +26,6 @@ class _add_screenState extends State<add_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(
         title: Text("Add Item"),
       ),
@@ -28,32 +35,42 @@ class _add_screenState extends State<add_screen> {
           children: <Widget>[
             Center(
               child: Text(
-                "Add Items", textDirection: TextDirection.ltr, style: TextStyle(fontSize: 50.0,),
+                "Add Items",
+                textDirection: TextDirection.ltr,
+                style: TextStyle(
+                  fontSize: 50.0,
+                ),
               ),
             ),
 
             ////Row for item name text and the text field
             Row(
               children: <Widget>[
-                Expanded( child: Padding(
-                  padding: const EdgeInsets.only(top: 35.0, left: 50.0,),
-                  child: Text(
-                    "Item Name", textDirection: TextDirection.ltr, style: TextStyle(fontSize: 40.0,),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 35.0,
+                      left: 50.0,
+                    ),
+                    child: Text(
+                      "Item Name",
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                        fontSize: 40.0,
+                      ),
+                    ),
                   ),
-                 ),
                 ),
-
-                Expanded(child: Padding(
+                Expanded(
+                    child: Padding(
                   padding: const EdgeInsets.only(top: 35.0, right: 50.0),
                   child: TextField(
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
-                        labelText:"Item Name",
+                        labelText: "Item Name",
                         hintText: "e.g. sandwich",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)
-                        )
-                    ),
+                            borderRadius: BorderRadius.circular(5.0))),
                   ),
                 ))
               ],
@@ -62,25 +79,31 @@ class _add_screenState extends State<add_screen> {
             //Row for date added text and the text field
             Row(
               children: <Widget>[
-                Expanded( child: Padding(
-                  padding: const EdgeInsets.only(top: 35.0, left: 50.0,),
-                  child: Text(
-                    "Date Added", textDirection: TextDirection.ltr, style: TextStyle(fontSize: 40.0,),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 35.0,
+                      left: 50.0,
+                    ),
+                    child: Text(
+                      "Date Added",
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                        fontSize: 40.0,
+                      ),
+                    ),
                   ),
                 ),
-                ),
-
-                Expanded(child: Padding(
+                Expanded(
+                    child: Padding(
                   padding: const EdgeInsets.only(top: 35.0, right: 50.0),
                   child: TextField(
                     keyboardType: TextInputType.datetime,
                     decoration: InputDecoration(
-                        labelText:"Date added",
+                        labelText: "Date added",
                         hintText: "01/01/2019",
                         border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0)
-                        )
-                    ),
+                            borderRadius: BorderRadius.circular(5.0))),
                   ),
                 ))
               ],
@@ -89,80 +112,88 @@ class _add_screenState extends State<add_screen> {
             //Row for the fridge text and the drop down menu
             Row(
               children: <Widget>[
-                Expanded( child: Padding(
-                  padding: const EdgeInsets.only(top: 35.0, left: 50.0,),
-                  child: Text(
-                    "Fridge", textDirection: TextDirection.ltr, style: TextStyle(fontSize: 40.0,),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 35.0,
+                      left: 50.0,
+                    ),
+                    child: Text(
+                      "Fridge",
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                        fontSize: 40.0,
+                      ),
+                    ),
                   ),
                 ),
-                ),
-
-                Expanded(child:
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: DropdownButton<String>(
-                    items: _fridgeLocation.map((String dropDownStringItem){
-                      return DropdownMenuItem<String>(
-                        value: dropDownStringItem,
-                        child: Text(dropDownStringItem),
-
-                      );
-                    }).toList(),
-
-                    onChanged:(String new_value_selected){
-                      //when u selected an item from the list
-                      whenFridgeDropButton(new_value_selected);
-                    },
-                    value: _currentFridgeLocation,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30.0),
+                    child: DropdownButton<String>(
+                      items: _fridgeLocation.map((String dropDownStringItem) {
+                        return DropdownMenuItem<String>(
+                          value: dropDownStringItem,
+                          child: Text(dropDownStringItem),
+                        );
+                      }).toList(),
+                      onChanged: (String new_value_selected) {
+                        //when u selected an item from the list
+                        whenFridgeDropButton(new_value_selected);
+                      },
+                      value: _currentFridgeLocation,
+                    ),
                   ),
-                ),)
+                )
               ],
             ),
 
             //Row for the donating shop also drop down menu for the shops
             Row(
               children: <Widget>[
-                Expanded( child: Padding(
-                  padding: const EdgeInsets.only(top: 35.0, left: 50.0,),
-                  child: Text(
-                    "Donating Shop", textDirection: TextDirection.ltr, style: TextStyle(fontSize: 40.0,),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 35.0,
+                      left: 50.0,
+                    ),
+                    child: Text(
+                      "Donating Shop",
+                      textDirection: TextDirection.ltr,
+                      style: TextStyle(
+                        fontSize: 40.0,
+                      ),
+                    ),
                   ),
                 ),
-                ),
-
-                Expanded(child:
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: DropdownButton<String>(
-                    items: _Shop.map((String dropDownStringItem){
-                      return DropdownMenuItem<String>(
-                        value: dropDownStringItem,
-                        child: Text(dropDownStringItem),
-
-                      );
-                    }).toList(),
-
-                    onChanged:(String new_value_selected){
-                      //when u selected an item from the list
-                      whenShopDropButton(new_value_selected);
-                    },
-                    value: _currentShop,
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 30.0),
+                    child: DropdownButton<String>(
+                      items: _Shop.map((String dropDownStringItem) {
+                        return DropdownMenuItem<String>(
+                          value: dropDownStringItem,
+                          child: Text(dropDownStringItem),
+                        );
+                      }).toList(),
+                      onChanged: (String new_value_selected) {
+                        //when u selected an item from the list
+                        whenShopDropButton(new_value_selected);
+                      },
+                      value: _currentShop,
+                    ),
                   ),
-                ),)
+                )
               ],
             ),
 
             //Row for the button confirm button
             Column(
-              children: <Widget>[
-                Button_confirm()
-              ],
+              children: <Widget>[Button_confirm()],
             ),
 
             Column(
-              children: <Widget>[
-                Button_Update()
-              ],
+              children: <Widget>[Button_Update()],
             )
           ],
         ),
@@ -170,19 +201,18 @@ class _add_screenState extends State<add_screen> {
     );
   }
 
-  void whenFridgeDropButton(String new_value_selected){
+  void whenFridgeDropButton(String new_value_selected) {
     setState(() {
       this._currentFridgeLocation = new_value_selected;
     });
   }
 
   //made a method so it can be modified easier and
-  void whenShopDropButton(String new_value_selected){
+  void whenShopDropButton(String new_value_selected) {
     setState(() {
       this._currentShop = new_value_selected;
     });
   }
-
 }
 
 // the green confirm button using a stateless widget
@@ -216,12 +246,12 @@ class Button_confirm extends StatelessWidget {
               //documentReference.setData(data).whenComplete(() {
               // print("Document Added");
               //}).catchError((e) => print(e));
-
             }),
       ),
     );
   }
 }
+
 void note(BuildContext context) {
   var alertDialog = AlertDialog(
     title: Text("adding Item"),
@@ -234,6 +264,7 @@ void note(BuildContext context) {
         return alertDialog;
       });
 }
+
 //update Button using a staeless widget
 class Button_Update extends StatelessWidget {
   @override
@@ -258,6 +289,7 @@ class Button_Update extends StatelessWidget {
     );
   }
 }
+
 void note_update(BuildContext context) {
   var alertDialog = AlertDialog(
     title: Text("Updating Item"),
@@ -270,4 +302,3 @@ void note_update(BuildContext context) {
         return alertDialog;
       });
 }
-

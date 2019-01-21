@@ -1,0 +1,17 @@
+*** This will be where we leave general notes for the project ***
+
+*** Please leave your name beside the comment too - Mo ***
+
+We might add a camera feature, later tho - Mo
+
+items in red, (exp date, and allergy info)
+Filter by type, where it came from, e.g. - Mo
+
+- Add reminder to give glass jar back to back to fridge (push notification)
+- Add forum to message the admins, e.g. "Hey, I just added this item"
+- Food leaves really quickly, like 10 mins!
+- 3-4 collections on the weekdays, 3-5 on the weekends
+Cafe21 & Central goes to Pendle, the rest goes to Bowland.
+- Pictures on Firebase?
+- Camera?                                                                         - Mo
+

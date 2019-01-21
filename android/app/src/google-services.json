@@ -8,9 +8,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:988744453388:android:a37011519479be42",
+        "mobilesdk_app_id": "1:988744453388:android:fa265c7e17dfa807",
         "android_client_info": {
-          "package_name": "fridgebuddy.android.com"
+          "package_name": "com.example.tabletapp"
         }
       },
       "oauth_client": [

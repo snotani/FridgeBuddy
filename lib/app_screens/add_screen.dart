@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class add_screen extends StatefulWidget {
   @override
@@ -205,6 +204,19 @@ class Button_confirm extends StatelessWidget {
             elevation: 6.0,
             onPressed: () {
               note(context);
+
+              //ADD ITEM TO DATABASE TEST
+              //final DocumentReference documentReference =
+              //Firestore.instance.document("myData/dummy");
+
+              //Map<String, String> data = <String, String>{
+              //  "name": "Pawan Kumar",
+              //  "desc": "Flutter Developer"
+              //};
+              //documentReference.setData(data).whenComplete(() {
+              // print("Document Added");
+              //}).catchError((e) => print(e));
+
             }),
       ),
     );

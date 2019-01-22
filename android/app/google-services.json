@@ -1,27 +1,35 @@
 {
   "project_info": {
-    "project_number": "988744453388",
-    "firebase_url": "https://fridge-buddy-scc230.firebaseio.com",
-    "project_id": "fridge-buddy-scc230",
-    "storage_bucket": "fridge-buddy-scc230.appspot.com"
+    "project_number": "1096469234633",
+    "firebase_url": "https://fridgebuddy-bcca7.firebaseio.com",
+    "project_id": "fridgebuddy-bcca7",
+    "storage_bucket": "fridgebuddy-bcca7.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:988744453388:android:a37011519479be42",
+        "mobilesdk_app_id": "1:1096469234633:android:79c8f770a3c84f4d",
         "android_client_info": {
-          "package_name": "fridgebuddy.android.com"
+          "package_name": "com.fridgebuddy.app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "988744453388-pnimkn9mf9r0a9df6g2ufgap8cji5144.apps.googleusercontent.com",
+          "client_id": "1096469234633-mhiuim201p0gv47ov0oiudin1m3vkits.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.fridgebuddy.app",
+            "certificate_hash": "8ca281b45c8f1df99e3b5641809badf5c9a26073"
+          }
+        },
+        {
+          "client_id": "1096469234633-n0st65kvjs3b7i41su4o8uv3lu62m9mh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBPEf4NEaVpKsesUYP64d-OpSesFVoAZXg"
+          "current_key": "AIzaSyA7BnCGp90dOJnWNYwbXQDeURyPjLsQ2CY"
         }
       ],
       "services": {
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1096469234633-n0st65kvjs3b7i41su4o8uv3lu62m9mh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

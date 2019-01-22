@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'admin_home_screen.dart';
 
 class login_screen extends StatefulWidget {
   @override
@@ -6,38 +7,32 @@ class login_screen extends StatefulWidget {
 }
 
 class _login_screenState extends State<login_screen> {
- // adding Var that will be used in the drop down menu
-
-
+  // adding Var that will be used in the drop down menu
 
 //the first text for the title admin login also the Appbar also
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Admin Login")
-      ),
+      appBar: AppBar(title: Text("Admin Login")),
       body: Container(
         margin: EdgeInsets.only(top: 40.0),
         child: Column(
           children: <Widget>[
             Center(
               child: Text(
-                  "Admin Login", textDirection: TextDirection.ltr,
-                style: TextStyle(
-                  fontSize: 50.0
-                ),
+                "Admin Login",
+                textDirection: TextDirection.ltr,
+                style: TextStyle(fontSize: 50.0),
               ),
             ),
-           Row(
-             children: <Widget>[
-                   Padding(
-                     padding: const EdgeInsets.only(left: 230.0, top: 20.0),
-                     child: logo_image_asset(),
-                   ),
-             ],
-           ),
-
+            Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 230.0, top: 20.0),
+                  child: logo_image_asset(),
+                ),
+              ],
+            ),
             Row(
               children: <Widget>[
                 Expanded(
@@ -57,19 +52,18 @@ class _login_screenState extends State<login_screen> {
                 ),
                 Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            labelText: "Username",
-                            hintText: "example@google.com",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                      ),
-                    ))
+                  padding: const EdgeInsets.only(top: 35.0, right: 50.0),
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        labelText: "Username",
+                        hintText: "example@google.com",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0))),
+                  ),
+                ))
               ],
             ),
-
             Row(
               children: <Widget>[
                 Expanded(
@@ -77,7 +71,6 @@ class _login_screenState extends State<login_screen> {
                     padding: const EdgeInsets.only(
                       top: 35.0,
                       left: 100.0,
-
                     ),
                     child: Text(
                       "Password",
@@ -90,33 +83,29 @@ class _login_screenState extends State<login_screen> {
                 ),
                 Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            labelText: "Password",
-                            hintText: "",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                      ),
-                    ))
+                  padding: const EdgeInsets.only(top: 35.0, right: 50.0),
+                  child: TextField(
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                        labelText: "Password",
+                        hintText: "",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5.0))),
+                  ),
+                ))
               ],
             ),
             Column(
-              children: <Widget>[Padding(
-                padding: const EdgeInsets.only(top: 30.0),
-                child: Button_Login(),
-              )],
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(top: 30.0),
+                  child: Button_Login(),
+                )
+              ],
             )
           ],
         ),
       ),
-
-
-
-
-
-
     );
   }
 }
@@ -130,13 +119,20 @@ class logo_image_asset extends StatelessWidget {
     AssetImage assetImage = AssetImage("images/logo.png");
     //create an image object from the assetimage object and pass it as parameter
 
-    Image logo_image = Image(image: assetImage,width: 300.0, height: 300.0,);
+    Image logo_image = Image(
+      image: assetImage,
+      width: 300.0,
+      height: 300.0,
+    );
 
     //the method will return the logo image as a container
     // with in it will be a child that will hold the image
-    return Container(child: logo_image,);
+    return Container(
+      child: logo_image,
+    );
   }
 }
+
 class Button_Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -154,11 +150,9 @@ class Button_Login extends StatelessWidget {
             ),
             elevation: 6.0,
             onPressed: () {
-
-
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> Admin_home_screen()));
             }),
       ),
     );
   }
 }
-

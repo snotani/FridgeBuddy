@@ -25,6 +25,8 @@ class _login_screenState extends State<login_screen> {
                 style: TextStyle(fontSize: 50.0),
               ),
             ),
+
+            //Row widget which has the image
             Row(
               children: <Widget>[
                 Padding(
@@ -33,6 +35,8 @@ class _login_screenState extends State<login_screen> {
                 ),
               ],
             ),
+
+            //Row which has the username text and text field
             Row(
               children: <Widget>[
                 Expanded(
@@ -64,6 +68,8 @@ class _login_screenState extends State<login_screen> {
                 ))
               ],
             ),
+
+            //Row which has the password text and the text field
             Row(
               children: <Widget>[
                 Expanded(
@@ -95,6 +101,7 @@ class _login_screenState extends State<login_screen> {
                 ))
               ],
             ),
+            //log in button
             Column(
               children: <Widget>[
                 Padding(
@@ -118,6 +125,7 @@ class logo_image_asset extends StatelessWidget {
 
     AssetImage assetImage = AssetImage("images/logo.png");
     //create an image object from the assetimage object and pass it as parameter
+    //resize the image with set heights and width
 
     Image logo_image = Image(
       image: assetImage,
@@ -150,7 +158,8 @@ class Button_Login extends StatelessWidget {
             ),
             elevation: 6.0,
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context)=> Admin_home_screen()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => Admin_home_screen()));
             }),
       ),
     );

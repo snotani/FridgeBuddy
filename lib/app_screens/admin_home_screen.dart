@@ -25,7 +25,7 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
             ),
             Column(
             children: <Widget>[
-                Button_view();
+                Button_view()
               ],
             ),
             Column(

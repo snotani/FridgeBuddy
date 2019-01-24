@@ -92,6 +92,7 @@ class _login_screenState extends State<login_screen> {
                   padding: const EdgeInsets.only(top: 35.0, right: 50.0),
                   child: TextField(
                     keyboardType: TextInputType.text,
+                    obscureText: true,
                     decoration: InputDecoration(
                         labelText: "Password",
                         hintText: "",

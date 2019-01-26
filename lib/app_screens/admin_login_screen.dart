@@ -13,6 +13,7 @@ class _login_screenState extends State<login_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Text("Admin Login")),
       body: Container(
         margin: EdgeInsets.only(top: 40.0),

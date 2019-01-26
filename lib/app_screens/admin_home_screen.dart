@@ -12,6 +12,7 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Text("Admin HomePage")),
       body: Container(
         margin: EdgeInsets.only(top: 40.0),

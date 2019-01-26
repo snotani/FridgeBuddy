@@ -26,6 +26,7 @@ class _add_screenState extends State<add_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Add Item"),
       ),

@@ -13,7 +13,15 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text("Admin HomePage")),
+      appBar: AppBar(
+          title: Text("Admin HomePage"),
+          leading:IconButton(icon: Icon(
+              Icons.exit_to_app),
+              onPressed: (){
+              logging_out(context);
+            }
+          )
+      ),
       body: Container(
         margin: EdgeInsets.only(top: 40.0),
         child: Column(
@@ -144,10 +152,37 @@ class Button_LogOut  extends StatelessWidget {
             ),
             elevation: 6.0,
             onPressed: () {
-              //action will go to the login screen or user homepage
-              Navigator.pop(context, new MaterialPageRoute(builder: (context)=> login_screen()));
+              logging_out(context);
             }),
       ),
     );
   }
 }
+
+void log_out_alert(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("LogOut"),
+    content: Text("Do you wish to log out?"),
+    actions: <Widget>[
+      new FlatButton( child: Text("Yes"),
+        onPressed: (){
+          logging_out(context);
+        },
+      ),
+    ],
+  );
+
+  showDialog(
+    context: context,
+    builder:  (BuildContext context){
+      return alertDialog;
+
+    }
+  );
+}
+
+void logging_out(BuildContext context){
+//action will go to the login screen or user homepage
+  Navigator.pop(context, new MaterialPageRoute(builder: (context)=> login_screen()));
+}
+

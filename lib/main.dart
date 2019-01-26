@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import './app_screens/add_screen.dart';
-import './app_screens/admin_login_screen.dart';
+import 'package:fridgebuddymobile/landingpage/landingPage.dart';
+import 'package:fridgebuddymobile/view/mainView.dart';
 
 void main(){
-  runApp(
-      MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: "FridgeBuddy",
-        home: login_screen() ,
-      )
-  );
+  runApp(new MaterialApp(
+    home: new LoadScreen(),
+  ));
 }

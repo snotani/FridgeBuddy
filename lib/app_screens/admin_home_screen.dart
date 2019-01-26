@@ -144,7 +144,7 @@ class Button_LogOut  extends StatelessWidget {
             elevation: 6.0,
             onPressed: () {
               //action will go to the login screen or user homepage
-              Navigator.push(context, new MaterialPageRoute(builder: (context)=> login_screen()));
+              Navigator.pop(context, new MaterialPageRoute(builder: (context)=> login_screen()));
             }),
       ),
     );

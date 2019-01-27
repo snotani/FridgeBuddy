@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 class add_screen extends StatefulWidget {
   @override
@@ -19,6 +20,26 @@ class _add_screenState extends State<add_screen> {
     "Wok in",
     "Central"
   ];
+
+    DateTime _date = DateTime.now();
+    TimeOfDay _time = TimeOfDay.now();
+
+    Future<Null> _selectDate(BuildContext context) async{
+      final DateTime picked = await showDatePicker(
+          context: context,
+          initialDate: _date,
+          firstDate: DateTime(2018),
+          lastDate: DateTime(2050)
+      );
+
+      if(picked != null && picked != _date){
+        print(_date.toString());
+        setState(() {
+          _date = picked;
+        });
+      }
+    }
+
   var _currentShop = ("Select shop");
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
@@ -44,7 +65,7 @@ class _add_screenState extends State<add_screen> {
               ),
             ),
 
-            ////Row for item name text and the text field
+            //Row for item name text and the text field
             Row(
               children: <Widget>[
                 Expanded(
@@ -97,16 +118,19 @@ class _add_screenState extends State<add_screen> {
                 ),
                 Expanded(
                     child: Padding(
-                  padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                  child: TextField(
-                    keyboardType: TextInputType.datetime,
-                    decoration: InputDecoration(
-                        labelText: "Date added",
-                        hintText: "01/01/2019",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0))),
+                  padding: const EdgeInsets.only(left: 45.0),
+                  child: Text(
+                      _date.toString(),style: TextStyle(fontSize: 20.0),
                   ),
-                ))
+                 )
+                ),
+                   Padding(
+                     padding: const EdgeInsets.only(right: 40.0),
+                     child: IconButton(icon: Icon(Icons.calendar_today), onPressed: (){
+                      _selectDate(context);
+                  }),
+                   ),
+
               ],
             ),
 
@@ -128,9 +152,9 @@ class _add_screenState extends State<add_screen> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
+
+                Padding(
+                    padding: const EdgeInsets.only(top: 30.0, right: 247.0),
                     child: DropdownButton<String>(
                       items: _fridgeLocation.map((String dropDownStringItem) {
                         return DropdownMenuItem<String>(
@@ -145,7 +169,7 @@ class _add_screenState extends State<add_screen> {
                       value: _currentFridgeLocation,
                     ),
                   ),
-                )
+
               ],
             ),
 
@@ -167,9 +191,9 @@ class _add_screenState extends State<add_screen> {
                     ),
                   ),
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
+
+                Padding(
+                    padding: const EdgeInsets.only(top: 30.0,right: 252.0),
                     child: DropdownButton<String>(
                       items: _Shop.map((String dropDownStringItem) {
                         return DropdownMenuItem<String>(
@@ -184,7 +208,7 @@ class _add_screenState extends State<add_screen> {
                       value: _currentShop,
                     ),
                   ),
-                )
+
               ],
             ),
 

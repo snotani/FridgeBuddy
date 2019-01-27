@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+var name = "na";
+DateTime dateAdded = DateTime.now();
+var fridgeLocation = "na";
+var donator = "na";
 
 class add_screen extends StatefulWidget {
   @override
@@ -7,6 +13,7 @@ class add_screen extends StatefulWidget {
 }
 
 class _add_screenState extends State<add_screen> {
+
   // Var that will be used in the drop down menu
   var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "others"];
   var _currentFridgeLocation = ("Select fridge");
@@ -36,11 +43,13 @@ class _add_screenState extends State<add_screen> {
         print(_date.toString());
         setState(() {
           _date = picked;
+          dateAdded = _date;
         });
       }
     }
 
   var _currentShop = ("Select shop");
+
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
 
@@ -93,6 +102,7 @@ class _add_screenState extends State<add_screen> {
                         hintText: "e.g. sandwich",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0))),
+                      onChanged: (String labelText) { name = labelText;},
                   ),
                 ))
               ],
@@ -165,11 +175,11 @@ class _add_screenState extends State<add_screen> {
                       onChanged: (String new_value_selected) {
                         //when u selected an item from the list
                         whenFridgeDropButton(new_value_selected);
+                        fridgeLocation = new_value_selected;
                       },
                       value: _currentFridgeLocation,
                     ),
                   ),
-
               ],
             ),
 
@@ -204,11 +214,11 @@ class _add_screenState extends State<add_screen> {
                       onChanged: (String new_value_selected) {
                         //when u selected an item from the list
                         whenShopDropButton(new_value_selected);
+                        donator = new_value_selected;
                       },
                       value: _currentShop,
                     ),
                   ),
-
               ],
             ),
 
@@ -260,17 +270,17 @@ class Button_confirm extends StatelessWidget {
             onPressed: () {
               note(context);
 
-              //ADD ITEM TO DATABASE TEST
-              //final DocumentReference documentReference =
-              //Firestore.instance.document("myData/dummy");
-
-              //Map<String, String> data = <String, String>{
-              //  "name": "Pawan Kumar",
-              //  "desc": "Flutter Developer"
-              //};
-              //documentReference.setData(data).whenComplete(() {
-              // print("Document Added");
-              //}).catchError((e) => print(e));
+              //Add items to database START
+              Firestore.instance.runTransaction((transaction) async {
+                await transaction.set(
+                    Firestore.instance.collection("Items").document(name), {
+                  'Item name': name,
+                  'Date Added': dateAdded,
+                  'Fridge': fridgeLocation,
+                  'Donator': donator,
+                });
+              });
+              //Add items to database END
             }),
       ),
     );

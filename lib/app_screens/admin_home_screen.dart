@@ -18,7 +18,7 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
           leading:IconButton(icon: Icon(
               Icons.exit_to_app),
               onPressed: (){
-              logging_out(context);
+              log_out_alert(context);
             }
           )
       ),
@@ -78,7 +78,7 @@ class Button_add extends StatelessWidget {
             elevation: 6.0,
             onPressed: () {
               //action will go here for the next screen
-              Navigator.push(context, new MaterialPageRoute(builder: (context)=> add_screen()));
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> add_screen()));
             }),
       ),
     );
@@ -152,7 +152,7 @@ class Button_LogOut  extends StatelessWidget {
             ),
             elevation: 6.0,
             onPressed: () {
-              logging_out(context);
+              log_out_alert(context);
             }),
       ),
     );
@@ -164,15 +164,21 @@ void log_out_alert(BuildContext context) {
     title: Text("LogOut"),
     content: Text("Do you wish to log out?"),
     actions: <Widget>[
-      new FlatButton( child: Text("Yes"),
+      FlatButton( child: Text("Yes"),
         onPressed: (){
           logging_out(context);
         },
       ),
+      FlatButton(child: Text("No"),
+      onPressed: (){
+        leave_alert(context);
+        },
+      )
     ],
   );
 
   showDialog(
+    barrierDismissible: false,
     context: context,
     builder:  (BuildContext context){
       return alertDialog;
@@ -183,6 +189,12 @@ void log_out_alert(BuildContext context) {
 
 void logging_out(BuildContext context){
 //action will go to the login screen or user homepage
-  Navigator.pop(context, new MaterialPageRoute(builder: (context)=> login_screen()));
+  Navigator.pop(context);
+  Navigator.pop(context);
+}
+
+void leave_alert(BuildContext context){
+  //action used to leave the alert
+  Navigator.pop(context);
 }
 

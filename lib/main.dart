@@ -8,7 +8,12 @@ void main(){
       MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "FridgeBuddy",
-        home: login_screen() ,
+        home: login_screen(),
+        theme: ThemeData(
+          primaryColor: Colors.blue,
+          accentColor: Colors.blueAccent,
+          brightness: Brightness.dark,
+        ),
       )
   );
 }

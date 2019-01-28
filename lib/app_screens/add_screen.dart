@@ -13,7 +13,6 @@ class add_screen extends StatefulWidget {
 }
 
 class _add_screenState extends State<add_screen> {
-
   // Var that will be used in the drop down menu
   var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "others"];
   var _currentFridgeLocation = ("Select fridge");
@@ -28,25 +27,26 @@ class _add_screenState extends State<add_screen> {
     "Central"
   ];
 
-    DateTime _date = DateTime.now();
-    TimeOfDay _time = TimeOfDay.now();
+  var _formKey = GlobalKey<FormState>();
 
-    Future<Null> _selectDate(BuildContext context) async{
-      final DateTime picked = await showDatePicker(
-          context: context,
-          initialDate: _date,
-          firstDate: DateTime(2018),
-          lastDate: DateTime(2050)
-      );
+  DateTime _date = DateTime.now();
+  TimeOfDay _time = TimeOfDay.now();
 
-      if(picked != null && picked != _date){
-        print(_date.toString());
-        setState(() {
-          _date = picked;
-          dateAdded = _date;
-        });
-      }
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: _date,
+        firstDate: DateTime(2018),
+        lastDate: DateTime(2050));
+
+    if (picked != null && picked != _date) {
+      print(_date.toString());
+      setState(() {
+        _date = picked;
+        dateAdded = _date;
+      });
     }
+  }
 
   var _currentShop = ("Select shop");
 
@@ -56,182 +56,185 @@ class _add_screenState extends State<add_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      //resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Add Item"),
       ),
-      body: Container(
-        margin: EdgeInsets.only(top: TOP_PADDING),
-        child: Column(
-          children: <Widget>[
-            Center(
-              child: Text(
-                "Add Items",
-                textDirection: TextDirection.ltr,
-                style: TextStyle(
-                  fontSize: 50.0,
-                ),
-              ),
-            ),
-
-            //Row for item name text and the text field
-            Row(
+      body: Form(
+        key: _formKey,
+        child: Padding(
+            padding: EdgeInsets.only(top: TOP_PADDING),
+            child: ListView(
               children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 50.0,
-                    ),
-                    child: Text(
-                      "Item Name",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                  child: TextField(
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                        labelText: "Item Name",
-                        hintText: "e.g. sandwich",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5.0))),
-                      onChanged: (String labelText) { name = labelText;},
-                  ),
-                ))
-              ],
-            ),
-
-            //Row for date added text and the text field
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 50.0,
-                    ),
-                    child: Text(
-                      "Date Added",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                    child: Padding(
-                  padding: const EdgeInsets.only(left: 45.0),
+                Center(
                   child: Text(
-                      _date.toString(),style: TextStyle(fontSize: 20.0),
-                  ),
-                 )
-                ),
-                   Padding(
-                     padding: const EdgeInsets.only(right: 40.0),
-                     child: IconButton(icon: Icon(Icons.calendar_today), onPressed: (){
-                      _selectDate(context);
-                  }),
-                   ),
-
-              ],
-            ),
-
-            //Row for the fridge text and the drop down menu
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 50.0,
+                    "Add Items",
+                    textDirection: TextDirection.ltr,
+                    style: TextStyle(
+                      fontSize: 50.0,
                     ),
-                    child: Text(
-                      "Fridge",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
+                  ),
+                ),
+
+                //Row for item name text and the text field
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 35.0,
+                          left: 50.0,
+                        ),
+                        child: Text(
+                          "Item Name",
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            fontSize: 40.0,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
+                      child: TextField(
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                            labelText: "Item Name",
+                            hintText: "e.g. sandwich",
+
+                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
+                            onChanged: (String labelText) {
+                          name = labelText;
+                        },
+                      ),
+                    ))
+                  ],
                 ),
 
-                Padding(
-                    padding: const EdgeInsets.only(top: 30.0, right: 247.0),
-                    child: DropdownButton<String>(
-                      items: _fridgeLocation.map((String dropDownStringItem) {
-                        return DropdownMenuItem<String>(
-                          value: dropDownStringItem,
-                          child: Text(dropDownStringItem),
-                        );
-                      }).toList(),
-                      onChanged: (String new_value_selected) {
-                        //when u selected an item from the list
-                        whenFridgeDropButton(new_value_selected);
-                        fridgeLocation = new_value_selected;
-                      },
-                      value: _currentFridgeLocation,
-                    ),
-                  ),
-              ],
-            ),
-
-            //Row for the donating shop also drop down menu for the shops
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 50.0,
-                    ),
-                    child: Text(
-                      "Donating Shop",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
+                //Row for date added text and the text field
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 35.0,
+                          left: 50.0,
+                        ),
+                        child: Text(
+                          "Date Added",
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            fontSize: 40.0,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(left: 45.0),
+                      child: Text(
+                        _date.toString(),
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    )),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40.0),
+                      child: IconButton(
+                          icon: Icon(Icons.calendar_today),
+                          onPressed: () {
+                            _selectDate(context);
+                          }),
+                    ),
+                  ],
                 ),
 
-                Padding(
-                    padding: const EdgeInsets.only(top: 30.0,right: 252.0),
-                    child: DropdownButton<String>(
-                      items: _Shop.map((String dropDownStringItem) {
-                        return DropdownMenuItem<String>(
-                          value: dropDownStringItem,
-                          child: Text(dropDownStringItem),
-                        );
-                      }).toList(),
-                      onChanged: (String new_value_selected) {
-                        //when u selected an item from the list
-                        whenShopDropButton(new_value_selected);
-                        donator = new_value_selected;
-                      },
-                      value: _currentShop,
+                //Row for the fridge text and the drop down menu
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 35.0,
+                          left: 50.0,
+                        ),
+                        child: Text(
+                          "Fridge",
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            fontSize: 40.0,
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0, right: 247.0),
+                      child: DropdownButton<String>(
+                        items: _fridgeLocation.map((String dropDownStringItem) {
+                          return DropdownMenuItem<String>(
+                            value: dropDownStringItem,
+                            child: Text(dropDownStringItem),
+                          );
+                        }).toList(),
+                        onChanged: (String new_value_selected) {
+                          //when u selected an item from the list
+                          whenFridgeDropButton(new_value_selected);
+                          fridgeLocation = new_value_selected;
+                        },
+                        value: _currentFridgeLocation,
+                      ),
+                    ),
+                  ],
+                ),
+
+                //Row for the donating shop also drop down menu for the shops
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 35.0,
+                          left: 50.0,
+                        ),
+                        child: Text(
+                          "Donating Shop",
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            fontSize: 40.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30.0, right: 252.0),
+                      child: DropdownButton<String>(
+                        items: _Shop.map((String dropDownStringItem) {
+                          return DropdownMenuItem<String>(
+                            value: dropDownStringItem,
+                            child: Text(dropDownStringItem),
+                          );
+                        }).toList(),
+                        onChanged: (String new_value_selected) {
+                          //when u selected an item from the list
+                          whenShopDropButton(new_value_selected);
+                          donator = new_value_selected;
+                        },
+                        value: _currentShop,
+                      ),
+                    ),
+                  ],
+                ),
+
+                //Row for the button confirm button
+                Column(
+                  children: <Widget>[Button_confirm()],
+                ),
+
+                Column(
+                  children: <Widget>[Button_Update()],
+                )
               ],
-            ),
-
-            //Row for the button confirm button
-            Column(
-              children: <Widget>[Button_confirm()],
-            ),
-
-            Column(
-              children: <Widget>[Button_Update()],
-            )
-          ],
-        ),
+            )),
       ),
     );
   }

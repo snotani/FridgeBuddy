@@ -6,6 +6,7 @@ var name = "na";
 DateTime dateAdded = DateTime.now();
 var fridgeLocation = "na";
 var donator = "na";
+var quantity = "na";
 
 class add_screen extends StatefulWidget {
   @override
@@ -95,20 +96,29 @@ class _add_screenState extends State<add_screen> {
                       ),
                     ),
                     Expanded(
-                        child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextField(
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            labelText: "Item Name",
-                            hintText: "e.g. sandwich",
-
-                            border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0))),
-                            onChanged: (String labelText) {
-                          name = labelText;
-                        },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 35.0, right: 20.0, left: 40.0),
+                        child: TextField(
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                              labelText: "Item Name",
+                              hintText: "e.g. sandwich",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0))),
+                          onChanged: (String labelText) {
+                            name = labelText;
+                          },
+                        ),
                       ),
-                    ))
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40.0, top: 40.0),
+                      child: IconButton(
+                          icon: Icon(Icons.add_circle),
+                          onPressed: () {
+
+                          }),
+                    ),
                   ],
                 ),
 
@@ -225,6 +235,41 @@ class _add_screenState extends State<add_screen> {
                   ],
                 ),
 
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 35.0,
+                          left: 50.0,
+                        ),
+                        child: Text(
+                          "Quantity",
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            fontSize: 40.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                        child: Padding(
+                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            labelText: "Number of items",
+                            hintText: "e.g. 9",
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0))),
+                        onChanged: (String labelText) {
+                          quantity = labelText;
+                        },
+                      ),
+                    ))
+                  ],
+                ),
+
                 //Row for the button confirm button
                 Column(
                   children: <Widget>[Button_confirm()],
@@ -281,6 +326,7 @@ class Button_confirm extends StatelessWidget {
                   'Date Added': dateAdded,
                   'Fridge': fridgeLocation,
                   'Donator': donator,
+                  'Quantity': quantity,
                 });
               });
               //Add items to database END

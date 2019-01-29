@@ -15,7 +15,7 @@ class add_screen extends StatefulWidget {
 
 class _add_screenState extends State<add_screen> {
   // Var that will be used in the drop down menu
-  var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "others"];
+  var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "Others"];
   var _currentFridgeLocation = ("Select fridge");
   var _Shop = [
     "Select shop",
@@ -27,6 +27,10 @@ class _add_screenState extends State<add_screen> {
     "Wok in",
     "Central"
   ];
+  var _currentShop = ("Select shop");
+
+  var _ItemsList = ["Select item","Sandwish","Doughnuts",];
+  var _currentItemList = ("Select item");
 
   var _formKey = GlobalKey<FormState>();
 
@@ -48,8 +52,6 @@ class _add_screenState extends State<add_screen> {
       });
     }
   }
-
-  var _currentShop = ("Select shop");
 
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
@@ -99,16 +101,20 @@ class _add_screenState extends State<add_screen> {
                       child: Padding(
                         padding: const EdgeInsets.only(
                             top: 35.0, right: 20.0, left: 40.0),
-                        child: TextField(
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                              labelText: "Item Name",
-                              hintText: "e.g. sandwich",
-                              border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(5.0))),
-                          onChanged: (String labelText) {
-                            name = labelText;
+                        child: DropdownButton<String>(
+                          items: _ItemsList.map((String dropDownStringItem) {
+                            return DropdownMenuItem<String>(
+                              value: dropDownStringItem,
+                              child: Text(dropDownStringItem),
+                            );
+                          }).toList(),
+                          onChanged: (String new_value_selected) {
+                            //when u selected an item from the list
+                            whenItemListDropButton(new_value_selected);
+                            //this section is the value that will be passed to the firebase datebase
+                            //Itemlist = new_value_selected;
                           },
+                          value: _currentItemList,
                         ),
                       ),
                     ),
@@ -286,6 +292,12 @@ class _add_screenState extends State<add_screen> {
     );
   }
 
+  void whenItemListDropButton(String new_value_selected) {
+    setState(() {
+      this._currentItemList = new_value_selected;
+    });
+  }
+
   void whenFridgeDropButton(String new_value_selected) {
     setState(() {
       this._currentFridgeLocation = new_value_selected;
@@ -335,7 +347,7 @@ class Button_confirm extends StatelessWidget {
           },
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.green),
+          borderSide: BorderSide(color: Colors.green,width: 5.0),
         ),
       ),
     );
@@ -376,7 +388,7 @@ class Button_Update extends StatelessWidget {
             },
             shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.green),),
+          borderSide: BorderSide(color: Colors.orange,width: 5.0),),
 
         ),
       );

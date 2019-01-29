@@ -331,7 +331,7 @@ class Button_confirm extends StatelessWidget {
               });
               //Add items to database END
             },
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color:Colors.green ),
             ),
       ),

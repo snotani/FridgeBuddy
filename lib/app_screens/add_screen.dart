@@ -97,7 +97,8 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: 35.0, right: 20.0, left: 40.0),
+                        padding: const EdgeInsets.only(
+                            top: 35.0, right: 20.0, left: 40.0),
                         child: TextField(
                           keyboardType: TextInputType.text,
                           decoration: InputDecoration(
@@ -142,14 +143,14 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                         child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0,left: 45.0),
-                      child: Text(
-                        _date.toString(),
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                    )),
+                          padding: const EdgeInsets.only(top: 35.0, left: 45.0),
+                          child: Text(
+                            _date.toString(),
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                        )),
                     Padding(
-                      padding: const EdgeInsets.only(top: 35.0,right: 40.0),
+                      padding: const EdgeInsets.only(top: 35.0, right: 40.0),
                       child: IconButton(
                           icon: Icon(Icons.calendar_today),
                           onPressed: () {
@@ -254,19 +255,20 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                         child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText: "Number of items",
-                            hintText: "e.g. 9",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        onChanged: (String labelText) {
-                          quantity = labelText;
-                        },
-                      ),
-                    ))
+                          padding: const EdgeInsets.only(
+                              top: 35.0, right: 50.0),
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                labelText: "Number of items",
+                                hintText: "e.g. 9",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0))),
+                            onChanged: (String labelText) {
+                              quantity = labelText;
+                            },
+                          ),
+                        ))
                   ],
                 ),
 
@@ -308,32 +310,33 @@ class Button_confirm extends StatelessWidget {
         width: 300.0,
         height: 100.0,
         child: OutlineButton(
-            color: Colors.green,
-            child: Text(
-              "Confirm",
-              textDirection: TextDirection.ltr,
-              style: TextStyle(color: Colors.green, fontSize: 40.0),
-            ),
-            //elevation: 6.0,
-            onPressed: () {
-              note(context);
+          color: Colors.green,
+          child: Text(
+            "Confirm",
+            textDirection: TextDirection.ltr,
+            style: TextStyle(color: Colors.green, fontSize: 40.0),
+          ),
+          //elevation: 6.0,
+          onPressed: () {
+            note(context);
 
-              //Add items to database START
-              Firestore.instance.runTransaction((transaction) async {
-                await transaction.set(
-                    Firestore.instance.collection("Items").document(name), {
-                  'Item name': name,
-                  'Date Added': dateAdded,
-                  'Fridge': fridgeLocation,
-                  'Donator': donator,
-                  'Quantity': quantity,
-                });
+            //Add items to database START
+            Firestore.instance.runTransaction((transaction) async {
+              await transaction.set(
+                  Firestore.instance.collection("Items").document(name), {
+                'Item name': name,
+                'Date Added': dateAdded,
+                'Fridge': fridgeLocation,
+                'Donator': donator,
+                'Quantity': quantity,
               });
-              //Add items to database END
-            },
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color:Colors.green ),
-            ),
+            });
+            //Add items to database END
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.green),
+        ),
       ),
     );
   }
@@ -361,19 +364,20 @@ class Button_Update extends StatelessWidget {
       child: Container(
         width: 300.0,
         height: 100.0,
-        child: RaisedButton(
+        child: OutlineButton(
             color: Colors.orange,
             child: Text(
               "Update",
               textDirection: TextDirection.ltr,
-              style: TextStyle(color: Colors.black, fontSize: 40.0),
+              style: TextStyle(color: Colors.orange, fontSize: 40.0),
             ),
-            elevation: 6.0,
             onPressed: () {
               note_update(context);
-            }),
-      ),
-    );
+            },
+            shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0))),
+        ),
+      );
   }
 }
 
@@ -406,16 +410,16 @@ void add_alert(BuildContext context) {
     ),
 
     actions: <Widget>[
-      FlatButton( child: Text("Yes"),
-        onPressed: (){
-        // action if he says yes
+      FlatButton(child: Text("Yes"),
+        onPressed: () {
+          // action if he says yes
 
         },
       ),
       FlatButton(child: Text("No"),
-        onPressed: (){
-        //pop the alert from the stack and goes back to the home screen
-        Navigator.pop(context);
+        onPressed: () {
+          //pop the alert from the stack and goes back to the home screen
+          Navigator.pop(context);
         },
       )
     ],
@@ -424,9 +428,8 @@ void add_alert(BuildContext context) {
   showDialog(
       barrierDismissible: false,
       context: context,
-      builder:  (BuildContext context){
+      builder: (BuildContext context) {
         return alertDialog;
-
       }
   );
 }

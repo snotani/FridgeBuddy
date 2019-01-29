@@ -142,14 +142,14 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                         child: Padding(
-                      padding: const EdgeInsets.only(left: 45.0),
+                      padding: const EdgeInsets.only(top: 35.0,left: 45.0),
                       child: Text(
                         _date.toString(),
                         style: TextStyle(fontSize: 20.0),
                       ),
                     )),
                     Padding(
-                      padding: const EdgeInsets.only(right: 40.0),
+                      padding: const EdgeInsets.only(top: 35.0,right: 40.0),
                       child: IconButton(
                           icon: Icon(Icons.calendar_today),
                           onPressed: () {

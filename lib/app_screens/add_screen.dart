@@ -116,7 +116,7 @@ class _add_screenState extends State<add_screen> {
                       child: IconButton(
                           icon: Icon(Icons.add_circle),
                           onPressed: () {
-
+                            add_alert(context);
                           }),
                     ),
                   ],
@@ -385,4 +385,45 @@ void note_update(BuildContext context) {
       builder: (BuildContext context) {
         return alertDialog;
       });
+}
+
+void add_alert(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Add New Item"),
+    content: Row(
+      children: <Widget>[
+        new Expanded(
+          child: new TextField(
+            autofocus: true,
+            decoration: new InputDecoration(
+                labelText: 'Item name ', hintText: 'eg. Milk'),
+          ),
+        )
+      ],
+    ),
+
+    actions: <Widget>[
+      FlatButton( child: Text("Yes"),
+        onPressed: (){
+        // action if he says yes
+
+        },
+      ),
+      FlatButton(child: Text("No"),
+        onPressed: (){
+        //pop the alert from the stack and goes back to the home screen
+        Navigator.pop(context);
+        },
+      )
+    ],
+  );
+
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder:  (BuildContext context){
+        return alertDialog;
+
+      }
+  );
 }

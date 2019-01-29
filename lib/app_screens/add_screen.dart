@@ -375,7 +375,9 @@ class Button_Update extends StatelessWidget {
               note_update(context);
             },
             shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0))),
+        borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.green),),
+
         ),
       );
   }

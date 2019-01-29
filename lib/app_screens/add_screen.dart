@@ -15,23 +15,22 @@ class add_screen extends StatefulWidget {
 
 class _add_screenState extends State<add_screen> {
   // Var that will be used in the drop down menu
-  var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "others"];
+  var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "Others"];
   var _currentFridgeLocation = ("Select fridge");
   var _Shop = [
     "Select shop",
     "Greggs",
-    "Spar",
+    "Cafe21",
     "Go Burrito",
-    "Sultan",
-    "Subway",
-    "Wok in",
-    "Central"
+    "Bowland Bar",
+    "LUSU Central",
+    "Juicafe"
   ];
 
   var _formKey = GlobalKey<FormState>();
 
   DateTime _date = DateTime.now();
-  TimeOfDay _time = TimeOfDay.now();
+  //TimeOfDay _time = TimeOfDay.now();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(

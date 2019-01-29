@@ -307,14 +307,14 @@ class Button_confirm extends StatelessWidget {
       child: Container(
         width: 300.0,
         height: 100.0,
-        child: RaisedButton(
+        child: OutlineButton(
             color: Colors.green,
             child: Text(
               "Confirm",
               textDirection: TextDirection.ltr,
-              style: TextStyle(color: Colors.black, fontSize: 40.0),
+              style: TextStyle(color: Colors.green, fontSize: 40.0),
             ),
-            elevation: 6.0,
+            //elevation: 6.0,
             onPressed: () {
               note(context);
 
@@ -330,7 +330,10 @@ class Button_confirm extends StatelessWidget {
                 });
               });
               //Add items to database END
-            }),
+            },
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+          borderSide: BorderSide(color:Colors.green ),
+            ),
       ),
     );
   }

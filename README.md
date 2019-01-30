@@ -1,5 +1,5 @@
 # FridgeBuddy
-# Authors: Siddharth Notani, Alfred Costello, Abdulsalam Aboubakar, Mubarak Salawu, Henry Pang
+Authors: Siddharth Notani, Alfred Costello, Abdulsalam Aboubakar, Mubarak Salawu, Henry Pang
 
 FridgeBuddy is a project where we aim to reduce food wastage in the university. The project would do this by helping both staff and students monitor the contents of the Community Fridge. This will also include statistics about the Community Fridge usage to reduce even more food waste within the University.
 

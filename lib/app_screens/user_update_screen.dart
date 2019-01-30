@@ -21,39 +21,34 @@ class _user_update_screen extends State<user_update_screen> {
         title: Text("Update Fridge Items"),
     ),
     body: Form(
-     key: _formKey,
-     child: Padding(
-       padding: EdgeInsets.only(top: TOP_PADDING),
-       child: ListView(
-        children: <Widget>[
-          Row(
-              children: <Widget>[
-           Expanded(
-       child: Padding(
-       padding: const EdgeInsets.only(top: 30.0, right: 50.0),
-       child: Text(
-         "Update Fridge Items",
-         textDirection: TextDirection.ltr,
-         style: TextStyle(
-           fontSize: 50.0,
-         ),
-       ),
-     ),
-
-       ),
-      Expanded(
-        child: add_icon_asset() ,
-      )
-
-         ],
-
+      key: _formKey,
+        child: Padding(
+          padding: EdgeInsets.only(top: TOP_PADDING),
+            child: ListView(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 30.0, right: 50.0),
+                          child: Text(
+                              "Update Fridge Items",
+                              textDirection: TextDirection.ltr,
+                              style: TextStyle(
+                                fontSize: 50.0,
+                              ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: add_icon_asset(),
+                      ),
+                    ]
+                  ),
+              ]
             ),
-          ),
-
-        ]
-       ),
+        ),
      ),
-    ),
     );
   }
 }
@@ -68,10 +63,10 @@ class add_icon_asset extends StatelessWidget {
     //create an image object from the assetimage object and pass it as parameter
     //resize the image with set heights and width
 
-    Image add_Icon_image = Image(
+    Image add_icon_image = Image(
       image: assetImage,
-      width: 300.0,
-      height: 300.0,
+      width: 70.0,
+      height: 70.0,
     );
 
     //the method will return the logo image as a container

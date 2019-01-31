@@ -46,7 +46,9 @@ class _user_update_screen extends State<user_update_screen> {
             itemBuilder: (BuildContext context, int index){
               return new ListTile(
                 title: new Text('Item no $index'),
-                trailing: new Icon(Icons.arrow_drop_down)
+                  leading: const Icon(Icons.fastfood),
+                  subtitle: const Text('Brief description of the food item'),
+                  trailing: new Icon(Icons.arrow_drop_down),
               );
             }
         ),
@@ -59,13 +61,16 @@ class _user_update_screen extends State<user_update_screen> {
 /*class admin_icon_asset extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
     //create an image object from the assetimage object and pass it as parameter
     AssetImage assetImage = AssetImage("images/add_icon.png");
+
     Image admin_icon_image = Image(
       image: assetImage,
       width: 70.0,
       height: 70.0,
     );
+
     //the method will return the logo image as a container
     // with in it will be a child that will hold the image
     return Container(

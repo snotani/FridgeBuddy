@@ -43,22 +43,28 @@ class _user_update_screen extends State<user_update_screen> {
         ),
         bottomNavigationBar: Container(
           height: 55.0,
-          child: BottomAppBar(
+          child: new BottomAppBar(
             color: Colors.blue,
-            child: Row(
+            child: new Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.home, color: Colors.white),
-                  onPressed: () {},
+                  icon: Icon(Icons.feedback, color: Colors.white),
+                  onPressed: () {
+                    // add feedback page
+                  },
                 ),
                 IconButton(
-                  icon: Icon(Icons.blur_on, color: Colors.white),
-                  onPressed: () {},
+                  icon: Icon(Icons.settings, color: Colors.white),
+                  onPressed: () {
+                    // add settings page
+                  },
                 ),
                 IconButton(
-                  icon: Icon(Icons.hotel, color: Colors.white),
-                  onPressed: () {},
+                  icon: Icon(Icons.help, color: Colors.white),
+                  onPressed: () {
+                    // add help page
+                  },
                 ),
               ],
             ),
@@ -71,9 +77,13 @@ class _user_update_screen extends State<user_update_screen> {
                 title: new Text('Item no $index'),
                   leading: const Icon(Icons.fastfood),
                   subtitle: const Text('Brief description of the food item'),
-                  trailing: new Icon(Icons.arrow_drop_down),
+                  trailing:
+                    new IconButton(
+                      icon: Icon(Icons.arrow_drop_down),
+                      onPressed: () {},
+                  ),
               );
-            }
+            },
         ),
       ),
     );

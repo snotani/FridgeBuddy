@@ -41,6 +41,29 @@ class _user_update_screen extends State<user_update_screen> {
             ),
           ],
         ),
+        bottomNavigationBar: Container(
+          height: 55.0,
+          child: BottomAppBar(
+            color: Colors.blue,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.home, color: Colors.white),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.blur_on, color: Colors.white),
+                  onPressed: () {},
+                ),
+                IconButton(
+                  icon: Icon(Icons.hotel, color: Colors.white),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+          ),
+        ),
         body: new ListView.builder(
             itemCount: items.length,
             itemBuilder: (BuildContext context, int index){

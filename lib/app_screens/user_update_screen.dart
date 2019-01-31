@@ -89,7 +89,7 @@ class _user_update_screen extends State<user_update_screen> {
     );
   }
 }
-
+// // https://stackoverflow.com/questions/50878254/how-do-i-position-widgets-inside-a-card-contained-in-a-row/50878780
 //widget that holds the image and returns it in a container
 /*class admin_icon_asset extends StatelessWidget {
   @override

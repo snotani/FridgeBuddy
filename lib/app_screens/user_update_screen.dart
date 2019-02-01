@@ -30,7 +30,7 @@ class _user_update_screen extends State<user_update_screen> {
         appBar: new AppBar(
           title: new Text("Update Fridge Items"),
           centerTitle: true,
-          elevation: 20.0,
+          elevation: 10.0,
           actions:  <Widget> [
             IconButton(
               tooltip: 'Admin Login',
@@ -51,19 +51,22 @@ class _user_update_screen extends State<user_update_screen> {
                 IconButton(
                   icon: Icon(Icons.feedback, color: Colors.white),
                   onPressed: () {
-                    // add feedback page
+                    // add feedback page/alert
+                    feedbackDialog(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.settings, color: Colors.white),
                   onPressed: () {
-                    // add settings page
+                    // add settings page/alert
+                    settingsDialog(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.help, color: Colors.white),
                   onPressed: () {
-                    // add help page
+                    // add help page/alert
+                    helpDialog(context);
                   },
                 ),
               ],
@@ -89,7 +92,47 @@ class _user_update_screen extends State<user_update_screen> {
     );
   }
 }
-// // https://stackoverflow.com/questions/50878254/how-do-i-position-widgets-inside-a-card-contained-in-a-row/50878780
+
+void feedbackDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: new Text("Feedback"),
+    content: new Text("Please submit your feedback below:"),
+    // add textfield
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void settingsDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: new Text("Settings"),
+    content: new Text("Add settings here"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void helpDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Help"),
+    content: Text("Explain how to use the app"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
 //widget that holds the image and returns it in a container
 /*class admin_icon_asset extends StatelessWidget {
   @override

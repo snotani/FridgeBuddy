@@ -1,5 +1,33 @@
 import 'package:flutter/material.dart';
 import 'admin_home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+//Authentication stuff start
+final FirebaseAuth auth = FirebaseAuth.instance;
+String username;
+String password;
+var usernameController = new TextEditingController();
+var passwordController = new TextEditingController();
+
+//Handle sign in
+Future<FirebaseUser> handleSignInEmail(String email, String password) async {
+  final FirebaseUser user = await auth.signInWithEmailAndPassword(email: email, password: password);
+  assert(user != null);
+  assert(await user.getIdToken() != null);
+  final FirebaseUser currentUser = await auth.currentUser();
+  assert(user.uid == currentUser.uid);
+  print('signInEmail succeeded: $user');
+  return user;
+}
+
+//Handle sign up - not implemented yet
+Future<FirebaseUser> handleSignUp(email, password) async {
+  final FirebaseUser user = await auth.createUserWithEmailAndPassword(email: email, password: password);
+  assert (user != null);
+  assert (await user.getIdToken() != null);
+  return user;
+}
+//Authentication stuff end
 
 class login_screen extends StatefulWidget {
   @override
@@ -59,12 +87,16 @@ class _login_screenState extends State<login_screen> {
                     child: Padding(
                   padding: const EdgeInsets.only(top: 35.0, right: 50.0),
                   child: TextField(
+                    controller: usernameController,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         labelText: "Username",
                         hintText: "example@google.com",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0))),
+                        onChanged: (String labelText) {
+                          username = labelText;
+                        },
                   ),
                 ))
               ],
@@ -92,6 +124,7 @@ class _login_screenState extends State<login_screen> {
                     child: Padding(
                   padding: const EdgeInsets.only(top: 35.0, right: 50.0),
                   child: TextField(
+                    controller: passwordController,
                     keyboardType: TextInputType.text,
                     obscureText: true,
                     decoration: InputDecoration(
@@ -99,6 +132,9 @@ class _login_screenState extends State<login_screen> {
                         hintText: "",
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0))),
+                        onChanged: (String labelText) {
+                          password = labelText;
+                        },
                   ),
                 ))
               ],
@@ -160,8 +196,12 @@ class Button_Login extends StatelessWidget {
             ),
             elevation: 6.0,
             onPressed: () {
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => Admin_home_screen()));
+              handleSignInEmail(username, password)
+                  .then((FirebaseUser user) {
+                  usernameController.clear();
+                  passwordController.clear();
+                Navigator.push(context, new MaterialPageRoute(builder: (context) => new Admin_home_screen()));
+              }).catchError((e) => print(e));
             }),
       ),
     );

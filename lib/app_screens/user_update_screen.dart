@@ -67,8 +67,10 @@ class _user_update_screen extends State<user_update_screen> {
             stream: Firestore.instance.collection('Items').snapshots(),
             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (!snapshot.hasData) return new Text('Loading...');
-              return ListView.builder(
-                itemExtent: 80.0,
+              return ListView.separated(
+                separatorBuilder: (context, index) => Divider(
+                  color: Colors.black,
+                ),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) =>
                     _buildListItem(context, snapshot.data.documents[index]),
@@ -89,36 +91,60 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
             style: Theme.of(context).textTheme.headline,
           ),
         ),
+        IconButton(
+          icon: Icon(Icons.remove_circle),
+          iconSize: 50.0,
+          color: Colors.blueAccent,
+          onPressed: () {
+            // remove one from quantity
+            Firestore.instance.runTransaction((transaction) async {
+              DocumentSnapshot freshSnap =
+              await transaction.get(document.reference);
+              await transaction.update(freshSnap.reference, {
+                'Quantity': freshSnap['Quantity'] - 1,
+              });
+              // Add if statement to check if quantity reaches 0
+            });
+          },
+        ),
         Container(
           decoration: const BoxDecoration(
             color: Color(0xffddddff),
           ),
           padding: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.only(top: 15.0),
           child: Text(
             document['Quantity'].toString(),
             style: Theme.of(context).textTheme.display1,
           ),
+        ),
+        IconButton(
+          icon: Icon(Icons.add_circle),
+          color: Colors.blueAccent,
+          iconSize: 50.0,
+          onPressed: () {
+            // add one to quantity
+            Firestore.instance.runTransaction((transaction) async {
+              DocumentSnapshot freshSnap =
+              await transaction.get(document.reference);
+              await transaction.update(freshSnap.reference, {
+                'Quantity': freshSnap['Quantity'] + 1,
+              });
+              // Add variable for count and disable add button
+            });
+          },
         ),
       ],
     ),
     leading: new Icon(
         Icons.fastfood,
         size: 40.0,
+        color: Colors.blueAccent,
     ),
     subtitle: new Text(
-        'Brief description of the food item',
+        document['Donator'],
         style: Theme.of(context).textTheme.subhead,
     ),
-    onTap: () {
-      Firestore.instance.runTransaction((transaction) async {
-        DocumentSnapshot freshSnap =
-        await transaction.get(document.reference);
-        await transaction.update(freshSnap.reference, {
-          'Quantity': freshSnap['Quantity'] + 1,
-
-        });
-      });
-    },
   );
 }
 

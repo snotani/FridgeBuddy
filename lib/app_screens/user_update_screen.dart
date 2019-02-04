@@ -107,7 +107,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     ),
     subtitle: new Text(
         'Brief description of the food item',
-        style: Theme.of(context).textTheme.title,
+        style: Theme.of(context).textTheme.subhead,
     ),
     onTap: () {
       Firestore.instance.runTransaction((transaction) async {
@@ -115,6 +115,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
         await transaction.get(document.reference);
         await transaction.update(freshSnap.reference, {
           'Quantity': freshSnap['Quantity'] + 1,
+
         });
       });
     },

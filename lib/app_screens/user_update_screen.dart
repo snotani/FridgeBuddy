@@ -8,33 +8,6 @@ class user_update_screen extends StatefulWidget {
   _user_update_screen createState() => _user_update_screen();
 }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
-  return ListTile(
-    title: Row(
-      children: [
-        Expanded(
-          child: Text(
-            document['Item name'],
-            style: Theme.of(context).textTheme.headline,
-          ),
-        ),
-        Container(
-          decoration: const BoxDecoration(
-            color: Color(0xffddddff),
-          ),
-          padding: const EdgeInsets.all(10.0),
-          child: Text(
-           document['Quantity'].toString(),
-            style: Theme.of(context).textTheme.display1,
-          ),
-        ),
-      ],
-    ),
-    onTap: () {
-      print('Should increase quantity here');
-    },
-  );
-}
 
 class _user_update_screen extends State<user_update_screen> {
 
@@ -106,6 +79,48 @@ class _user_update_screen extends State<user_update_screen> {
   }
 }
 
+Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+  return ListTile(
+    title: Row(
+      children: [
+        Expanded(
+          child: Text(
+            document['Item name'],
+            style: Theme.of(context).textTheme.headline,
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            color: Color(0xffddddff),
+          ),
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            document['Quantity'].toString(),
+            style: Theme.of(context).textTheme.display1,
+          ),
+        ),
+      ],
+    ),
+    leading: new Icon(
+        Icons.fastfood,
+        size: 40.0,
+    ),
+    subtitle: new Text(
+        'Brief description of the food item',
+        style: Theme.of(context).textTheme.title,
+    ),
+    onTap: () {
+      Firestore.instance.runTransaction((transaction) async {
+        DocumentSnapshot freshSnap =
+        await transaction.get(document.reference);
+        await transaction.update(freshSnap.reference, {
+          'Quantity': freshSnap['Quantity'] + 1,
+        });
+      });
+    },
+  );
+}
+
 void feedbackDialog(BuildContext context) {
   var alertDialog = AlertDialog(
     title: new Text("Feedback"),
@@ -145,22 +160,3 @@ void helpDialog(BuildContext context) {
         return alertDialog;
       });
 }
-
-
-/*new ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index){
-              return new ListTile(
-                title: new Text('Item no $index'),
-                  leading: const Icon(Icons.fastfood),
-                  subtitle: const Text('Brief description of the food item'),
-                  trailing:
-                      new IconButton(
-                        icon: Icon(Icons.arrow_drop_down),
-                        onPressed: () {
-
-                        },
-                      ),
-              );
-            },
-        ), */

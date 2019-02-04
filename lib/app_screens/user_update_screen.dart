@@ -21,6 +21,7 @@ class _user_update_screen extends State<user_update_screen> {
           title: new Text("Update Fridge Items"),
           centerTitle: true,
           elevation: 10.0,
+          // Increase app bar size
           actions:  <Widget> [
             IconButton(
               tooltip: 'Admin Login',
@@ -41,21 +42,21 @@ class _user_update_screen extends State<user_update_screen> {
                 IconButton(
                   icon: Icon(Icons.feedback, color: Colors.white),
                   onPressed: () {
-                    // add feedback page/alert
+                    // add feedback page/alert - TBD
                     feedbackDialog(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.settings, color: Colors.white),
                   onPressed: () {
-                    // add settings page/alert
+                    // add settings page/alert - TBD
                     settingsDialog(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.help, color: Colors.white),
                   onPressed: () {
-                    // add help page/alert
+                    // add help page/alert - TBD
                     helpDialog(context);
                   },
                 ),
@@ -94,7 +95,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
         IconButton(
           icon: Icon(Icons.remove_circle),
           iconSize: 50.0,
-          color: Colors.blueAccent,
+          color: Colors.blue[700],
           onPressed: () {
             // remove one from quantity
             Firestore.instance.runTransaction((transaction) async {
@@ -103,7 +104,8 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
               await transaction.update(freshSnap.reference, {
                 'Quantity': freshSnap['Quantity'] - 1,
               });
-              // Add if statement to check if quantity reaches 0
+              // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
+              // Look into deleting a database field
             });
           },
         ),
@@ -120,7 +122,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
         ),
         IconButton(
           icon: Icon(Icons.add_circle),
-          color: Colors.blueAccent,
+          color: Colors.blue[700],
           iconSize: 50.0,
           onPressed: () {
             // add one to quantity
@@ -131,6 +133,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
                 'Quantity': freshSnap['Quantity'] + 1,
               });
               // Add variable for count and disable add button
+              // Initially disabled add button but once the counter is not 0, enable it
             });
           },
         ),
@@ -139,7 +142,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     leading: new Icon(
         Icons.fastfood,
         size: 40.0,
-        color: Colors.blueAccent,
+        color: Colors.blue[700],
     ),
     subtitle: new Text(
         document['Donator'],

@@ -6,7 +6,7 @@ var name = "na";
 DateTime dateAdded = DateTime.now();
 var fridgeLocation = "na";
 var donator = "na";
-var quantity = "na";
+var quantity;
 
 class add_screen extends StatefulWidget {
   @override
@@ -271,7 +271,7 @@ class _add_screenState extends State<add_screen> {
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5.0))),
                             onChanged: (String labelText) {
-                              quantity = labelText;
+                              quantity = int.parse(labelText);
                             },
                           ),
                         ))

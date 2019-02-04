@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'admin_login_screen.dart';
-//import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class user_update_screen extends StatefulWidget {
@@ -8,18 +8,35 @@ class user_update_screen extends StatefulWidget {
   _user_update_screen createState() => _user_update_screen();
 }
 
+Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+  return ListTile(
+    title: Row(
+      children: [
+        Expanded(
+          child: Text(
+            document['Item name'],
+            style: Theme.of(context).textTheme.headline,
+          ),
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            color: Color(0xffddddff),
+          ),
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+           document['Quantity'].toString(),
+            style: Theme.of(context).textTheme.display1,
+          ),
+        ),
+      ],
+    ),
+    onTap: () {
+      print('Should increase quantity here');
+    },
+  );
+}
+
 class _user_update_screen extends State<user_update_screen> {
-
-  List<int> items = new List();
-
-  @override
-  void initState() {
-    // for loop to add the amount of items to the fridge - link to database
-    for (int i=0; i<50; i++){
-      items.add(i);
-    }
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,23 +90,17 @@ class _user_update_screen extends State<user_update_screen> {
             ),
           ),
         ),
-        body: new ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (BuildContext context, int index){
-              return new ListTile(
-                title: new Text('Item no $index'),
-                  leading: const Icon(Icons.fastfood),
-                  subtitle: const Text('Brief description of the food item'),
-                  trailing:
-                      new IconButton(
-                        icon: Icon(Icons.arrow_drop_down),
-                        onPressed: () {
-
-                        },
-                      ),
+        body: StreamBuilder(
+            stream: Firestore.instance.collection('Items').snapshots(),
+            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (!snapshot.hasData) return new Text('Loading...');
+              return ListView.builder(
+                itemExtent: 80.0,
+                itemCount: snapshot.data.documents.length,
+                itemBuilder: (context, index) =>
+                    _buildListItem(context, snapshot.data.documents[index]),
               );
-            },
-        ),
+            }),
       ),
     );
   }
@@ -135,10 +146,21 @@ void helpDialog(BuildContext context) {
       });
 }
 
-// Add expansion tile
-class extend_tile extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return new Container();
-  }
-}
+
+/*new ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (BuildContext context, int index){
+              return new ListTile(
+                title: new Text('Item no $index'),
+                  leading: const Icon(Icons.fastfood),
+                  subtitle: const Text('Brief description of the food item'),
+                  trailing:
+                      new IconButton(
+                        icon: Icon(Icons.arrow_drop_down),
+                        onPressed: () {
+
+                        },
+                      ),
+              );
+            },
+        ), */

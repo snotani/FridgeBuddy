@@ -17,23 +17,26 @@ class _user_update_screen extends State<user_update_screen> {
       title: 'User Update Screen',
       debugShowCheckedModeBanner: false,
       home: new Scaffold(
-        appBar: new AppBar(
-          title: new Text("Update Fridge Items"),
-          centerTitle: true,
-          elevation: 10.0,
-          // Increase app bar size
-          actions:  <Widget> [
-            IconButton(
-              tooltip: 'Admin Login',
-              icon: const Icon(Icons.person_add),
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context)=> login_screen()));
-              },
-            ),
-          ],
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(70.0), // here the desired height
+          child: new AppBar(
+            title: new Text("Update Fridge Items", style: Theme.of(context).textTheme.display1),
+            centerTitle: true,
+            elevation: 10.0,
+            actions:  <Widget> [
+              IconButton(
+                tooltip: 'Admin Login',
+                icon: const Icon(Icons.person_add),
+                iconSize: 50.0,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=> login_screen()));
+                },
+              ),
+            ],
+          ),
         ),
         bottomNavigationBar: Container(
-          height: 55.0,
+          height: 70.0,
           child: new BottomAppBar(
             color: Colors.blue,
             child: new Row(
@@ -41,6 +44,7 @@ class _user_update_screen extends State<user_update_screen> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.feedback, color: Colors.white),
+                  iconSize: 50.0,
                   onPressed: () {
                     // add feedback page/alert - TBD
                     feedbackDialog(context);
@@ -48,6 +52,7 @@ class _user_update_screen extends State<user_update_screen> {
                 ),
                 IconButton(
                   icon: Icon(Icons.settings, color: Colors.white),
+                  iconSize: 50.0,
                   onPressed: () {
                     // add settings page/alert - TBD
                     settingsDialog(context);
@@ -55,6 +60,7 @@ class _user_update_screen extends State<user_update_screen> {
                 ),
                 IconButton(
                   icon: Icon(Icons.help, color: Colors.white),
+                  iconSize: 50.0,
                   onPressed: () {
                     // add help page/alert - TBD
                     helpDialog(context);
@@ -119,6 +125,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
             document['Quantity'].toString(),
             style: Theme.of(context).textTheme.display1,
           ),
+
         ),
         IconButton(
           icon: Icon(Icons.add_circle),

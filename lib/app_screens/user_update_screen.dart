@@ -11,6 +11,8 @@ class user_update_screen extends StatefulWidget {
 
 class _user_update_screen extends State<user_update_screen> {
 
+  var quantity_check = 0;
+
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -20,7 +22,7 @@ class _user_update_screen extends State<user_update_screen> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70.0), // here the desired height
           child: new AppBar(
-            title: new Text("Update Fridge Items", style: Theme.of(context).textTheme.display1),
+            title: new Text("Update Fridge Items", style: TextStyle(fontSize: 40.0)),
             centerTitle: true,
             elevation: 10.0,
             actions:  <Widget> [
@@ -80,7 +82,7 @@ class _user_update_screen extends State<user_update_screen> {
                 ),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) =>
-                    _buildListItem(context, snapshot.data.documents[index]),
+                    _buildListItem(context, snapshot.data.documents[index], quantity_check),
               );
             }),
       ),
@@ -88,7 +90,7 @@ class _user_update_screen extends State<user_update_screen> {
   }
 }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+Widget _buildListItem(BuildContext context, DocumentSnapshot document,quantity_check) {
   return ListTile(
     title: Row(
       children: [
@@ -104,15 +106,19 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
           color: Colors.blue[700],
           onPressed: () {
             // remove one from quantity
-            Firestore.instance.runTransaction((transaction) async {
-              DocumentSnapshot freshSnap =
-              await transaction.get(document.reference);
-              await transaction.update(freshSnap.reference, {
-                'Quantity': freshSnap['Quantity'] - 1,
+            if(document['Quantity'] > 0) {
+              Firestore.instance.runTransaction((transaction) async {
+                DocumentSnapshot freshSnap =
+                await transaction.get(document.reference);
+                await transaction.update(freshSnap.reference, {
+                  'Quantity': freshSnap['Quantity'] - 1,
+                });
               });
-              // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
-              // Look into deleting a database field
-            });
+            }
+            // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
+            if (document['Quantity'] == 0){
+              delete_field_alert(context);
+            }
           },
         ),
         Container(
@@ -196,4 +202,43 @@ void helpDialog(BuildContext context) {
       builder: (BuildContext context) {
         return alertDialog;
       });
+}
+
+void delete_field_alert (BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Delete Item"),
+    content: Text("Do you wish to retrieve this last item?"),
+    actions: <Widget>[
+      FlatButton( child: Text("Yes"),
+        onPressed: (){
+          delete_field(context);
+        },
+      ),
+      FlatButton(child: Text("No"),
+        onPressed: (){
+          //stay_on_page(context);
+        },
+      )
+    ],
+  );
+
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder:  (BuildContext context){
+        return alertDialog;
+
+      }
+  );
+}
+
+// This will delete the item field requested
+void delete_field(BuildContext context){
+  Navigator.pop(context);
+  Navigator.pop(context);
+}
+
+// This will remain on the page
+void stay_on_page(BuildContext context){
+  Navigator.pop(context);
 }

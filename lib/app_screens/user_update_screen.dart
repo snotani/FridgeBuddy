@@ -11,8 +11,6 @@ class user_update_screen extends StatefulWidget {
 
 class _user_update_screen extends State<user_update_screen> {
 
-  var quantity_check = 0;
-
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
@@ -82,7 +80,7 @@ class _user_update_screen extends State<user_update_screen> {
                 ),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) =>
-                    _buildListItem(context, snapshot.data.documents[index], quantity_check),
+                    _buildListItem(context, snapshot.data.documents[index]),
               );
             }),
       ),
@@ -90,7 +88,10 @@ class _user_update_screen extends State<user_update_screen> {
   }
 }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot document,quantity_check) {
+Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+
+  int quantity_check = 0;
+
   return ListTile(
     title: Row(
       children: [
@@ -106,7 +107,9 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document,quantity_c
           color: Colors.blue[700],
           onPressed: () {
             // remove one from quantity
-            if(document['Quantity'] > 0) {
+            if(document['Quantity'] > 1) {
+              quantity_check--;
+              print(quantity_check);
               Firestore.instance.runTransaction((transaction) async {
                 DocumentSnapshot freshSnap =
                 await transaction.get(document.reference);
@@ -116,7 +119,8 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document,quantity_c
               });
             }
             // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
-            if (document['Quantity'] == 0){
+            if (document['Quantity'] == 1){
+
               delete_field_alert(context);
             }
           },
@@ -137,18 +141,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document,quantity_c
           icon: Icon(Icons.add_circle),
           color: Colors.blue[700],
           iconSize: 50.0,
-          onPressed: () {
-            // add one to quantity
-            Firestore.instance.runTransaction((transaction) async {
-              DocumentSnapshot freshSnap =
-              await transaction.get(document.reference);
-              await transaction.update(freshSnap.reference, {
-                'Quantity': freshSnap['Quantity'] + 1,
-              });
-              // Add variable for count and disable add button
-              // Initially disabled add button but once the counter is not 0, enable it
-            });
-          },
+          onPressed: (quantity_check == 0) ? () => increase_quantity(document, quantity_check) : null,
         ),
       ],
     ),
@@ -162,6 +155,19 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document,quantity_c
         style: Theme.of(context).textTheme.subhead,
     ),
   );
+}
+
+void increase_quantity (DocumentSnapshot document,quantity_check) {
+  // add one to quantity
+  Firestore.instance.runTransaction((transaction) async {
+    DocumentSnapshot freshSnap =
+    await transaction.get(document.reference);
+    await transaction.update(freshSnap.reference, {
+      'Quantity': freshSnap['Quantity'] + 1,
+    });
+    // Add variable for count and disable add button
+    // Initially disabled add button but once the counter is not 0, enable it
+  });
 }
 
 void feedbackDialog(BuildContext context) {
@@ -211,7 +217,7 @@ void delete_field_alert (BuildContext context) {
     actions: <Widget>[
       FlatButton( child: Text("Yes"),
         onPressed: (){
-          delete_field(context);
+          //delete_field(context);
         },
       ),
       FlatButton(child: Text("No"),
@@ -234,8 +240,9 @@ void delete_field_alert (BuildContext context) {
 
 // This will delete the item field requested
 void delete_field(BuildContext context){
-  Navigator.pop(context);
-  Navigator.pop(context);
+  Firestore.instance.collection('path').document('name').updateData({'Bacon': FieldValue.delete()}).whenComplete((){
+    print('Field Deleted');
+  });
 }
 
 // This will remain on the page

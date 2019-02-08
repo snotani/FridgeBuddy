@@ -20,12 +20,11 @@ class _add_screenState extends State<add_screen> {
   var _Shop = [
     "Select shop",
     "Greggs",
-    "Spar",
+    "Cafe21",
     "Go Burrito",
-    "Sultan",
-    "Subway",
-    "Wok in",
-    "Central"
+    "Bowland Bar",
+    "LUSU Central",
+    "Juicafe"
   ];
   var _currentShop = ("Select shop");
 
@@ -35,7 +34,7 @@ class _add_screenState extends State<add_screen> {
   var _formKey = GlobalKey<FormState>();
 
   DateTime _date = DateTime.now();
-  TimeOfDay _time = TimeOfDay.now();
+  //TimeOfDay _time = TimeOfDay.now();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(

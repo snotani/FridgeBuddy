@@ -6,7 +6,9 @@ var name = "na";
 DateTime dateAdded = DateTime.now();
 var fridgeLocation = "na";
 var donator = "na";
-var quantity = "na";
+int quantity;
+
+TextEditingController number_items_controller = TextEditingController();
 
 class add_screen extends StatefulWidget {
   @override
@@ -29,7 +31,11 @@ class _add_screenState extends State<add_screen> {
   ];
   var _currentShop = ("Select shop");
 
-  var _ItemsList = ["Select item","Sandwish","Doughnuts",];
+  var _ItemsList = [
+    "Select item",
+    "Sandwish",
+    "Doughnuts",
+  ];
   var _currentItemList = ("Select item");
 
   var _formKey = GlobalKey<FormState>();
@@ -149,12 +155,12 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 35.0, left: 45.0),
-                          child: Text(
-                            _date.toString(),
-                            style: TextStyle(fontSize: 20.0),
-                          ),
-                        )),
+                      padding: const EdgeInsets.only(top: 35.0, left: 45.0),
+                      child: Text(
+                        _date.toString(),
+                        style: TextStyle(fontSize: 20.0),
+                      ),
+                    )),
                     Padding(
                       padding: const EdgeInsets.only(top: 35.0, right: 40.0),
                       child: IconButton(
@@ -261,28 +267,78 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 35.0, right: 50.0),
-                          child: TextField(
-                            keyboardType: TextInputType.number,
-                            decoration: InputDecoration(
-                                labelText: "Number of items",
-                                hintText: "e.g. 9",
-                                border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5.0))),
-                            onChanged: (String labelText) {
-                              quantity = labelText;
-                            },
-                          ),
-                        ))
+                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            labelText: "Number of items",
+                            hintText: "e.g. 9",
+                            errorStyle: TextStyle(
+                              color: Colors.yellowAccent,
+                              fontSize: 15,
+                            ),
+                            border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(5.0))),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return "Please enter a valid number ";
+                          }
+                        },
+                        controller: number_items_controller,
+                      ),
+                    ))
                   ],
                 ),
 
                 //Row for the button confirm button
                 Column(
-                  children: <Widget>[Button_confirm()],
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 50.0),
+                      child: Container(
+                        width: 300.0,
+                        height: 100.0,
+                        child: OutlineButton(
+                          color: Colors.green,
+                          child: Text(
+                            "Confirm",
+                            textDirection: TextDirection.ltr,
+                            style:
+                                TextStyle(color: Colors.green, fontSize: 40.0),
+                          ),
+                          //elevation: 6.0,
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              note(context);
+                              //Add items to database START
+                              Firestore.instance
+                                  .runTransaction((transaction) async {
+                                await transaction.set(
+                                    Firestore.instance
+                                        .collection("Items")
+                                        .document(name),
+                                    {
+                                      //Item name needs to be changed to be linked to the database also connect the dropdownbutton to the collection
+                                      'Item name': name,
+                                      'Date Added': dateAdded,
+                                      'Fridge': fridgeLocation,
+                                      'Donator': donator,
+                                      'Quantity': quantity = int.parse(
+                                          number_items_controller.text),
+                                    });
+                              });
+                              //Add items to database END
+                            }
+                          },
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0)),
+                          borderSide:
+                              BorderSide(color: Colors.green, width: 5.0),
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-
                 Column(
                   children: <Widget>[Button_Update()],
                 )
@@ -312,48 +368,6 @@ class _add_screenState extends State<add_screen> {
   }
 }
 
-// the green confirm button using a stateless widget
-class Button_confirm extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Container(
-        width: 300.0,
-        height: 100.0,
-        child: OutlineButton(
-          color: Colors.green,
-          child: Text(
-            "Confirm",
-            textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.green, fontSize: 40.0),
-          ),
-          //elevation: 6.0,
-          onPressed: () {
-            note(context);
-
-            //Add items to database START
-            Firestore.instance.runTransaction((transaction) async {
-              await transaction.set(
-                  Firestore.instance.collection("Items").document(name), {
-                'Item name': name,
-                'Date Added': dateAdded,
-                'Fridge': fridgeLocation,
-                'Donator': donator,
-                'Quantity': quantity,
-              });
-            });
-            //Add items to database END
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.green,width: 5.0),
-        ),
-      ),
-    );
-  }
-}
-
 void note(BuildContext context) {
   var alertDialog = AlertDialog(
     title: Text("adding Item"),
@@ -377,21 +391,21 @@ class Button_Update extends StatelessWidget {
         width: 300.0,
         height: 100.0,
         child: OutlineButton(
-            color: Colors.orange,
-            child: Text(
-              "Update",
-              textDirection: TextDirection.ltr,
-              style: TextStyle(color: Colors.orange, fontSize: 40.0),
-            ),
-            onPressed: () {
-              note_update(context);
-            },
-            shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.orange,width: 5.0),),
-
+          color: Colors.orange,
+          child: Text(
+            "Update",
+            textDirection: TextDirection.ltr,
+            style: TextStyle(color: Colors.orange, fontSize: 40.0),
+          ),
+          onPressed: () {
+            note_update(context);
+          },
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.orange, width: 5.0),
         ),
-      );
+      ),
+    );
   }
 }
 
@@ -422,15 +436,15 @@ void add_alert(BuildContext context) {
         )
       ],
     ),
-
     actions: <Widget>[
-      FlatButton(child: Text("Yes"),
+      FlatButton(
+        child: Text("Yes"),
         onPressed: () {
           // action if he says yes
-
         },
       ),
-      FlatButton(child: Text("No"),
+      FlatButton(
+        child: Text("No"),
         onPressed: () {
           //pop the alert from the stack and goes back to the home screen
           Navigator.pop(context);
@@ -444,6 +458,5 @@ void add_alert(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return alertDialog;
-      }
-  );
+      });
 }

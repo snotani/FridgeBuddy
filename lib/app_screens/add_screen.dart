@@ -6,9 +6,13 @@ var name = "na";
 DateTime dateAdded = DateTime.now();
 var fridgeLocation = "na";
 var donator = "na";
+<<<<<<< HEAD
 int quantity;
 
 TextEditingController number_items_controller = TextEditingController();
+=======
+var quantity;
+>>>>>>> 276219fdcdff55127fae13efe6c410b331647d87
 
 class add_screen extends StatefulWidget {
   @override
@@ -22,12 +26,11 @@ class _add_screenState extends State<add_screen> {
   var _Shop = [
     "Select shop",
     "Greggs",
-    "Spar",
+    "Cafe21",
     "Go Burrito",
-    "Sultan",
-    "Subway",
-    "Wok in",
-    "Central"
+    "Bowland Bar",
+    "LUSU Central",
+    "Juicafe"
   ];
   var _currentShop = ("Select shop");
 
@@ -41,7 +44,7 @@ class _add_screenState extends State<add_screen> {
   var _formKey = GlobalKey<FormState>();
 
   DateTime _date = DateTime.now();
-  TimeOfDay _time = TimeOfDay.now();
+  //TimeOfDay _time = TimeOfDay.now();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -267,6 +270,7 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                         child: Padding(
+<<<<<<< HEAD
                       padding: const EdgeInsets.only(top: 35.0, right: 50.0),
                       child: TextFormField(
                         keyboardType: TextInputType.number,
@@ -287,6 +291,22 @@ class _add_screenState extends State<add_screen> {
                         controller: number_items_controller,
                       ),
                     ))
+=======
+                          padding: const EdgeInsets.only(
+                              top: 35.0, right: 50.0),
+                          child: TextField(
+                            keyboardType: TextInputType.number,
+                            decoration: InputDecoration(
+                                labelText: "Number of items",
+                                hintText: "e.g. 9",
+                                border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(5.0))),
+                            onChanged: (String labelText) {
+                              quantity = int.parse(labelText);
+                            },
+                          ),
+                        ))
+>>>>>>> 276219fdcdff55127fae13efe6c410b331647d87
                   ],
                 ),
 

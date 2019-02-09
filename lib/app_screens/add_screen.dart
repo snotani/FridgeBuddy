@@ -6,13 +6,9 @@ var name = "na";
 DateTime dateAdded = DateTime.now();
 var fridgeLocation = "na";
 var donator = "na";
-<<<<<<< HEAD
 int quantity;
 
 TextEditingController number_items_controller = TextEditingController();
-=======
-var quantity;
->>>>>>> 276219fdcdff55127fae13efe6c410b331647d87
 
 class add_screen extends StatefulWidget {
   @override
@@ -26,11 +22,12 @@ class _add_screenState extends State<add_screen> {
   var _Shop = [
     "Select shop",
     "Greggs",
-    "Cafe21",
+    "Spar",
     "Go Burrito",
-    "Bowland Bar",
-    "LUSU Central",
-    "Juicafe"
+    "Sultan",
+    "Subway",
+    "Wok in",
+    "Central"
   ];
   var _currentShop = ("Select shop");
 
@@ -44,7 +41,7 @@ class _add_screenState extends State<add_screen> {
   var _formKey = GlobalKey<FormState>();
 
   DateTime _date = DateTime.now();
-  //TimeOfDay _time = TimeOfDay.now();
+  TimeOfDay _time = TimeOfDay.now();
 
   Future<Null> _selectDate(BuildContext context) async {
     final DateTime picked = await showDatePicker(
@@ -158,12 +155,12 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                         child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, left: 45.0),
-                      child: Text(
-                        _date.toString(),
-                        style: TextStyle(fontSize: 20.0),
-                      ),
-                    )),
+                          padding: const EdgeInsets.only(top: 35.0, left: 45.0),
+                          child: Text(
+                            _date.toString(),
+                            style: TextStyle(fontSize: 20.0),
+                          ),
+                        )),
                     Padding(
                       padding: const EdgeInsets.only(top: 35.0, right: 40.0),
                       child: IconButton(
@@ -270,43 +267,26 @@ class _add_screenState extends State<add_screen> {
                     ),
                     Expanded(
                         child: Padding(
-<<<<<<< HEAD
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                            labelText: "Number of items",
-                            hintText: "e.g. 9",
-                            errorStyle: TextStyle(
-                              color: Colors.yellowAccent,
-                              fontSize: 15,
-                            ),
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        validator: (String value) {
-                          if (value.isEmpty) {
-                            return "Please enter a valid number ";
-                          }
-                        },
-                        controller: number_items_controller,
-                      ),
-                    ))
-=======
-                          padding: const EdgeInsets.only(
-                              top: 35.0, right: 50.0),
-                          child: TextField(
+                          padding: const EdgeInsets.only(top: 35.0, right: 50.0),
+                          child: TextFormField(
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
                                 labelText: "Number of items",
                                 hintText: "e.g. 9",
+                                errorStyle: TextStyle(
+                                  color: Colors.yellowAccent,
+                                  fontSize: 15,
+                                ),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5.0))),
-                            onChanged: (String labelText) {
-                              quantity = int.parse(labelText);
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return "Please enter a valid number ";
+                              }
                             },
+                            controller: number_items_controller,
                           ),
                         ))
->>>>>>> 276219fdcdff55127fae13efe6c410b331647d87
                   ],
                 ),
 
@@ -324,7 +304,7 @@ class _add_screenState extends State<add_screen> {
                             "Confirm",
                             textDirection: TextDirection.ltr,
                             style:
-                                TextStyle(color: Colors.green, fontSize: 40.0),
+                            TextStyle(color: Colors.green, fontSize: 40.0),
                           ),
                           //elevation: 6.0,
                           onPressed: () {
@@ -353,7 +333,7 @@ class _add_screenState extends State<add_screen> {
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0)),
                           borderSide:
-                              BorderSide(color: Colors.green, width: 5.0),
+                          BorderSide(color: Colors.green, width: 5.0),
                         ),
                       ),
                     )
@@ -421,7 +401,7 @@ class Button_Update extends StatelessWidget {
             note_update(context);
           },
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color: Colors.orange, width: 5.0),
         ),
       ),

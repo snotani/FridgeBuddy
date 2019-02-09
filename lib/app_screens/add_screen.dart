@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'admin_home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 var name = "na";
@@ -345,6 +346,41 @@ class _add_screenState extends State<add_screen> {
               ],
             )),
       ),
+      bottomNavigationBar: Container(
+        height: 70.0,
+        child: new BottomAppBar(
+          color: Colors.blue,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.exit_to_app, color: Colors.black),
+                iconSize: 50.0,
+                onPressed: () {
+                  // add feedback page/alert - TBD
+                  log_out(context);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.update, color: Colors.black87),
+                iconSize: 50.0,
+                onPressed: () {
+                  // add settings page/alert - TBD
+                  update_page(context);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.search, color: Colors.black87),
+                iconSize: 50.0,
+                onPressed: () {
+                  // add help page/alert - TBD
+                  sreach_page(context);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
@@ -460,3 +496,69 @@ void add_alert(BuildContext context) {
         return alertDialog;
       });
 }
+
+
+void log_out(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("LogOut"),
+    content: Text("Do you wish to log out?"),
+    actions: <Widget>[
+      FlatButton(child: Text("Yes"),
+        onPressed: () {
+          logging_out(context);
+        },
+      ),
+      FlatButton(child: Text("No"),
+        onPressed: () {
+          leave_alert(context);
+        },
+      )
+    ],
+  );
+
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      }
+  );
+}
+void logging_out(BuildContext context) {
+//action will go to the login screen or user homepage
+  Navigator.pop(context);
+  Navigator.pop(context);
+  Navigator.pop(context);
+}
+
+void leave_alert(BuildContext context) {
+  //action used to leave the alert
+  Navigator.pop(context);
+}
+
+void update_page(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: new Text("update_page"),
+    content: new Text("update_page"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void sreach_page(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("sreach_page"),
+    content: Text("sreach_page"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+

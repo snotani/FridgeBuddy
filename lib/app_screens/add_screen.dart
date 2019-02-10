@@ -489,9 +489,7 @@ void add_alert(BuildContext context) {
             decoration: new InputDecoration(
                 labelText: 'Item name', hintText: 'eg. Milk'),
             onChanged: (current) {
-              /*
               name = current;
-              */
             }
           ),
         )
@@ -501,7 +499,6 @@ void add_alert(BuildContext context) {
       FlatButton(
         child: Text("Yes"),
         onPressed: () {
-          /*
           Firestore.instance
               .runTransaction((transaction) async {
             await transaction.set(
@@ -510,13 +507,12 @@ void add_alert(BuildContext context) {
                     .document(name),
                 {
                   'Item name': name,
-                  'Date Added': "na",
-                  'Fridge': "na",
-                  'Donator': "na",
-                  'Quantity': "0",
+                  'Date Added': dateAdded,
+                  'Fridge': fridgeLocation,
+                  'Donator': donator,
+                  'Quantity': quantity = 0,
                 });
           });
-          */
           Navigator.pop(context);
         }),
       FlatButton(

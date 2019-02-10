@@ -239,11 +239,11 @@ void delete_field_alert (BuildContext context) {
 }
 
 // This will delete the item field requested
-void delete_field(BuildContext context){
-  Firestore.instance.collection('path').document('name').updateData({'Bacon': FieldValue.delete()}).whenComplete((){
-    print('Field Deleted');
-  });
-}
+//void delete_field(BuildContext context){
+//  Firestore.instance.collection('path').document('name').updateData({'Bacon': FieldValue.delete()}).whenComplete((){
+//    print('Field Deleted');
+//  });
+//}
 
 // This will remain on the page
 void stay_on_page(BuildContext context){

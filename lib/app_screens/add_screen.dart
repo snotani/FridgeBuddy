@@ -30,13 +30,13 @@ class _add_screenState extends State<add_screen> {
     "Wok in",
     "Central"
   ];
+
   var _currentShop = ("Select shop");
 
   var _ItemsList = [
     "Select item",
-    "Sandwish",
-    "Doughnuts",
   ];
+
   var _currentItemList = ("Select item");
 
   var _formKey = GlobalKey<FormState>();
@@ -63,6 +63,19 @@ class _add_screenState extends State<add_screen> {
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
 
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => getItems());
+  }
+
+  void getItems(){
+    Firestore.instance
+        .collection('Items').snapshots()
+        .listen((data) =>
+        data.documents.forEach((doc) => _ItemsList.add(doc.documentID)));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -85,7 +98,6 @@ class _add_screenState extends State<add_screen> {
                     ),
                   ),
                 ),
-
                 //Row for item name text and the text field
                 Row(
                   children: <Widget>[
@@ -118,6 +130,8 @@ class _add_screenState extends State<add_screen> {
                           onChanged: (String new_value_selected) {
                             //when u selected an item from the list
                             whenItemListDropButton(new_value_selected);
+                            name = new_value_selected;
+                            print("name = " + name);
                             //this section is the value that will be passed to the firebase datebase
                             //Itemlist = new_value_selected;
                           },
@@ -135,7 +149,6 @@ class _add_screenState extends State<add_screen> {
                     ),
                   ],
                 ),
-
                 //Row for date added text and the text field
                 Row(
                   children: <Widget>[
@@ -310,6 +323,13 @@ class _add_screenState extends State<add_screen> {
                           //elevation: 6.0,
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
+                              var currentQuantity;
+                              Firestore.instance
+                                  .collection('Items')
+                                  .where("Item name", isEqualTo: name)
+                                  .snapshots()
+                                  .listen((data) =>
+                                  data.documents.forEach((doc) => currentQuantity = (doc["Quantity"])));
                               note(context);
                               //Add items to database START
                               Firestore.instance
@@ -324,7 +344,7 @@ class _add_screenState extends State<add_screen> {
                                       'Date Added': dateAdded,
                                       'Fridge': fridgeLocation,
                                       'Donator': donator,
-                                      'Quantity': quantity = int.parse(
+                                      'Quantity': quantity = currentQuantity + int.parse(
                                           number_items_controller.text),
                                     });
                               });
@@ -467,18 +487,38 @@ void add_alert(BuildContext context) {
           child: new TextField(
             autofocus: true,
             decoration: new InputDecoration(
-                labelText: 'Item name ', hintText: 'eg. Milk'),
+                labelText: 'Item name', hintText: 'eg. Milk'),
+            onChanged: (current) {
+              /*
+              name = current;
+              */
+            }
           ),
         )
-      ],
+  ],
     ),
     actions: <Widget>[
       FlatButton(
         child: Text("Yes"),
         onPressed: () {
-          // action if he says yes
-        },
-      ),
+          /*
+          Firestore.instance
+              .runTransaction((transaction) async {
+            await transaction.set(
+                Firestore.instance
+                    .collection("Items")
+                    .document(name),
+                {
+                  'Item name': name,
+                  'Date Added': "na",
+                  'Fridge': "na",
+                  'Donator': "na",
+                  'Quantity': "0",
+                });
+          });
+          */
+          Navigator.pop(context);
+        }),
       FlatButton(
         child: Text("No"),
         onPressed: () {
@@ -561,4 +601,3 @@ void sreach_page(BuildContext context) {
         return alertDialog;
       });
 }
-

@@ -1,13 +1,42 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'admin_home_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'admin_home_screen.dart';
 
 var name = "na";
 DateTime dateAdded = DateTime.now();
 var fridgeLocation = "na";
 var donator = "na";
 int quantity;
+bool lock = false;
+
+var _ItemsList = [
+  "Select item",
+];
+
+//void getItems(){
+//    Firestore.instance.collection('Items').snapshots().listen((data) {
+//      data.documents.forEach((doc) {
+//        _ItemsList.add(doc.documentID);
+//      });
+//      print(_ItemsList);
+//    });
+//}
+
+Future getItems() async {
+  _ItemsList = [
+    "Select item",
+  ];
+  print("Before getItems = " + _ItemsList.toString());
+  await Firestore.instance.collection('Items').snapshots().listen((data) {
+    data.documents.forEach((doc) {
+        if(_ItemsList.contains(doc) == false){
+          _ItemsList.add(doc.documentID);
+        }
+    });
+  });
+  print("After getItems = " + _ItemsList.toString());
+}
 
 TextEditingController number_items_controller = TextEditingController();
 
@@ -16,7 +45,8 @@ class add_screen extends StatefulWidget {
   _add_screenState createState() => _add_screenState();
 }
 
-class _add_screenState extends State<add_screen> {
+class _add_screenState extends State<add_screen>{
+
   // Var that will be used in the drop down menu
   var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "Others"];
   var _currentFridgeLocation = ("Select fridge");
@@ -33,11 +63,7 @@ class _add_screenState extends State<add_screen> {
 
   var _currentShop = ("Select shop");
 
-  var _ItemsList = [
-    "Select item",
-  ];
-
-  var _currentItemList = ("Select item");
+  var _currentItemList = "Select item";
 
   var _formKey = GlobalKey<FormState>();
 
@@ -63,18 +89,7 @@ class _add_screenState extends State<add_screen> {
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
 
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => getItems());
-  }
 
-  void getItems(){
-    Firestore.instance
-        .collection('Items').snapshots()
-        .listen((data) =>
-        data.documents.forEach((doc) => _ItemsList.add(doc.documentID)));
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,16 +139,14 @@ class _add_screenState extends State<add_screen> {
                           items: _ItemsList.map((String dropDownStringItem) {
                             return DropdownMenuItem<String>(
                               value: dropDownStringItem,
-                              child: Text(dropDownStringItem),
+                              child: new Text(dropDownStringItem),
                             );
                           }).toList(),
                           onChanged: (String new_value_selected) {
-                            //when u selected an item from the list
+                            //When an item is selected from the drop down
+                            print("ItemList = " + _ItemsList.toString());
                             whenItemListDropButton(new_value_selected);
                             name = new_value_selected;
-                            print("name = " + name);
-                            //this section is the value that will be passed to the firebase datebase
-                            //Itemlist = new_value_selected;
                           },
                           value: _currentItemList,
                         ),
@@ -330,7 +343,6 @@ class _add_screenState extends State<add_screen> {
                                   .snapshots()
                                   .listen((data) =>
                                   data.documents.forEach((doc) => currentQuantity = (doc["Quantity"])));
-                              note(context);
                               //Add items to database START
                               Firestore.instance
                                   .runTransaction((transaction) async {
@@ -339,7 +351,6 @@ class _add_screenState extends State<add_screen> {
                                         .collection("Items")
                                         .document(name),
                                     {
-                                      //Item name needs to be changed to be linked to the database also connect the dropdownbutton to the collection
                                       'Item name': name,
                                       'Date Added': dateAdded,
                                       'Fridge': fridgeLocation,
@@ -347,6 +358,8 @@ class _add_screenState extends State<add_screen> {
                                       'Quantity': quantity = currentQuantity + int.parse(
                                           number_items_controller.text),
                                     });
+                                Navigator.pop(context);
+                                addItemNote(context);
                               });
                               //Add items to database END
                             }
@@ -424,10 +437,23 @@ class _add_screenState extends State<add_screen> {
   }
 }
 
-void note(BuildContext context) {
+void addItemNote(BuildContext context) {
   var alertDialog = AlertDialog(
-    title: Text("adding Item"),
+    title: Text("Adding Item"),
     content: Text("You have added an Item"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void createItemNote(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Creating Item"),
+    content: Text("You have created a new item"),
   );
 
   showDialog(
@@ -514,6 +540,8 @@ void add_alert(BuildContext context) {
                 });
           });
           Navigator.pop(context);
+          Navigator.pop(context);
+          createItemNote(context);
         }),
       FlatButton(
         child: Text("No"),

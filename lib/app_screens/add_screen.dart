@@ -53,12 +53,11 @@ class _add_screenState extends State<add_screen>{
   var _Shop = [
     "Select shop",
     "Greggs",
-    "Spar",
+    "Cafe21",
     "Go Burrito",
-    "Sultan",
-    "Subway",
-    "Wok in",
-    "Central"
+    "Bowland Bar",
+    "LUSU Central",
+    "Juicafe"
   ];
 
   var _currentShop = ("Select shop");

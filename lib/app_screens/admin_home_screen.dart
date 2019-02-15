@@ -131,7 +131,7 @@ class Button_update extends StatelessWidget {
             style: TextStyle(color: Colors.orange, fontSize: 40.0),
           ),
           onPressed: () {
-            //action will go to the list of itemspage
+            goToUpdateScreen(context);
           },
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),

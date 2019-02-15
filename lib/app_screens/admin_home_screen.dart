@@ -209,3 +209,8 @@ void goToAddScreen(context){
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => add_screen()));
 }
+
+void goToUpdateScreen(context){
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => admin_update_screen()));
+}

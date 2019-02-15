@@ -95,30 +95,6 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
             style: Theme.of(context).textTheme.headline,
           ),
         ),
-        IconButton(
-          icon: Icon(Icons.remove_circle),
-          iconSize: 50.0,
-          color: Colors.blue[700],
-          onPressed: () {
-            // remove one from quantity
-            if(document['Quantity'] > 1) {
-              quantity_check--;
-              print(quantity_check);
-              Firestore.instance.runTransaction((transaction) async {
-                DocumentSnapshot freshSnap =
-                await transaction.get(document.reference);
-                await transaction.update(freshSnap.reference, {
-                  'Quantity': freshSnap['Quantity'] - 1,
-                });
-              });
-            }
-            // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
-            if (document['Quantity'] == 1){
-
-              //delete_field_alert(context);
-            }
-          },
-        ),
         Container(
           decoration: const BoxDecoration(
             color: Color(0xffddddff),
@@ -129,12 +105,6 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
             document['Quantity'].toString(),
             style: Theme.of(context).textTheme.display1,
           ),
-        ),
-        IconButton(
-          icon: Icon(Icons.add_circle),
-          color: Colors.blue[700],
-          iconSize: 50.0,
-          //onPressed: () {increase_quantity(document, quantity_check); },
         ),
       ],
     ),

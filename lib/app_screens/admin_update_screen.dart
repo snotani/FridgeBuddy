@@ -26,7 +26,7 @@ class _admin_update_screenState extends State<admin_update_screen> {
                 icon: const Icon(Icons.person_add),
                 iconSize: 50.0,
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> login_screen()));
+                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> login_screen()));
                 },
               ),
             ],
@@ -77,10 +77,92 @@ class _admin_update_screenState extends State<admin_update_screen> {
                 ),
                 itemCount: snapshot.data.documents.length,
                 itemBuilder: (context, index) =>
-                    //_buildListItem(context, snapshot.data.documents[index]),
+                    _buildListItem(context, snapshot.data.documents[index]),
               );
             }),
       ),
     );
   }
 }
+
+Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+
+  int quantity_check = 0;
+
+  return ListTile(
+    title: Row(
+      children: [
+        Expanded(
+          child: Text(
+            document['Item name'],
+            style: Theme.of(context).textTheme.headline,
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.remove_circle),
+          iconSize: 50.0,
+          color: Colors.blue[700],
+          onPressed: () {
+            // remove one from quantity
+            if(document['Quantity'] > 1) {
+              quantity_check--;
+              print(quantity_check);
+              Firestore.instance.runTransaction((transaction) async {
+                DocumentSnapshot freshSnap =
+                await transaction.get(document.reference);
+                await transaction.update(freshSnap.reference, {
+                  'Quantity': freshSnap['Quantity'] - 1,
+                });
+              });
+            }
+            // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
+            if (document['Quantity'] == 1){
+
+              //delete_field_alert(context);
+            }
+          },
+        ),
+        Container(
+          decoration: const BoxDecoration(
+            color: Color(0xffddddff),
+          ),
+          padding: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.only(top: 15.0),
+          child: Text(
+            document['Quantity'].toString(),
+            style: Theme.of(context).textTheme.display1,
+          ),
+        ),
+        IconButton(
+          icon: Icon(Icons.add_circle),
+          color: Colors.blue[700],
+          iconSize: 50.0,
+          onPressed: () {increase_quantity(document, quantity_check); },
+        ),
+      ],
+    ),
+    leading: new Icon(
+      Icons.fastfood,
+      size: 40.0,
+      color: Colors.blue[700],
+    ),
+    subtitle: new Text(
+      document['Donator'],
+      style: Theme.of(context).textTheme.subhead,
+    ),
+  );
+}
+
+void increase_quantity (DocumentSnapshot document,quantity_check) {
+  // add one to quantity
+  Firestore.instance.runTransaction((transaction) async {
+    DocumentSnapshot freshSnap =
+    await transaction.get(document.reference);
+    await transaction.update(freshSnap.reference, {
+      'Quantity': freshSnap['Quantity'] + 1,
+    });
+    // Add variable for count and disable add button
+    // Initially disabled add button but once the counter is not 0, enable it
+  });
+}
+

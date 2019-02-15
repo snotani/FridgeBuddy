@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'admin_login_screen.dart';
 import 'admin_update_screen.dart';
+import 'admin_view_screen.dart';
 import 'add_screen.dart';
 
 
@@ -214,4 +215,9 @@ void goToAddScreen(context){
 void goToUpdateScreen(context){
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => admin_update_screen()));
+}
+
+void goToViewScreen(context){
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => admin_view_screen()));
 }

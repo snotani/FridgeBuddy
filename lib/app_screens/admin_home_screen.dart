@@ -106,8 +106,7 @@ class Button_view extends StatelessWidget {
             style: TextStyle(color: Colors.amber, fontSize: 40.0),
           ),
           onPressed: () {
-            //action will go to the items list page
-
+            goToViewScreen(context);
           },
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),

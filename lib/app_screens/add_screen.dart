@@ -406,7 +406,7 @@ class _add_screenState extends State<add_screen>{
                 iconSize: 50.0,
                 onPressed: () {
                   // add help page/alert - TBD
-                  sreach_page(context);
+                  search_page(context);
                 },
               ),
             ],
@@ -612,10 +612,10 @@ void update_page(BuildContext context) {
       });
 }
 
-void sreach_page(BuildContext context) {
+void search_page(BuildContext context) {
   var alertDialog = AlertDialog(
-    title: Text("sreach_page"),
-    content: Text("sreach_page"),
+    title: Text("search_page"),
+    content: Text("search_page"),
   );
 
   showDialog(

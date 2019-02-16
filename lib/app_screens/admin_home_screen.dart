@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'admin_login_screen.dart';
+import 'admin_update_screen.dart';
+import 'admin_view_screen.dart';
 import 'add_screen.dart';
 
 
@@ -104,8 +106,7 @@ class Button_view extends StatelessWidget {
             style: TextStyle(color: Colors.amber, fontSize: 40.0),
           ),
           onPressed: () {
-            //action will go to the items list page
-
+            goToViewScreen(context);
           },
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
@@ -131,7 +132,7 @@ class Button_update extends StatelessWidget {
             style: TextStyle(color: Colors.orange, fontSize: 40.0),
           ),
           onPressed: () {
-            //action will go to the list of itemspage
+            goToUpdateScreen(context);
           },
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
@@ -208,4 +209,14 @@ void leave_alert(BuildContext context) {
 void goToAddScreen(context){
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => add_screen()));
+}
+
+void goToUpdateScreen(context){
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => admin_update_screen()));
+}
+
+void goToViewScreen(context){
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => admin_view_screen()));
 }

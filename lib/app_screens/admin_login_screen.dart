@@ -145,7 +145,11 @@ class _login_screenState extends State<login_screen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 30.0),
                   child: Button_Login(),
-                )
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 0.0),
+                  child: Button_SignUp(),
+                ),
               ],
             )
           ],
@@ -209,3 +213,26 @@ class Button_Login extends StatelessWidget {
     );
   }
 }
+
+class Button_SignUp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 50.0),
+      child: Container(
+        width: 300.0,
+        height: 100.0,
+        child: RaisedButton(
+          color: Colors.orange,
+          child: Text(
+            "Sign up",
+            textDirection: TextDirection.ltr,
+            style: TextStyle(color: Colors.black, fontSize: 40.0),
+          ),
+          onPressed: (){},
+        ),
+      ),
+    );
+  }
+}
+

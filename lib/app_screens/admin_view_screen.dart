@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'admin_home_screen.dart';
+import 'admin_update_screen.dart';
+import 'add_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class admin_view_screen extends StatefulWidget {
@@ -14,7 +16,7 @@ class _admin_view_screenState extends State<admin_view_screen> {
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70.0), // here the desired height
           child: new AppBar(
-            title: new Text("Update Fridge Items", style: TextStyle(fontSize: 40.0)),
+            title: new Text("View Fridge Items", style: TextStyle(fontSize: 40.0)),
             centerTitle: true,
             elevation: 10.0,
             leading: IconButton(
@@ -34,27 +36,28 @@ class _admin_view_screenState extends State<admin_view_screen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.feedback, color: Colors.white),
+                  icon: Icon(Icons.update, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add feedback page/alert - TBD
-                    //feedbackDialog(context);
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => admin_update_screen()));
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.settings, color: Colors.white),
+                  icon: Icon(Icons.home, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add settings page/alert - TBD
-                    //settingsDialog(context);
+                    Navigator.pop(context);
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.help, color: Colors.white),
+                  icon: Icon(Icons.add, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add help page/alert - TBD
-                    //helpDialog(context);
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => add_screen()));
                   },
                 ),
               ],
@@ -92,9 +95,6 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
           ),
         ),
         Container(
-          decoration: const BoxDecoration(
-            color: Color(0xffddddff),
-          ),
           padding: const EdgeInsets.all(10.0),
           margin: const EdgeInsets.only(top: 15.0),
           child: Text(
@@ -115,3 +115,4 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     ),
   );
 }
+

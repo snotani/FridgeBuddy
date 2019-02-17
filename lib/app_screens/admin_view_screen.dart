@@ -10,10 +10,7 @@ class admin_view_screen extends StatefulWidget {
 class _admin_view_screenState extends State<admin_view_screen> {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'User Update Screen',
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
+    return new Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70.0), // here the desired height
           child: new AppBar(
@@ -77,8 +74,7 @@ class _admin_view_screenState extends State<admin_view_screen> {
                     _buildListItem(context, snapshot.data.documents[index]),
               );
             }),
-      ),
-    );
+      );
   }
 }
 
@@ -119,4 +115,3 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     ),
   );
 }
-

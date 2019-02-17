@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'admin_home_screen.dart';
+import 'admin_view_screen.dart';
+import 'add_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class admin_update_screen extends StatefulWidget {
@@ -17,16 +18,6 @@ class _admin_update_screenState extends State<admin_update_screen> {
             title: new Text("Update Fridge Items", style: TextStyle(fontSize: 40.0)),
             centerTitle: true,
             elevation: 10.0,
-            actions:  <Widget> [
-              IconButton(
-                tooltip: 'Admin Login',
-                icon: const Icon(Icons.person_add),
-                iconSize: 50.0,
-                onPressed: () {
-                  //Navigator.push(context, MaterialPageRoute(builder: (context)=> login_screen()));
-                },
-              ),
-            ],
           ),
         ),
         bottomNavigationBar: Container(
@@ -37,27 +28,28 @@ class _admin_update_screenState extends State<admin_update_screen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.feedback, color: Colors.white),
+                  icon: Icon(Icons.view_list, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add feedback page/alert - TBD
-                    //feedbackDialog(context);
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => admin_view_screen()));
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.settings, color: Colors.white),
+                  icon: Icon(Icons.home, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add settings page/alert - TBD
-                    //settingsDialog(context);
+                    Navigator.pop(context);
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.help, color: Colors.white),
+                  icon: Icon(Icons.add, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add help page/alert - TBD
-                    //helpDialog(context);
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => add_screen()));
                   },
                 ),
               ],
@@ -119,9 +111,6 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
           },
         ),
         Container(
-          decoration: const BoxDecoration(
-            color: Color(0xffddddff),
-          ),
           padding: const EdgeInsets.all(10.0),
           margin: const EdgeInsets.only(top: 15.0),
           child: Text(
@@ -161,4 +150,3 @@ void increase_quantity (DocumentSnapshot document,quantity_check) {
     // Initially disabled add button but once the counter is not 0, enable it
   });
 }
-

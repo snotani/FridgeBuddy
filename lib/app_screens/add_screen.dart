@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'admin_update_screen.dart';
+import 'admin_view_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'admin_home_screen.dart';
+
 
 var name = "na";
 DateTime dateAdded = DateTime.now();
@@ -93,7 +95,7 @@ class _add_screenState extends State<add_screen>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Add Item"),
       ),
@@ -386,27 +388,27 @@ class _add_screenState extends State<add_screen>{
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               IconButton(
-                icon: Icon(Icons.exit_to_app, color: Colors.black),
+                icon: Icon(Icons.view_list, color: Colors.white),
                 iconSize: 50.0,
                 onPressed: () {
                   // add feedback page/alert - TBD
-                  log_out(context);
+                  view_list(context);
                 },
               ),
               IconButton(
-                icon: Icon(Icons.update, color: Colors.black87),
+                icon: Icon(Icons.home, color: Colors.white),
                 iconSize: 50.0,
                 onPressed: () {
-                  // add settings page/alert - TBD
-                  update_page(context);
+                  Navigator.pop(context);
                 },
               ),
               IconButton(
-                icon: Icon(Icons.search, color: Colors.black87),
+                icon: Icon(Icons.update, color: Colors.white),
                 iconSize: 50.0,
                 onPressed: () {
-                  // add help page/alert - TBD
-                  search_page(context);
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => admin_update_screen()));
                 },
               ),
             ],
@@ -560,7 +562,7 @@ void add_alert(BuildContext context) {
       });
 }
 
-
+/*
 void log_out(BuildContext context) {
   var alertDialog = AlertDialog(
     title: Text("LogOut"),
@@ -577,50 +579,24 @@ void log_out(BuildContext context) {
         },
       )
     ],
-  );
+  );*/
 
-  showDialog(
+ /* showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alertDialog;
       }
   );
-}
-void logging_out(BuildContext context) {
+}*/
+void view_list(BuildContext context) {
 //action will go to the login screen or user homepage
   Navigator.pop(context);
-  Navigator.pop(context);
-  Navigator.pop(context);
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => admin_view_screen()));
 }
 
 void leave_alert(BuildContext context) {
   //action used to leave the alert
   Navigator.pop(context);
-}
-
-void update_page(BuildContext context) {
-  var alertDialog = AlertDialog(
-    title: new Text("update_page"),
-    content: new Text("update_page"),
-  );
-
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alertDialog;
-      });
-}
-
-void search_page(BuildContext context) {
-  var alertDialog = AlertDialog(
-    title: Text("search_page"),
-    content: Text("search_page"),
-  );
-
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alertDialog;
-      });
 }

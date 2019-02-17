@@ -123,9 +123,6 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
           },
         ),
         Container(
-          decoration: const BoxDecoration(
-            color: Color(0xffddddff),
-          ),
           padding: const EdgeInsets.all(10.0),
           margin: const EdgeInsets.only(top: 15.0),
           child: Text(
@@ -138,7 +135,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
           icon: Icon(Icons.add_circle),
           color: Colors.blue[700],
           iconSize: 50.0,
-          onPressed: (quantity_check == 0) ? () => increase_quantity(document, quantity_check) : null,
+          //onPressed: (quantity_check == 0) ? () => increase_quantity(document, quantity_check) : null,
         ),
       ],
     ),

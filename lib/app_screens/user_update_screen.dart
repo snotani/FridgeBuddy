@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'admin_login_screen.dart';
+import 'package:tablet_app/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -13,10 +14,7 @@ class _user_update_screen extends State<user_update_screen> {
 
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'User Update Screen',
-      debugShowCheckedModeBanner: false,
-      home: new Scaffold(
+    return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(70.0), // here the desired height
           child: new AppBar(
@@ -83,8 +81,7 @@ class _user_update_screen extends State<user_update_screen> {
                     _buildListItem(context, snapshot.data.documents[index]),
               );
             }),
-      ),
-    );
+      );
   }
 }
 

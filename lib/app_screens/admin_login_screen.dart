@@ -146,10 +146,6 @@ class _login_screenState extends State<login_screen> {
                   padding: const EdgeInsets.only(top: 30.0),
                   child: Button_Login(),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 0.0),
-                  child: Button_SignUp(),
-                ),
               ],
             )
           ],
@@ -183,55 +179,79 @@ class logo_image_asset extends StatelessWidget {
   }
 }
 
+//holds both the login and sign up button
 class Button_Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Container(
-        width: 300.0,
-        height: 100.0,
-        child: RaisedButton(
-            color: Colors.green,
-            child: Text(
-              "Log In",
-              textDirection: TextDirection.ltr,
-              style: TextStyle(color: Colors.black, fontSize: 40.0),
+      padding: const EdgeInsets.only(top: 10.0),
+        child: new Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            // The sign in button
+            new MaterialButton(
+              minWidth: 200,
+              height: 50,
+              color: Colors.green,
+              child: Text(
+                "Sign In",
+                textDirection: TextDirection.ltr,
+                style: TextStyle(color: Colors.black, fontSize: 40.0),
+              ),
+              onPressed: () {
+                // Run sign in function
+                handleSignInEmail(username, password)
+                    // Clear fields
+                    .then((FirebaseUser user) {
+                      usernameController.clear();
+                      passwordController.clear();
+                      username = "";
+                      password = "";
+                      // Go to admin page
+                      Navigator.push(context, new MaterialPageRoute(builder: (context) => new Admin_home_screen()));
+                }).catchError((e) => print(e));
+              }),
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
             ),
-            elevation: 6.0,
-            onPressed: () {
-              handleSignInEmail(username, password)
-                  .then((FirebaseUser user) {
-                usernameController.clear();
-                passwordController.clear();
-                username = "";
-                password = "";
-                Navigator.push(context, new MaterialPageRoute(builder: (context) => new Admin_home_screen()));
-              }).catchError((e) => print(e));
-            }),
-      ),
-    );
-  }
-}
-
-class Button_SignUp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Container(
-        width: 300.0,
-        height: 100.0,
-        child: RaisedButton(
-          color: Colors.orange,
-          child: Text(
-            "Sign up",
-            textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.black, fontSize: 40.0),
-          ),
-          onPressed: (){},
-        ),
-      ),
+            // Sign up button
+            new MaterialButton(
+                minWidth: 200,
+                height: 50,
+                color: Colors.green,
+                child: Text(
+                  "Sign Up",
+                  textDirection: TextDirection.ltr,
+                  style: TextStyle(color: Colors.black, fontSize: 40.0),
+                ),
+                onPressed: () {
+                  // Run sign up function
+                  handleSignUp(username, password)
+                      .then((FirebaseUser user) {
+                    // Show alert box
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: new Text("Account Created"),
+                          content: new Text("Account has successfully been created, please log in"),
+                          actions: <Widget>[
+                            // Close button on alert box
+                            new FlatButton(
+                              child: new Text("OK"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                    // print error
+                  }).catchError((e) => print(e));
+                }),
+          ]
+        )
     );
   }
 }

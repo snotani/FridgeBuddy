@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'admin_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-//Authentication stuff start
 final FirebaseAuth auth = FirebaseAuth.instance;
 String username;
 String password;
@@ -20,14 +20,28 @@ Future<FirebaseUser> handleSignInEmail(String email, String password) async {
   return user;
 }
 
-//Handle sign up - not implemented yet
+//Handle sign up
 Future<FirebaseUser> handleSignUp(email, password) async {
   final FirebaseUser user = await auth.createUserWithEmailAndPassword(email: email, password: password);
   assert (user != null);
   assert (await user.getIdToken() != null);
+  await Firestore.instance
+      .runTransaction((transaction) async {
+    await transaction.set(
+        Firestore.instance
+            .collection("users")
+            .document(user.uid),
+        {
+          'email': user.email,
+          'verified': user.isEmailVerified,
+          'role': "user",
+          'uid': user.uid
+        });
+  });
   return user;
-}
-//Authentication stuff end
+  }
+
+
 
 class login_screen extends StatefulWidget {
   @override
@@ -203,12 +217,8 @@ class Button_Login extends StatelessWidget {
                 handleSignInEmail(username, password)
                     // Clear fields
                     .then((FirebaseUser user) {
-                      usernameController.clear();
-                      passwordController.clear();
-                      username = "";
-                      password = "";
                       // Go to admin page
-                      Navigator.push(context, new MaterialPageRoute(builder: (context) => new Admin_home_screen()));
+                      authorizeAccess(context);
                 }).catchError((e) => print(e));
               }),
             Padding(
@@ -233,8 +243,8 @@ class Button_Login extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: new Text("Account Created"),
-                          content: new Text("Account has successfully been created, please log in"),
+                          title: new Text("Please wait for verification"),
+                          content: new Text("Your account must be verified by an admin before you can sign in. Please wait for verification."),
                           actions: <Widget>[
                             // Close button on alert box
                             new FlatButton(
@@ -253,6 +263,41 @@ class Button_Login extends StatelessWidget {
           ]
         )
     );
+  }
+
+  authorizeAccess(BuildContext context){
+    FirebaseAuth.instance.currentUser().then((user){
+      Firestore.instance.collection('/users').where('uid', isEqualTo: user.uid).getDocuments().then((docs){
+        if(docs.documents[0].exists){
+          if(docs.documents[0].data['role'] == 'admin'){
+            usernameController.clear();
+            passwordController.clear();
+            username = "";
+            password = "";
+            Navigator.push(context, new MaterialPageRoute(builder: (context) => new Admin_home_screen()));
+          } else {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: new Text("Not verified"),
+                  content: new Text("Your account has not been verified by an admin. Try again later."),
+                  actions: <Widget>[
+                    // Close button on alert box
+                    new FlatButton(
+                      child: new Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          }
+        }
+      });
+    });
   }
 }
 

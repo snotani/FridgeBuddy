@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'admin_home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'sign_up_screen.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
 String username;
@@ -19,29 +20,6 @@ Future<FirebaseUser> handleSignInEmail(String email, String password) async {
   print('signInEmail succeeded: $user');
   return user;
 }
-
-//Handle sign up
-Future<FirebaseUser> handleSignUp(email, password) async {
-  final FirebaseUser user = await auth.createUserWithEmailAndPassword(email: email, password: password);
-  assert (user != null);
-  assert (await user.getIdToken() != null);
-  await Firestore.instance
-      .runTransaction((transaction) async {
-    await transaction.set(
-        Firestore.instance
-            .collection("users")
-            .document(user.uid),
-        {
-          'email': user.email,
-          'verified': user.isEmailVerified,
-          'role': "user",
-          'uid': user.uid
-        });
-  });
-  return user;
-  }
-
-
 
 class login_screen extends StatefulWidget {
   @override
@@ -89,7 +67,7 @@ class _login_screenState extends State<login_screen> {
                       left: 100.0,
                     ),
                     child: Text(
-                      "Username",
+                      "Email",
                       textDirection: TextDirection.ltr,
                       style: TextStyle(
                         fontSize: 40.0,
@@ -104,7 +82,7 @@ class _login_screenState extends State<login_screen> {
                         controller: usernameController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
-                            labelText: "Username",
+                            labelText: "Email",
                             hintText: "example@google.com",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0))),
@@ -235,30 +213,7 @@ class Button_Login extends StatelessWidget {
                   style: TextStyle(color: Colors.black, fontSize: 40.0),
                 ),
                 onPressed: () {
-                  // Run sign up function
-                  handleSignUp(username, password)
-                      .then((FirebaseUser user) {
-                    // Show alert box
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: new Text("Please wait for verification"),
-                          content: new Text("Your account must be verified by an admin before you can sign in. Please wait for verification."),
-                          actions: <Widget>[
-                            // Close button on alert box
-                            new FlatButton(
-                              child: new Text("OK"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                    // print error
-                  }).catchError((e) => print(e));
+                  Navigator.push(context, new MaterialPageRoute(builder: (context) => new sign_up_screen()));
                 }),
           ]
         )

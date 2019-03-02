@@ -3,6 +3,7 @@ import 'admin_login_screen.dart';
 import 'admin_update_screen.dart';
 import 'admin_view_screen.dart';
 import 'add_screen.dart';
+import 'verify_accounts_screen.dart';
 
 
 class Admin_home_screen extends StatefulWidget {
@@ -51,10 +52,14 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
             ),
             Column(
               children: <Widget>[
+                Button_verify()
+              ],
+            ),
+            Column(
+              children: <Widget>[
                 Button_LogOut()
               ],
             )
-
           ],
         ),
       ),
@@ -68,8 +73,8 @@ class Button_add extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: Container(
-        width: 600.0,
-        height: 100.0,
+        width: 450.0,
+        height: 80.0,
         child: OutlineButton(
           color: Colors.green,
           child: Text(
@@ -96,8 +101,8 @@ class Button_view extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: Container(
-        width: 300.0,
-        height: 100.0,
+        width: 450.0,
+        height: 80.0,
         child: OutlineButton(
           color: Colors.amber,
           child: Text(
@@ -122,8 +127,8 @@ class Button_update extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 50.0),
       child: Container(
-        width: 600.0,
-        height: 100.0,
+        width: 450.0,
+        height: 80.0,
         child: OutlineButton(
           color: Colors.orangeAccent,
           child: Text(
@@ -146,10 +151,10 @@ class Button_LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 150.0),
+      padding: const EdgeInsets.only(top: 50.0),
       child: Container(
-        width: 300.0,
-        height: 100.0,
+        width: 250.0,
+        height: 80.0,
         child: OutlineButton(
           color: Colors.redAccent,
           child: Text(
@@ -163,6 +168,32 @@ class Button_LogOut extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color: Colors.red,width: 5.0),),
+      ),
+    );
+  }
+}
+
+class Button_verify extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 50.0),
+      child: Container(
+        width: 450.0,
+        height: 80.0,
+        child: OutlineButton(
+          color: Colors.blue,
+          child: Text(
+            "Verify users",
+            textDirection: TextDirection.ltr,
+            style: TextStyle(color: Colors.blue, fontSize: 40.0),
+          ),
+          onPressed: () {
+            goToVerifyScreen(context);
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.blue,width: 5.0),),
       ),
     );
   }
@@ -219,4 +250,9 @@ void goToUpdateScreen(context){
 void goToViewScreen(context){
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => admin_view_screen()));
+}
+
+void goToVerifyScreen(context){
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => verify_accounts_screen()));
 }

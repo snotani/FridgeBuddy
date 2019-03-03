@@ -164,41 +164,6 @@ class _add_screenState extends State<add_screen>{
                   ],
                 ),
                 //Row for date added text and the text field
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 35.0,
-                          left: 50.0,
-                        ),
-                        child: Text(
-                          "Date Added",
-                          textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                            fontSize: 40.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 35.0, left: 45.0),
-                          child: Text(
-                            _date.toString(),
-                            style: TextStyle(fontSize: 20.0),
-                          ),
-                        )),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 40.0),
-                      child: IconButton(
-                          icon: Icon(Icons.calendar_today),
-                          onPressed: () {
-                            _selectDate(context);
-                          }),
-                    ),
-                  ],
-                ),
 
                 //Row for the fridge text and the drop down menu
                 Row(

@@ -34,7 +34,7 @@ class _login_screenState extends State<login_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text("Admin Login")),
+      appBar: AppBar(title: Text("FridgeBuddy Admin Login")),
       body: Container(
         margin: EdgeInsets.only(top: 40.0),
         child: Column(

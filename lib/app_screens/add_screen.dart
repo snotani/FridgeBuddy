@@ -4,14 +4,22 @@ import 'admin_update_screen.dart';
 import 'admin_view_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
-var name = "na";
-DateTime dateAdded = DateTime.now();
-var fridgeLocation = "na";
-var donator = "na";
+var itemName = "na";
+var fridgeName = "na";
+var shopName = "na";
 int quantity;
+DateTime dateAdded = DateTime.now();
+
 var _ItemsList = [
   "Select item",
+];
+
+var _FridgesList = [
+  "Select fridge",
+];
+
+var _ShopsList = [
+  "Select shop",
 ];
 
 Future getItems() async {
@@ -20,6 +28,26 @@ Future getItems() async {
         if(_ItemsList.contains(doc.documentID) == false){
           _ItemsList.add(doc.documentID);
         }
+    });
+  });
+}
+
+Future getFridges() async {
+  Firestore.instance.collection('Fridges').snapshots().listen((data) {
+    data.documents.forEach((doc) {
+      if(_FridgesList.contains(doc.documentID) == false){
+        _FridgesList.add(doc.documentID);
+      }
+    });
+  });
+}
+
+Future getShops() async {
+  Firestore.instance.collection('Shops').snapshots().listen((data) {
+    data.documents.forEach((doc) {
+      if(_ShopsList.contains(doc.documentID) == false){
+        _ShopsList.add(doc.documentID);
+      }
     });
   });
 }
@@ -33,21 +61,9 @@ class add_screen extends StatefulWidget {
 
 class _add_screenState extends State<add_screen>{
   // Var that will be used in the drop down menu
-  var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "Others"];
-  var _currentFridgeLocation = ("Select fridge");
-  var _Shop = [
-    "Select shop",
-    "Greggs",
-    "Cafe21",
-    "Go Burrito",
-    "Bowland Bar",
-    "LUSU Central",
-    "Juicafe"
-  ];
-
-  var _currentShop = ("Select shop");
-
-  var _currentItemList = "Select item";
+  var _currentFridgeLocation = _FridgesList[0];
+  var _currentShop = _ShopsList[0];
+  var _currentItemList = _ItemsList[0];
 
   var _formKey = GlobalKey<FormState>();
 
@@ -76,7 +92,8 @@ class _add_screenState extends State<add_screen>{
                     ),
                   ),
                 ),
-                //Row for item name text and the text field
+
+                //Item name
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -108,7 +125,7 @@ class _add_screenState extends State<add_screen>{
                           onChanged: (String new_value_selected) {
                             //When an item is selected from the drop down
                             whenItemListDropButton(new_value_selected);
-                            name = new_value_selected;
+                            itemName = new_value_selected;
                           },
                           value: _currentItemList,
                         ),
@@ -124,47 +141,8 @@ class _add_screenState extends State<add_screen>{
                     ),
                   ],
                 ),
-                //Row for date added text and the text field
 
-                //Row for the fridge text and the drop down menu
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 35.0,
-                          left: 50.0,
-                        ),
-                        child: Text(
-                          "Fridge",
-                          textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                            fontSize: 40.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0, right: 247.0),
-                      child: DropdownButton<String>(
-                        items: _fridgeLocation.map((String dropDownStringItem) {
-                          return DropdownMenuItem<String>(
-                            value: dropDownStringItem,
-                            child: Text(dropDownStringItem),
-                          );
-                        }).toList(),
-                        onChanged: (String new_value_selected) {
-                          //when u selected an item from the list
-                          whenFridgeDropButton(new_value_selected);
-                          fridgeLocation = new_value_selected;
-                        },
-                        value: _currentFridgeLocation,
-                      ),
-                    ),
-                  ],
-                ),
-
-                //Row for the donating shop also drop down menu for the shops
+                //Donating shop
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -182,22 +160,82 @@ class _add_screenState extends State<add_screen>{
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0, right: 252.0),
-                      child: DropdownButton<String>(
-                        items: _Shop.map((String dropDownStringItem) {
-                          return DropdownMenuItem<String>(
-                            value: dropDownStringItem,
-                            child: Text(dropDownStringItem),
-                          );
-                        }).toList(),
-                        onChanged: (String new_value_selected) {
-                          //when u selected an item from the list
-                          whenShopDropButton(new_value_selected);
-                          donator = new_value_selected;
-                        },
-                        value: _currentShop,
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 35.0, right: 20.0, left: 40.0),
+                        child: DropdownButton<String>(
+                          items: _ShopsList.map((String dropDownStringItem) {
+                            return DropdownMenuItem<String>(
+                              value: dropDownStringItem,
+                              child: new Text(dropDownStringItem),
+                            );
+                          }).toList(),
+                          onChanged: (String new_value_selected) {
+                            //When an item is selected from the drop down
+                            whenShopDropButton(new_value_selected);
+                            shopName = new_value_selected;
+                          },
+                          value: _currentShop,
+                        ),
                       ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40.0, top: 40.0),
+                      child: IconButton(
+                          icon: Icon(Icons.add_circle),
+                          onPressed: () {
+                            addShop_alert(context);
+                          }),
+                    ),
+                  ],
+                ),
+
+                //Row for item name text and the text field
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          top: 35.0,
+                          left: 50.0,
+                        ),
+                        child: Text(
+                          "Fridge",
+                          textDirection: TextDirection.ltr,
+                          style: TextStyle(
+                            fontSize: 40.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            top: 35.0, right: 20.0, left: 40.0),
+                        child: DropdownButton<String>(
+                          items: _FridgesList.map((String dropDownStringItem) {
+                            return DropdownMenuItem<String>(
+                              value: dropDownStringItem,
+                              child: new Text(dropDownStringItem),
+                            );
+                          }).toList(),
+                          onChanged: (String new_value_selected) {
+                            //When an item is selected from the drop down
+                            whenFridgeDropButton(new_value_selected);
+                            fridgeName = new_value_selected;
+                          },
+                          value: _currentFridgeLocation,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 40.0, top: 40.0),
+                      child: IconButton(
+                          icon: Icon(Icons.add_circle),
+                          onPressed: () {
+                            addFridge_alert(context);
+                          }),
                     ),
                   ],
                 ),
@@ -266,7 +304,7 @@ class _add_screenState extends State<add_screen>{
                               var currentQuantity;
                               Firestore.instance
                                   .collection('Items')
-                                  .where("Item name", isEqualTo: name)
+                                  .where("Item name", isEqualTo: itemName)
                                   .snapshots()
                                   .listen((data) =>
                                   data.documents.forEach((doc) => currentQuantity = (doc["Quantity"])));
@@ -276,12 +314,12 @@ class _add_screenState extends State<add_screen>{
                                 await transaction.set(
                                     Firestore.instance
                                         .collection("Items")
-                                        .document(name),
+                                        .document(itemName),
                                     {
-                                      'Item name': name,
+                                      'Item name': itemName,
                                       'Date Added': dateAdded,
-                                      'Fridge': fridgeLocation,
-                                      'Donator': donator,
+                                      'Fridge': fridgeName,
+                                      'Donator': shopName,
                                       'Quantity': quantity = currentQuantity + int.parse(
                                           number_items_controller.text),
                                     });
@@ -356,7 +394,6 @@ class _add_screenState extends State<add_screen>{
     });
   }
 
-  //made a method so it can be modified easier and
   void whenShopDropButton(String new_value_selected) {
     setState(() {
       this._currentShop = new_value_selected;
@@ -366,8 +403,34 @@ class _add_screenState extends State<add_screen>{
 
 void addItemNote(BuildContext context) {
   var alertDialog = AlertDialog(
-    title: Text("Adding Item"),
-    content: Text("You have added an Item"),
+    title: Text("Added Item"),
+    content: Text("You have added an item"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void createFridgeNote(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Created Fridge"),
+    content: Text("You have created a new fridge"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void createShopNote(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Created Shop"),
+    content: Text("You have created a new shop"),
   );
 
   showDialog(
@@ -379,7 +442,7 @@ void addItemNote(BuildContext context) {
 
 void createItemNote(BuildContext context) {
   var alertDialog = AlertDialog(
-    title: Text("Creating Item"),
+    title: Text("Created Item"),
     content: Text("You have created a new item"),
   );
 
@@ -442,7 +505,7 @@ void add_alert(BuildContext context) {
             decoration: new InputDecoration(
                 labelText: 'Item name', hintText: 'eg. Milk'),
             onChanged: (current) {
-              name = current;
+              itemName = current;
             }
           ),
         )
@@ -457,12 +520,12 @@ void add_alert(BuildContext context) {
             await transaction.set(
                 Firestore.instance
                     .collection("Items")
-                    .document(name),
+                    .document(itemName),
                 {
-                  'Item name': name,
+                  'Item name': itemName,
                   'Date Added': dateAdded,
-                  'Fridge': fridgeLocation,
-                  'Donator': donator,
+                  'Fridge': fridgeName,
+                  'Donator': shopName,
                   'Quantity': quantity = 0,
                 });
           });
@@ -488,33 +551,112 @@ void add_alert(BuildContext context) {
       });
 }
 
-/*
-void log_out(BuildContext context) {
+void addFridge_alert(BuildContext context) {
   var alertDialog = AlertDialog(
-    title: Text("LogOut"),
-    content: Text("Do you wish to log out?"),
+    title: Text("Add New Fridge"),
+    content: Row(
+      children: <Widget>[
+        new Expanded(
+          child: new TextField(
+              autofocus: true,
+              decoration: new InputDecoration(
+                  labelText: 'Fridge Name', hintText: 'eg. Bowland'),
+              onChanged: (current) {
+                fridgeName = current;
+              }
+          ),
+        )
+      ],
+    ),
     actions: <Widget>[
-      FlatButton(child: Text("Yes"),
+      FlatButton(
+          child: Text("Yes"),
+          onPressed: () {
+            Firestore.instance
+                .runTransaction((transaction) async {
+              await transaction.set(
+                  Firestore.instance
+                      .collection("Fridges")
+                      .document(fridgeName),
+                  {
+                    'Name': fridgeName,
+                  });
+            });
+            Navigator.pop(context);
+            getFridges();
+            createFridgeNote(context);
+          }),
+      FlatButton(
+        child: Text("No"),
         onPressed: () {
-          logging_out(context);
-        },
-      ),
-      FlatButton(child: Text("No"),
-        onPressed: () {
-          leave_alert(context);
+          //pop the alert from the stack and goes back to the home screen
+          Navigator.pop(context);
         },
       )
     ],
-  );*/
+  );
 
- /* showDialog(
+  showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return alertDialog;
-      }
+      });
+}
+
+void addShop_alert(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Add New Shop"),
+    content: Row(
+      children: <Widget>[
+        new Expanded(
+          child: new TextField(
+              autofocus: true,
+              decoration: new InputDecoration(
+                  labelText: 'Shop Name', hintText: 'eg. Greggs'),
+              onChanged: (current) {
+                shopName = current;
+              }
+          ),
+        )
+      ],
+    ),
+    actions: <Widget>[
+      FlatButton(
+          child: Text("Yes"),
+          onPressed: () {
+            Firestore.instance
+                .runTransaction((transaction) async {
+              await transaction.set(
+                  Firestore.instance
+                      .collection("Shops")
+                      .document(shopName),
+                  {
+                    'Name': shopName,
+                  });
+            });
+            Navigator.pop(context);
+            getShops();
+            createShopNote(context);
+          }),
+      FlatButton(
+        child: Text("No"),
+        onPressed: () {
+          //pop the alert from the stack and goes back to the home screen
+          Navigator.pop(context);
+        },
+      )
+    ],
   );
-}*/
+
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
 void view_list(BuildContext context) {
 //action will go to the login screen or user homepage
   Navigator.pop(context);

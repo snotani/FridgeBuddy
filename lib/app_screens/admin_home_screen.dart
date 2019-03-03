@@ -237,9 +237,14 @@ void leave_alert(BuildContext context) {
 }
 
 void goToAddScreen(context){
-  getItems();
-  Navigator.push(context,
-      MaterialPageRoute(builder: (context) => add_screen()));
+  try{
+    getItems();
+    getFridges();
+    getShops();
+  } finally {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => add_screen()));
+  }
 }
 
 void goToUpdateScreen(context){

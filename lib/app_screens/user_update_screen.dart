@@ -246,7 +246,10 @@ void statisticsDialog(BuildContext context) {
 void helpDialog(BuildContext context) {
   var alertDialog = AlertDialog(
     title: Text("Help"),
-    content: Text("Explain how to use the app"),
+    content: Text("FridgeBuddy is a project where we aim to reduce food wastage in the university. "
+        "The project would do this by helping both staff and students monitor the contents of the Community Fridge. "
+        "This will also include statistics about the Community Fridge usage to reduce even more food waste within the University.",
+        style: TextStyle(height: 2.0)),
   );
 
   showDialog(
@@ -298,14 +301,4 @@ void delete_field(docID) {
 // This will remain on the page
 void stay_on_page(BuildContext context){
   Navigator.pop(context);
-}
-
-void deleteData(docID){
-  Firestore.instance
-      .collection('Items')
-      .document(docID)
-      .delete()
-      .catchError((error){
-    print(error);
-  });
 }

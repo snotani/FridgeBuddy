@@ -45,7 +45,7 @@ class _sign_up_screenState extends State<sign_up_screen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text("Admin Sign Up")),
+      appBar: AppBar(title: Text("FridgeBuddy Volunteer Sign Up")),
       body: Container(
         margin: EdgeInsets.only(top: 40.0),
         child: Column(

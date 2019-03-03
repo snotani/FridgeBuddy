@@ -56,19 +56,26 @@ class _admin_update_screenState extends State<admin_update_screen> {
             ),
           ),
         ),
-        body: StreamBuilder(
-            stream: Firestore.instance.collection('Items').snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) return new Text('Loading...');
-              return ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                  color: Colors.black,
-                ),
-                itemCount: snapshot.data.documents.length,
-                itemBuilder: (context, index) =>
-                    _buildListItem(context, snapshot.data.documents[index]),
-              );
-            }),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              child: StreamBuilder(
+                  stream: Firestore.instance.collection('Items').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) return new Text('Loading...');
+                    return ListView.separated(
+                      separatorBuilder: (context, index) => Divider(
+                        color: Colors.black,
+                      ),
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) =>
+                          _buildListItem(context, snapshot.data.documents[index]),
+                    );
+                  }),
+            ),
+            Button_confirm()
+          ],
+        ),
       );
   }
 }
@@ -138,6 +145,32 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
   );
 }
 
+class Button_confirm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30.0),
+      child: Container(
+        width: 450.0,
+        height: 80.0,
+        child: OutlineButton(
+          color: Colors.green,
+          child: Text(
+            "Confirm",
+            textDirection: TextDirection.ltr,
+            style: TextStyle(color: Colors.green, fontSize: 40.0),
+          ),
+          onPressed: () {
+            confirmDialog(context);
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.green,width: 5.0),),
+      ),
+    );
+  }
+}
+
 void increase_quantity (DocumentSnapshot document,quantity_check) {
   // add one to quantity
   Firestore.instance.runTransaction((transaction) async {
@@ -149,4 +182,17 @@ void increase_quantity (DocumentSnapshot document,quantity_check) {
     // Add variable for count and disable add button
     // Initially disabled add button but once the counter is not 0, enable it
   });
+}
+
+void confirmDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: new Text("Successfull!"),
+    content: new Text("You have successfully updated the fridge!"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
 }

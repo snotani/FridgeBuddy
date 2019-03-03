@@ -52,7 +52,7 @@ class _sign_up_screenState extends State<sign_up_screen> {
           children: <Widget>[
             Center(
               child: Text(
-                "Admin Sign Up",
+                "Volunteer Sign Up",
                 textDirection: TextDirection.ltr,
                 style: TextStyle(fontSize: 50.0),
               ),

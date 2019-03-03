@@ -69,7 +69,7 @@ class _admin_update_screenState extends State<admin_update_screen> {
                       ),
                       itemCount: snapshot.data.documents.length,
                       itemBuilder: (context, index) =>
-                          _buildListItem(context, snapshot.data.documents[index]),
+                          _buildListItem(context, snapshot.data.documents[index], snapshot.data.documents[index].documentID),
                     );
                   }),
             ),
@@ -80,7 +80,7 @@ class _admin_update_screenState extends State<admin_update_screen> {
   }
 }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
 
   int quantity_check = 0;
 
@@ -112,8 +112,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
             }
             // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
             if (document['Quantity'] == 1){
-
-              //delete_field_alert(context);
+              delete_field_alert(context, docID);
             }
           },
         ),
@@ -195,4 +194,48 @@ void confirmDialog(BuildContext context) {
       builder: (BuildContext context) {
         return alertDialog;
       });
+}
+
+void delete_field_alert (BuildContext context, docID) {
+  var alertDialog = AlertDialog(
+    title: Text("Delete Item"),
+    content: Text("Do you wish to retrieve this last item?"),
+    actions: <Widget>[
+      FlatButton( child: Text("Yes"),
+        onPressed: (){
+          delete_field(docID);
+          Navigator.pop(context);
+        },
+      ),
+      FlatButton(child: Text("No"),
+        onPressed: (){
+          stay_on_page(context);
+        },
+      )
+    ],
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return alertDialog;
+
+      }
+  );
+}
+
+//This will delete the item field requested
+void delete_field(docID) {
+  Firestore.instance
+      .collection('Items')
+      .document(docID)
+      .delete()
+      .catchError((error){
+    print(error);
+  });
+}
+
+// This will remain on the page
+void stay_on_page(BuildContext context){
+  Navigator.pop(context);
 }

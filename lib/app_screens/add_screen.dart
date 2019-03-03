@@ -23,16 +23,24 @@ var _ShopsList = [
 ];
 
 Future getItems() async {
+  _ItemsList = [
+    "Select item",
+  ];
+
   Firestore.instance.collection('Items').snapshots().listen((data) {
     data.documents.forEach((doc) {
-        if(_ItemsList.contains(doc.documentID) == false){
-          _ItemsList.add(doc.documentID);
-        }
+      if (_ItemsList.contains(doc.documentID) == false) {
+        _ItemsList.add(doc.documentID);
+      }
     });
   });
 }
 
 Future getFridges() async {
+  _FridgesList = [
+    "Select fridge",
+  ];
+
   Firestore.instance.collection('Fridges').snapshots().listen((data) {
     data.documents.forEach((doc) {
       if(_FridgesList.contains(doc.documentID) == false){
@@ -43,6 +51,10 @@ Future getFridges() async {
 }
 
 Future getShops() async {
+  _ShopsList = [
+    "Select shop",
+  ];
+
   Firestore.instance.collection('Shops').snapshots().listen((data) {
     data.documents.forEach((doc) {
       if(_ShopsList.contains(doc.documentID) == false){
@@ -53,6 +65,17 @@ Future getShops() async {
 }
 
 TextEditingController number_items_controller = TextEditingController();
+
+Future clearQuantityController() {
+  number_items_controller.text = "";
+}
+
+bool isNumeric(String str) {
+  if(str == null) {
+    return false;
+  }
+  return double.tryParse(str) != null;
+}
 
 class add_screen extends StatefulWidget {
   @override
@@ -115,19 +138,38 @@ class _add_screenState extends State<add_screen>{
                       child: Padding(
                         padding: const EdgeInsets.only(
                             top: 35.0, right: 20.0, left: 40.0),
-                        child: DropdownButton<String>(
-                          items: _ItemsList.map((String dropDownStringItem) {
-                            return DropdownMenuItem<String>(
-                              value: dropDownStringItem,
-                              child: new Text(dropDownStringItem),
+                        child: new FormField<String>(
+                          builder: (FormFieldState<String> state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                errorText: state.hasError ? state.errorText : null,
+                              ),
+                              isEmpty: _currentItemList == '',
+                              child: new DropdownButtonHideUnderline(
+                                child: new DropdownButton<String>(
+                                  value: _currentItemList,
+                                  isDense: true,
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      whenItemListDropButton(newValue);
+                                      state.didChange(newValue);
+                                    });
+                                  },
+                                  items: _ItemsList.map((String value) {
+                                    return new DropdownMenuItem<String>(
+                                      value: value,
+                                      child: new Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
                             );
-                          }).toList(),
-                          onChanged: (String new_value_selected) {
-                            //When an item is selected from the drop down
-                            whenItemListDropButton(new_value_selected);
-                            itemName = new_value_selected;
                           },
-                          value: _currentItemList,
+                          validator: (value) {
+                            if (value == "Select item" || value == null) {
+                              return ('Please choose an item');
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -164,19 +206,38 @@ class _add_screenState extends State<add_screen>{
                       child: Padding(
                         padding: const EdgeInsets.only(
                             top: 35.0, right: 20.0, left: 40.0),
-                        child: DropdownButton<String>(
-                          items: _ShopsList.map((String dropDownStringItem) {
-                            return DropdownMenuItem<String>(
-                              value: dropDownStringItem,
-                              child: new Text(dropDownStringItem),
+                        child: new FormField<String>(
+                          builder: (FormFieldState<String> state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                errorText: state.hasError ? state.errorText : null,
+                              ),
+                              isEmpty: _currentShop == '',
+                              child: new DropdownButtonHideUnderline(
+                                child: new DropdownButton<String>(
+                                  value: _currentShop,
+                                  isDense: true,
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      whenShopDropButton(newValue);
+                                      state.didChange(newValue);
+                                    });
+                                  },
+                                  items: _ShopsList.map((String value) {
+                                    return new DropdownMenuItem<String>(
+                                      value: value,
+                                      child: new Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
                             );
-                          }).toList(),
-                          onChanged: (String new_value_selected) {
-                            //When an item is selected from the drop down
-                            whenShopDropButton(new_value_selected);
-                            shopName = new_value_selected;
                           },
-                          value: _currentShop,
+                          validator: (value) {
+                            if (value == "Select shop" || value == null) {
+                              return ('Please choose a shop');
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -191,7 +252,6 @@ class _add_screenState extends State<add_screen>{
                   ],
                 ),
 
-                //Row for item name text and the text field
                 Row(
                   children: <Widget>[
                     Expanded(
@@ -205,6 +265,7 @@ class _add_screenState extends State<add_screen>{
                           textDirection: TextDirection.ltr,
                           style: TextStyle(
                             fontSize: 40.0,
+
                           ),
                         ),
                       ),
@@ -213,19 +274,38 @@ class _add_screenState extends State<add_screen>{
                       child: Padding(
                         padding: const EdgeInsets.only(
                             top: 35.0, right: 20.0, left: 40.0),
-                        child: DropdownButton<String>(
-                          items: _FridgesList.map((String dropDownStringItem) {
-                            return DropdownMenuItem<String>(
-                              value: dropDownStringItem,
-                              child: new Text(dropDownStringItem),
+                        child: new FormField<String>(
+                          builder: (FormFieldState<String> state) {
+                            return InputDecorator(
+                              decoration: InputDecoration(
+                                errorText: state.hasError ? state.errorText : null,
+                              ),
+                              isEmpty: _currentFridgeLocation == '',
+                              child: new DropdownButtonHideUnderline(
+                                child: new DropdownButton<String>(
+                                  value: _currentFridgeLocation,
+                                  isDense: true,
+                                  onChanged: (String newValue) {
+                                    setState(() {
+                                      whenFridgeDropButton(newValue);
+                                      state.didChange(newValue);
+                                    });
+                                  },
+                                  items: _FridgesList.map((String value) {
+                                    return new DropdownMenuItem<String>(
+                                      value: value,
+                                      child: new Text(value),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
                             );
-                          }).toList(),
-                          onChanged: (String new_value_selected) {
-                            //When an item is selected from the drop down
-                            whenFridgeDropButton(new_value_selected);
-                            fridgeName = new_value_selected;
                           },
-                          value: _currentFridgeLocation,
+                          validator: (value) {
+                            if (value == "Select fridge" || value == null) {
+                              return ('Please choose a fridge');
+                            }
+                          },
                         ),
                       ),
                     ),
@@ -262,6 +342,13 @@ class _add_screenState extends State<add_screen>{
                           padding: const EdgeInsets.only(top: 35.0, right: 50.0),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
+                            controller: number_items_controller,
+                            textInputAction: TextInputAction.done,
+                            validator: (value) {
+                              if (value.length == 0 || isNumeric(value) == false) {
+                                return ('Please enter a valid number');
+                              }
+                            },
                             decoration: InputDecoration(
                                 labelText: "Number of items",
                                 hintText: "e.g. 9",
@@ -271,12 +358,6 @@ class _add_screenState extends State<add_screen>{
                                 ),
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(5.0))),
-                            validator: (String value) {
-                              if (value.isEmpty) {
-                                return "Please enter a valid number ";
-                              }
-                            },
-                            controller: number_items_controller,
                           ),
                         ))
                   ],
@@ -405,6 +486,19 @@ void addItemNote(BuildContext context) {
   var alertDialog = AlertDialog(
     title: Text("Added Item"),
     content: Text("You have added an item"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void errorNote(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Error"),
+    content: Text("Form validation failed"),
   );
 
   showDialog(

@@ -49,11 +49,11 @@ class _user_update_screen extends State<user_update_screen> {
                   },
                 ),
                 IconButton(
-                  icon: Icon(Icons.settings, color: Colors.white),
+                  icon: Icon(Icons.insert_chart, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add settings page/alert - TBD
-                    settingsDialog(context);
+                    // add analytics- TBD
+                    statisticsDialog(context);
                   },
                 ),
                 IconButton(
@@ -68,19 +68,26 @@ class _user_update_screen extends State<user_update_screen> {
             ),
           ),
         ),
-        body: StreamBuilder(
-            stream: Firestore.instance.collection('Items').snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) return new Text('Loading...');
-              return ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                  color: Colors.black,
-                ),
-                itemCount: snapshot.data.documents.length,
-                itemBuilder: (context, index) =>
-                    _buildListItem(context, snapshot.data.documents[index]),
-              );
-            }),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              child: StreamBuilder(
+                  stream: Firestore.instance.collection('Items').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) return new Text('Loading...');
+                    return ListView.separated(
+                      separatorBuilder: (context, index) => Divider(
+                        color: Colors.black,
+                      ),
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) =>
+                          _buildListItem(context, snapshot.data.documents[index]),
+                    );
+                  }),
+            ),
+            Button_confirm()
+          ],
+        ),
       );
   }
 }
@@ -151,6 +158,32 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
   );
 }
 
+class Button_confirm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30.0),
+      child: Container(
+        width: 450.0,
+        height: 80.0,
+        child: OutlineButton(
+          color: Colors.green,
+          child: Text(
+            "Confirm",
+            textDirection: TextDirection.ltr,
+            style: TextStyle(color: Colors.green, fontSize: 40.0),
+          ),
+          onPressed: () {
+            confirmDialog(context);
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.green,width: 5.0),),
+      ),
+    );
+  }
+}
+
 void increase_quantity (DocumentSnapshot document,quantity_check) {
   // add one to quantity
   Firestore.instance.runTransaction((transaction) async {
@@ -162,6 +195,19 @@ void increase_quantity (DocumentSnapshot document,quantity_check) {
     // Add variable for count and disable add button
     // Initially disabled add button but once the counter is not 0, enable it
   });
+}
+
+void confirmDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: new Text("Successfull!"),
+    content: new Text("You have successfully updated the fridge!"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
 }
 
 void feedbackDialog(BuildContext context) {
@@ -178,10 +224,10 @@ void feedbackDialog(BuildContext context) {
       });
 }
 
-void settingsDialog(BuildContext context) {
+void statisticsDialog(BuildContext context) {
   var alertDialog = AlertDialog(
-    title: new Text("Settings"),
-    content: new Text("Add settings here"),
+    title: new Text("Statistics"),
+    content: new Text("Add statistics page here"),
   );
 
   showDialog(
@@ -216,7 +262,7 @@ void delete_field_alert (BuildContext context) {
       ),
       FlatButton(child: Text("No"),
         onPressed: (){
-          //stay_on_page(context);
+          stay_on_page(context);
         },
       )
     ],
@@ -234,9 +280,9 @@ void delete_field_alert (BuildContext context) {
 
 // This will delete the item field requested
 //void delete_field(BuildContext context){
-//  Firestore.instance.collection('path').document('name').updateData({'Bacon': FieldValue.delete()}).whenComplete((){
-//    print('Field Deleted');
-//  });
+  //Firestore.instance.collection('path').document('name').updateData({'Bacon': FieldValue.delete()}).whenComplete((){
+    //print('Field Deleted');
+  //});
 //}
 
 // This will remain on the page

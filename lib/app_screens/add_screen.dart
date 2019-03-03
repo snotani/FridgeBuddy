@@ -467,7 +467,7 @@ void add_alert(BuildContext context) {
                 });
           });
           Navigator.pop(context);
-          Navigator.pop(context);
+          getItems();
           createItemNote(context);
         }),
       FlatButton(

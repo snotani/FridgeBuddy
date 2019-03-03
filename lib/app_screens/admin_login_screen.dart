@@ -176,17 +176,17 @@ class Button_Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.only(top: 30.0),
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // The sign in button
             new MaterialButton(
-              minWidth: 200,
-              height: 50,
+              minWidth: 300,
+              height: 80,
               color: Colors.green,
               child: Text(
-                "Sign In",
+                "Log In",
                 textDirection: TextDirection.ltr,
                 style: TextStyle(color: Colors.black, fontSize: 40.0),
               ),
@@ -200,12 +200,12 @@ class Button_Login extends StatelessWidget {
                 }).catchError((e) => print(e));
               }),
             Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 30.0),
             ),
             // Sign up button
             new MaterialButton(
-                minWidth: 200,
-                height: 50,
+                minWidth: 300,
+                height: 80,
                 color: Colors.green,
                 child: Text(
                   "Sign Up",

@@ -84,7 +84,6 @@ class Button_add extends StatelessWidget {
           ),
           onPressed: () {
             //action will go here for the next screen
-            getItems();
             goToAddScreen(context);
           },
           shape: RoundedRectangleBorder(
@@ -238,6 +237,7 @@ void leave_alert(BuildContext context) {
 }
 
 void goToAddScreen(context){
+  getItems();
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => add_screen()));
 }

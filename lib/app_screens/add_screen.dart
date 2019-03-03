@@ -10,34 +10,18 @@ DateTime dateAdded = DateTime.now();
 var fridgeLocation = "na";
 var donator = "na";
 int quantity;
-bool lock = false;
-
 var _ItemsList = [
   "Select item",
 ];
 
-//void getItems(){
-//    Firestore.instance.collection('Items').snapshots().listen((data) {
-//      data.documents.forEach((doc) {
-//        _ItemsList.add(doc.documentID);
-//      });
-//      print(_ItemsList);
-//    });
-//}
-
 Future getItems() async {
-  _ItemsList = [
-    "Select item",
-  ];
-  print("Before getItems = " + _ItemsList.toString());
-  await Firestore.instance.collection('Items').snapshots().listen((data) {
+  Firestore.instance.collection('Items').snapshots().listen((data) {
     data.documents.forEach((doc) {
-        if(_ItemsList.contains(doc) == false){
+        if(_ItemsList.contains(doc.documentID) == false){
           _ItemsList.add(doc.documentID);
         }
     });
   });
-  print("After getItems = " + _ItemsList.toString());
 }
 
 TextEditingController number_items_controller = TextEditingController();
@@ -48,7 +32,6 @@ class add_screen extends StatefulWidget {
 }
 
 class _add_screenState extends State<add_screen>{
-
   // Var that will be used in the drop down menu
   var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "Others"];
   var _currentFridgeLocation = ("Select fridge");
@@ -68,29 +51,8 @@ class _add_screenState extends State<add_screen>{
 
   var _formKey = GlobalKey<FormState>();
 
-  DateTime _date = DateTime.now();
-  TimeOfDay _time = TimeOfDay.now();
-
-  Future<Null> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: _date,
-        firstDate: DateTime(2018),
-        lastDate: DateTime(2050));
-
-    if (picked != null && picked != _date) {
-      print(_date.toString());
-      setState(() {
-        _date = picked;
-        dateAdded = _date;
-      });
-    }
-  }
-
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +107,6 @@ class _add_screenState extends State<add_screen>{
                           }).toList(),
                           onChanged: (String new_value_selected) {
                             //When an item is selected from the drop down
-                            print("ItemList = " + _ItemsList.toString());
                             whenItemListDropButton(new_value_selected);
                             name = new_value_selected;
                           },

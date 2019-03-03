@@ -144,19 +144,19 @@ class _add_screenState extends State<add_screen>{
                               decoration: InputDecoration(
                                 errorText: state.hasError ? state.errorText : null,
                               ),
-                              isEmpty: _currentItemList == '',
                               child: new DropdownButtonHideUnderline(
-                                child: new DropdownButton<String>(
+                                child: DropdownButton<String>(
                                   value: _currentItemList,
                                   isDense: true,
                                   onChanged: (String newValue) {
                                     setState(() {
                                       whenItemListDropButton(newValue);
                                       state.didChange(newValue);
+                                      itemName = newValue;
                                     });
                                   },
                                   items: _ItemsList.map((String value) {
-                                    return new DropdownMenuItem<String>(
+                                    return DropdownMenuItem<String>(
                                       value: value,
                                       child: new Text(value),
                                     );
@@ -212,7 +212,6 @@ class _add_screenState extends State<add_screen>{
                               decoration: InputDecoration(
                                 errorText: state.hasError ? state.errorText : null,
                               ),
-                              isEmpty: _currentShop == '',
                               child: new DropdownButtonHideUnderline(
                                 child: new DropdownButton<String>(
                                   value: _currentShop,
@@ -221,6 +220,7 @@ class _add_screenState extends State<add_screen>{
                                     setState(() {
                                       whenShopDropButton(newValue);
                                       state.didChange(newValue);
+                                      shopName = newValue;
                                     });
                                   },
                                   items: _ShopsList.map((String value) {
@@ -280,7 +280,6 @@ class _add_screenState extends State<add_screen>{
                               decoration: InputDecoration(
                                 errorText: state.hasError ? state.errorText : null,
                               ),
-                              isEmpty: _currentFridgeLocation == '',
                               child: new DropdownButtonHideUnderline(
                                 child: new DropdownButton<String>(
                                   value: _currentFridgeLocation,
@@ -289,6 +288,7 @@ class _add_screenState extends State<add_screen>{
                                     setState(() {
                                       whenFridgeDropButton(newValue);
                                       state.didChange(newValue);
+                                      fridgeName = newValue;
                                     });
                                   },
                                   items: _FridgesList.map((String value) {
@@ -408,6 +408,8 @@ class _add_screenState extends State<add_screen>{
                                 addItemNote(context);
                               });
                               //Add items to database END
+                            } else {
+                              errorNote(context);
                             }
                           },
                           shape: RoundedRectangleBorder(

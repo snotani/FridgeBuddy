@@ -43,7 +43,6 @@ class _user_update_screen extends State<user_update_screen> {
                   icon: Icon(Icons.feedback, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add feedback page/alert - TBD
                     feedbackDialog(context);
                   },
                 ),
@@ -59,7 +58,6 @@ class _user_update_screen extends State<user_update_screen> {
                   icon: Icon(Icons.help, color: Colors.white),
                   iconSize: 50.0,
                   onPressed: () {
-                    // add help page/alert - TBD
                     helpDialog(context);
                   },
                 ),
@@ -211,8 +209,18 @@ void confirmDialog(BuildContext context) {
 void feedbackDialog(BuildContext context) {
   var alertDialog = AlertDialog(
     title: new Text("Feedback"),
-    content: new Text("Please submit your feedback below:"),
-    // add textfield
+    content: new Column(
+      children: <Widget>[
+        TextField(
+          decoration: InputDecoration(hintText: 'Enter feedback here...'),
+          onChanged: (value) {
+
+          },
+        ),
+        SizedBox(height: 10.0,)
+      ],
+    ),
+
   );
 
   showDialog(
@@ -225,7 +233,7 @@ void feedbackDialog(BuildContext context) {
 void statisticsDialog(BuildContext context) {
   var alertDialog = AlertDialog(
     title: new Text("Statistics"),
-    content: new Text("Add statistics page here"),
+    content: new Text("Add statistics page here - Pull data of analytics from Firebase"),
   );
 
   showDialog(

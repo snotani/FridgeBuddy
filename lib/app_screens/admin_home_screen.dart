@@ -188,6 +188,7 @@ class Button_verify extends StatelessWidget {
             style: TextStyle(color: Colors.blue, fontSize: 40.0),
           ),
           onPressed: () {
+            getCurrentUser();
             goToVerifyScreen(context);
           },
           shape: RoundedRectangleBorder(

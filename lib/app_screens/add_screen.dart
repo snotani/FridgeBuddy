@@ -4,7 +4,6 @@ import 'admin_update_screen.dart';
 import 'admin_view_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-
 var name = "na";
 DateTime dateAdded = DateTime.now();
 var fridgeLocation = "na";
@@ -32,9 +31,9 @@ Future getItems() async {
   print("Before getItems = " + _ItemsList.toString());
   await Firestore.instance.collection('Items').snapshots().listen((data) {
     data.documents.forEach((doc) {
-        if(_ItemsList.contains(doc) == false){
-          _ItemsList.add(doc.documentID);
-        }
+      if (_ItemsList.contains(doc) == false) {
+        _ItemsList.add(doc.documentID);
+      }
     });
   });
   print("After getItems = " + _ItemsList.toString());
@@ -47,8 +46,7 @@ class add_screen extends StatefulWidget {
   _add_screenState createState() => _add_screenState();
 }
 
-class _add_screenState extends State<add_screen>{
-
+class _add_screenState extends State<add_screen> {
   // Var that will be used in the drop down menu
   var _fridgeLocation = ["Select fridge", "Pendle", "Bowland", "Others"];
   var _currentFridgeLocation = ("Select fridge");
@@ -90,8 +88,6 @@ class _add_screenState extends State<add_screen>{
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,7 +98,8 @@ class _add_screenState extends State<add_screen>{
       body: Form(
         key: _formKey,
         child: Padding(
-            padding: EdgeInsets.only(top: TOP_PADDING),
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height / 50),
             child: ListView(
               children: <Widget>[
                 Center(
@@ -119,10 +116,9 @@ class _add_screenState extends State<add_screen>{
                   children: <Widget>[
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 35.0,
-                          left: 50.0,
-                        ),
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height / 25,
+                            left: MediaQuery.of(context).size.width / 15),
                         child: Text(
                           "Item Name",
                           textDirection: TextDirection.ltr,
@@ -134,8 +130,9 @@ class _add_screenState extends State<add_screen>{
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(
-                            top: 35.0, right: 20.0, left: 40.0),
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.height / 25,
+                            left: MediaQuery.of(context).size.width / 15),
                         child: DropdownButton<String>(
                           items: _ItemsList.map((String dropDownStringItem) {
                             return DropdownMenuItem<String>(
@@ -154,7 +151,11 @@ class _add_screenState extends State<add_screen>{
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 40.0, top: 40.0),
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 30,
+                        right: MediaQuery.of(context).size.width / 30,
+                        top: MediaQuery.of(context).size.height / 25,
+                      ),
                       child: IconButton(
                           icon: Icon(Icons.add_circle),
                           onPressed: () {
@@ -164,103 +165,132 @@ class _add_screenState extends State<add_screen>{
                   ],
                 ),
                 //Row for date added text and the text field
-
                 //Row for the fridge text and the drop down menu
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 35.0,
-                          left: 50.0,
-                        ),
-                        child: Text(
-                          "Fridge",
-                          textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                            fontSize: 40.0,
+                Padding(
+                  padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height / 35),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 15),
+                          child: Text(
+                            "Fridge",
+                            textDirection: TextDirection.ltr,
+                            style: TextStyle(
+                              fontSize: 40.0,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0, right: 247.0),
-                      child: DropdownButton<String>(
-                        items: _fridgeLocation.map((String dropDownStringItem) {
-                          return DropdownMenuItem<String>(
-                            value: dropDownStringItem,
-                            child: Text(dropDownStringItem),
-                          );
-                        }).toList(),
-                        onChanged: (String new_value_selected) {
-                          //when u selected an item from the list
-                          whenFridgeDropButton(new_value_selected);
-                          fridgeLocation = new_value_selected;
-                        },
-                        value: _currentFridgeLocation,
+                      Expanded(
+                        child: Padding(
+                          padding:  EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 15
+                          ),
+                          child: DropdownButton<String>(
+                            items: _fridgeLocation.map((String dropDownStringItem) {
+                              return DropdownMenuItem<String>(
+                                value: dropDownStringItem,
+                                child: Text(dropDownStringItem),
+                              );
+                            }).toList(),
+                            onChanged: (String new_value_selected) {
+                              //when you selected an item from the list
+                              whenFridgeDropButton(new_value_selected);
+                              fridgeLocation = new_value_selected;
+                            },
+                            value: _currentFridgeLocation,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 30,
+                          right: MediaQuery.of(context).size.width / 30,
+                        ),
+                        child: IconButton(
+                            icon: Icon(Icons.add_circle),
+                            onPressed: () {
+                              add_alert(context);
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
 
                 //Row for the donating shop also drop down menu for the shops
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 35.0,
-                          left: 50.0,
-                        ),
-                        child: Text(
-                          "Donating Shop",
-                          textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                            fontSize: 40.0,
+                Padding(
+                  padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height / 35),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 15),
+                          child: Text(
+                            "Donating Shop",
+                            textDirection: TextDirection.ltr,
+                            style: TextStyle(
+                              fontSize: 40.0,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30.0, right: 252.0),
-                      child: DropdownButton<String>(
-                        items: _Shop.map((String dropDownStringItem) {
-                          return DropdownMenuItem<String>(
-                            value: dropDownStringItem,
-                            child: Text(dropDownStringItem),
-                          );
-                        }).toList(),
-                        onChanged: (String new_value_selected) {
-                          //when u selected an item from the list
-                          whenShopDropButton(new_value_selected);
-                          donator = new_value_selected;
-                        },
-                        value: _currentShop,
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 15),
+                          child: DropdownButton<String>(
+                            items: _Shop.map((String dropDownStringItem) {
+                              return DropdownMenuItem<String>(
+                                value: dropDownStringItem,
+                                child: Text(dropDownStringItem),
+                              );
+                            }).toList(),
+                            onChanged: (String new_value_selected) {
+                              //when u selected an item from the list
+                              whenShopDropButton(new_value_selected);
+                              donator = new_value_selected;
+                            },
+                            value: _currentShop,
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 30,
+                          right: MediaQuery.of(context).size.width / 30,
+                        ),
+                        child: IconButton(
+                            icon: Icon(Icons.add_circle),
+                            onPressed: () {
+                              add_alert(context);
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
 
-                Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 35.0,
-                          left: 50.0,
-                        ),
-                        child: Text(
-                          "Quantity",
-                          textDirection: TextDirection.ltr,
-                          style: TextStyle(
-                            fontSize: 40.0,
+                Padding(
+                  padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height / 35),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              left: MediaQuery.of(context).size.width / 15),
+                          child: Text(
+                            "Quantity",
+                            textDirection: TextDirection.ltr,
+                            style: TextStyle(
+                              fontSize: 40.0,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    Expanded(
+                      Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 35.0, right: 50.0),
+                          padding: EdgeInsets.only(right: MediaQuery.of(context).size.width / 8),
                           child: TextFormField(
                             keyboardType: TextInputType.number,
                             decoration: InputDecoration(
@@ -279,15 +309,18 @@ class _add_screenState extends State<add_screen>{
                             },
                             controller: number_items_controller,
                           ),
-                        ))
-                  ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
 
                 //Row for the button confirm button
                 Column(
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.only(top: 50.0),
+                      padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height / 10),
                       child: Container(
                         width: 300.0,
                         height: 100.0,
@@ -297,7 +330,7 @@ class _add_screenState extends State<add_screen>{
                             "Confirm",
                             textDirection: TextDirection.ltr,
                             style:
-                            TextStyle(color: Colors.green, fontSize: 40.0),
+                                TextStyle(color: Colors.green, fontSize: 40.0),
                           ),
                           //elevation: 6.0,
                           onPressed: () {
@@ -307,8 +340,9 @@ class _add_screenState extends State<add_screen>{
                                   .collection('Items')
                                   .where("Item name", isEqualTo: name)
                                   .snapshots()
-                                  .listen((data) =>
-                                  data.documents.forEach((doc) => currentQuantity = (doc["Quantity"])));
+                                  .listen((data) => data.documents.forEach(
+                                      (doc) =>
+                                          currentQuantity = (doc["Quantity"])));
                               //Add items to database START
                               Firestore.instance
                                   .runTransaction((transaction) async {
@@ -321,8 +355,9 @@ class _add_screenState extends State<add_screen>{
                                       'Date Added': dateAdded,
                                       'Fridge': fridgeLocation,
                                       'Donator': donator,
-                                      'Quantity': quantity = currentQuantity + int.parse(
-                                          number_items_controller.text),
+                                      'Quantity': quantity = currentQuantity +
+                                          int.parse(
+                                              number_items_controller.text),
                                     });
                                 Navigator.pop(context);
                                 addItemNote(context);
@@ -333,10 +368,10 @@ class _add_screenState extends State<add_screen>{
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0)),
                           borderSide:
-                          BorderSide(color: Colors.green, width: 5.0),
+                              BorderSide(color: Colors.green, width: 5.0),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Column(
@@ -372,8 +407,10 @@ class _add_screenState extends State<add_screen>{
                 iconSize: 50.0,
                 onPressed: () {
                   Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => admin_update_screen()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => admin_update_screen()));
                 },
               ),
             ],
@@ -434,7 +471,7 @@ class Button_Update extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
       child: Container(
         width: 300.0,
         height: 100.0,
@@ -449,7 +486,7 @@ class Button_Update extends StatelessWidget {
             note_update(context);
           },
           shape:
-          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color: Colors.orange, width: 5.0),
         ),
       ),
@@ -477,38 +514,33 @@ void add_alert(BuildContext context) {
       children: <Widget>[
         new Expanded(
           child: new TextField(
-            autofocus: true,
-            decoration: new InputDecoration(
-                labelText: 'Item name', hintText: 'eg. Milk'),
-            onChanged: (current) {
-              name = current;
-            }
-          ),
+              autofocus: true,
+              decoration: new InputDecoration(
+                  labelText: 'Item name', hintText: 'eg. Milk'),
+              onChanged: (current) {
+                name = current;
+              }),
         )
-  ],
+      ],
     ),
     actions: <Widget>[
       FlatButton(
-        child: Text("Yes"),
-        onPressed: () {
-          Firestore.instance
-              .runTransaction((transaction) async {
-            await transaction.set(
-                Firestore.instance
-                    .collection("Items")
-                    .document(name),
-                {
-                  'Item name': name,
-                  'Date Added': dateAdded,
-                  'Fridge': fridgeLocation,
-                  'Donator': donator,
-                  'Quantity': quantity = 0,
-                });
-          });
-          Navigator.pop(context);
-          Navigator.pop(context);
-          createItemNote(context);
-        }),
+          child: Text("Yes"),
+          onPressed: () {
+            Firestore.instance.runTransaction((transaction) async {
+              await transaction
+                  .set(Firestore.instance.collection("Items").document(name), {
+                'Item name': name,
+                'Date Added': dateAdded,
+                'Fridge': fridgeLocation,
+                'Donator': donator,
+                'Quantity': quantity = 0,
+              });
+            });
+            Navigator.pop(context);
+            Navigator.pop(context);
+            createItemNote(context);
+          }),
       FlatButton(
         child: Text("No"),
         onPressed: () {
@@ -546,7 +578,7 @@ void log_out(BuildContext context) {
     ],
   );*/
 
- /* showDialog(
+/* showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
@@ -557,8 +589,8 @@ void log_out(BuildContext context) {
 void view_list(BuildContext context) {
 //action will go to the login screen or user homepage
   Navigator.pop(context);
-  Navigator.push(context,
-      MaterialPageRoute(builder: (context) => admin_view_screen()));
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => admin_view_screen()));
 }
 
 void leave_alert(BuildContext context) {

@@ -37,9 +37,10 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
             ),
             Column(
               children: <Widget>[
-                SizedBox(
-
-                ),
+              /*  SizedBox(
+                  height: MediaQuery.of(context).size.height / 25,
+                  width: MediaQuery.of(context).size.width /100,
+                ),*/
                 Button_view()
               ],
             ),
@@ -74,24 +75,27 @@ class Button_add extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-      return Container(
-        width: 450.0,
-        height: 80.0,
-        child: OutlineButton(
-          color: Colors.green,
-          child: Text(
-            "Add Item",
-            textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.green, fontSize: 40.0),
-          ),
-          onPressed: () {
-            //action will go here for the next screen
-            getItems();
-            goToAddScreen(context);
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.green,width: 5.0),),
+      return Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
+        child: Container(
+          width: MediaQuery.of(context).size.width / 1.5 ,
+          height: MediaQuery.of(context).size.height / 16 ,
+          child: OutlineButton(
+            color: Colors.green,
+            child: Text(
+              "Add Item",
+              textDirection: TextDirection.ltr,
+              style: TextStyle(color: Colors.green, fontSize: 40.0),
+            ),
+            onPressed: () {
+              //action will go here for the next screen
+              getItems();
+              goToAddScreen(context);
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            borderSide: BorderSide(color: Colors.green,width: 5.0),),
+        ),
       );
   }
 }
@@ -99,22 +103,25 @@ class Button_add extends StatelessWidget {
 class Button_view extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      return Container(
-        width: 450.0,
-        height: 80.0,
-        child: OutlineButton(
-          color: Colors.amber,
-          child: Text(
-            "View Items",
-            textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.amber, fontSize: 40.0),
-          ),
-          onPressed: () {
-            goToViewScreen(context);
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.amber,width: 5.0),),
+      return Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
+        child: Container(
+          width: MediaQuery.of(context).size.width / 1.5 ,
+          height: MediaQuery.of(context).size.height / 16 ,
+          child: OutlineButton(
+            color: Colors.amber,
+            child: Text(
+              "View Items",
+              textDirection: TextDirection.ltr,
+              style: TextStyle(color: Colors.amber, fontSize: 40.0),
+            ),
+            onPressed: () {
+              goToViewScreen(context);
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            borderSide: BorderSide(color: Colors.amber,width: 5.0),),
+        ),
       );
   }
 }
@@ -123,22 +130,25 @@ class Button_update extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-      return Container(
-        width: 450.0,
-        height: 80.0,
-        child: OutlineButton(
-          color: Colors.orangeAccent,
-          child: Text(
-            "Update list",
-            textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.orange, fontSize: 40.0),
-          ),
-          onPressed: () {
-            goToUpdateScreen(context);
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.orange,width: 5.0),),
+      return Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
+        child: Container(
+          width: MediaQuery.of(context).size.width / 1.5 ,
+          height: MediaQuery.of(context).size.height / 16 ,
+          child: OutlineButton(
+            color: Colors.orangeAccent,
+            child: Text(
+              "Update list",
+              textDirection: TextDirection.ltr,
+              style: TextStyle(color: Colors.orange, fontSize: 40.0),
+            ),
+            onPressed: () {
+              goToUpdateScreen(context);
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            borderSide: BorderSide(color: Colors.orange,width: 5.0),),
+        ),
       );
   }
 }
@@ -146,22 +156,25 @@ class Button_update extends StatelessWidget {
 class Button_LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      return Container(
-        width: 250.0,
-        height: 80.0,
-        child: OutlineButton(
-          color: Colors.redAccent,
-          child: Text(
-            "Log Out",
-            textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.red, fontSize: 40.0),
-          ),
-          onPressed: () {
-            log_out_alert(context);
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.red,width: 5.0),),
+      return Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
+        child: Container(
+          width: MediaQuery.of(context).size.width / 1.5 ,
+          height: MediaQuery.of(context).size.height / 16 ,
+          child: OutlineButton(
+            color: Colors.redAccent,
+            child: Text(
+              "Log Out",
+              textDirection: TextDirection.ltr,
+              style: TextStyle(color: Colors.red, fontSize: 40.0),
+            ),
+            onPressed: () {
+              log_out_alert(context);
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            borderSide: BorderSide(color: Colors.red,width: 5.0),),
+        ),
       );
   }
 }
@@ -169,22 +182,25 @@ class Button_LogOut extends StatelessWidget {
 class Button_verify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      return Container(
-        width: 450.0,
-        height: 80.0,
-        child: OutlineButton(
-          color: Colors.blue,
-          child: Text(
-            "Verify users",
-            textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.blue, fontSize: 40.0),
-          ),
-          onPressed: () {
-            goToVerifyScreen(context);
-          },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.blue,width: 5.0),),
+      return Padding(
+        padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
+        child: Container(
+          width: MediaQuery.of(context).size.width / 1.5 ,
+          height: MediaQuery.of(context).size.height / 16 ,
+          child: OutlineButton(
+            color: Colors.blue,
+            child: Text(
+              "Verify users",
+              textDirection: TextDirection.ltr,
+              style: TextStyle(color: Colors.blue, fontSize: 40.0),
+            ),
+            onPressed: () {
+              goToVerifyScreen(context);
+            },
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0)),
+            borderSide: BorderSide(color: Colors.blue,width: 5.0),),
+        ),
       );
   }
 }

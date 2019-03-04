@@ -37,6 +37,9 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
             ),
             Column(
               children: <Widget>[
+                SizedBox(
+
+                ),
                 Button_view()
               ],
             ),
@@ -70,9 +73,8 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
 class Button_add extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Container(
+
+      return Container(
         width: 450.0,
         height: 80.0,
         child: OutlineButton(
@@ -90,17 +92,14 @@ class Button_add extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color: Colors.green,width: 5.0),),
-      ),
-    );
+      );
   }
 }
 
 class Button_view extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Container(
+      return Container(
         width: 450.0,
         height: 80.0,
         child: OutlineButton(
@@ -116,17 +115,15 @@ class Button_view extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color: Colors.amber,width: 5.0),),
-      ),
-    );
+      );
   }
 }
 
 class Button_update extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Container(
+
+      return Container(
         width: 450.0,
         height: 80.0,
         child: OutlineButton(
@@ -142,17 +139,14 @@ class Button_update extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color: Colors.orange,width: 5.0),),
-      ),
-    );
+      );
   }
 }
 
 class Button_LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Container(
+      return Container(
         width: 250.0,
         height: 80.0,
         child: OutlineButton(
@@ -168,17 +162,14 @@ class Button_LogOut extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color: Colors.red,width: 5.0),),
-      ),
-    );
+      );
   }
 }
 
 class Button_verify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Container(
+      return Container(
         width: 450.0,
         height: 80.0,
         child: OutlineButton(
@@ -194,8 +185,7 @@ class Button_verify extends StatelessWidget {
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0)),
           borderSide: BorderSide(color: Colors.blue,width: 5.0),),
-      ),
-    );
+      );
   }
 }
 

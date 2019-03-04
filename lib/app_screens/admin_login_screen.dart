@@ -5,10 +5,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'sign_up_screen.dart';
 
 final FirebaseAuth auth = FirebaseAuth.instance;
-String username;
+String emailAddress;
 String password;
-var usernameController = new TextEditingController();
+var emailController = new TextEditingController();
 var passwordController = new TextEditingController();
+var _LoginFormKey = GlobalKey<FormState>();
 
 //Handle sign in
 Future<FirebaseUser> handleSignInEmail(String email, String password) async {
@@ -21,27 +22,39 @@ Future<FirebaseUser> handleSignInEmail(String email, String password) async {
   return user;
 }
 
+bool isEmail(String em) {
+
+  String p = r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+
+  RegExp regExp = new RegExp(p);
+
+  return regExp.hasMatch(em);
+}
+
 class login_screen extends StatefulWidget {
   @override
   _login_screenState createState() => _login_screenState();
 }
 
 class _login_screenState extends State<login_screen> {
-  // adding Var that will be used in the drop down menu
 
 //the first text for the title admin login also the Appbar also
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      appBar: AppBar(title: Text("FridgeBuddy Admin Login")),
-      body: Container(
+      appBar: AppBar(
+        title: Text("Add Item"),
+      ),
+      body: Form(
+        key: _LoginFormKey,
+        child: Container(
         margin: EdgeInsets.only(top: 40.0),
         child: Column(
           children: <Widget>[
             Center(
               child: Text(
-                "Admin Login",
+                "FridgeBuddy Login",
                 textDirection: TextDirection.ltr,
                 style: TextStyle(fontSize: 50.0),
               ),
@@ -78,16 +91,19 @@ class _login_screenState extends State<login_screen> {
                 Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextField(
-                        controller: usernameController,
-                        keyboardType: TextInputType.text,
+                      child: new TextFormField(
+                        controller: emailController,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                             labelText: "Email",
                             hintText: "example@google.com",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0))),
-                        onChanged: (String labelText) {
-                          username = labelText;
+                        textInputAction: TextInputAction.done,
+                        validator: (value){
+                          if(value.length < 1 || value == null || value.contains("@") == false || isEmail(value) == false){
+                            return ('Please enter a valid email');
+                          }
                         },
                       ),
                     ))
@@ -115,7 +131,7 @@ class _login_screenState extends State<login_screen> {
                 Expanded(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextField(
+                      child: new TextFormField(
                         controller: passwordController,
                         keyboardType: TextInputType.text,
                         obscureText: true,
@@ -124,8 +140,11 @@ class _login_screenState extends State<login_screen> {
                             hintText: "",
                             border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(5.0))),
-                        onChanged: (String labelText) {
-                          password = labelText;
+                        textInputAction: TextInputAction.done,
+                        validator: (value){
+                          if(value.length < 1 || value == null){
+                            return ('Please enter a valid password');
+                          }
                         },
                       ),
                     ))
@@ -143,6 +162,7 @@ class _login_screenState extends State<login_screen> {
           ],
         ),
       ),
+    ),
     );
   }
 }
@@ -191,13 +211,17 @@ class Button_Login extends StatelessWidget {
                 style: TextStyle(color: Colors.black, fontSize: 40.0),
               ),
               onPressed: () {
-                // Run sign in function
-                handleSignInEmail(username, password)
-                    // Clear fields
-                    .then((FirebaseUser user) {
-                      // Go to admin page
-                      authorizeAccess(context);
-                }).catchError((e) => print(e));
+                emailAddress = emailController.text;
+                password = passwordController.text;
+                if(_LoginFormKey.currentState.validate()) {
+                  // Run sign in function
+                  handleSignInEmail(emailAddress, password)
+                  // Clear fields
+                      .then((FirebaseUser user) {
+                    // Go to admin page
+                    authorizeAccess(context);
+                  }).catchError((e) => print(e));
+                }
               }),
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
@@ -224,10 +248,10 @@ class Button_Login extends StatelessWidget {
     FirebaseAuth.instance.currentUser().then((user){
       Firestore.instance.collection('/users').where('uid', isEqualTo: user.uid).getDocuments().then((docs){
         if(docs.documents[0].exists){
-          if(docs.documents[0].data['role'] == 'admin'){
-            usernameController.clear();
+          if(docs.documents[0].data['role'] == 'admin' || docs.documents[0].data['role'] == 'volunteer'){
+            emailController.clear();
             passwordController.clear();
-            username = "";
+            emailAddress = "";
             password = "";
             Navigator.push(context, new MaterialPageRoute(builder: (context) => new Admin_home_screen()));
           } else {

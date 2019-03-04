@@ -37,10 +37,6 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
             ),
             Column(
               children: <Widget>[
-              /*  SizedBox(
-                  height: MediaQuery.of(context).size.height / 25,
-                  width: MediaQuery.of(context).size.width /100,
-                ),*/
                 Button_view()
               ],
             ),

@@ -36,7 +36,7 @@ class _login_screenState extends State<login_screen> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(title: Text("Admin Login")),
       body: Container(
-        margin: EdgeInsets.only(top: 40.0),
+        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.02),
         child: Column(
           children: <Widget>[
             Center(
@@ -50,48 +50,47 @@ class _login_screenState extends State<login_screen> {
             //Row widget which has the image
             Row(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 230.0, top: 20.0),
-                  child: logo_image_asset(),
-                ),
+                Expanded(
+                child: logo_image_asset()
+                )
               ],
             ),
 
             //Row which has the username text and text field
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 100.0,
-                    ),
-                    child: Text(
-                      "Email",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
+            Padding(
+              padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.04,),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(left: MediaQuery.of(context).size.width * 0.13),
+                      child: Text(
+                        "Email",
+                        textDirection: TextDirection.ltr,
+                        style: TextStyle(
+                          fontSize: 40.0,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextField(
-                        controller: usernameController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            labelText: "Email",
-                            hintText: "example@google.com",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        onChanged: (String labelText) {
-                          username = labelText;
-                        },
-                      ),
-                    ))
-              ],
+                  Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(right: MediaQuery.of(context).size.width * 0.13),
+                        child: TextField(
+                          controller: usernameController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                              labelText: "Email",
+                              hintText: "example@google.com",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0))),
+                          onChanged: (String labelText) {
+                            username = labelText;
+                          },
+                        ),
+                      ))
+                ],
+              ),
             ),
 
             //Row which has the password text and the text field
@@ -99,10 +98,7 @@ class _login_screenState extends State<login_screen> {
               children: <Widget>[
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 100.0,
-                    ),
+                    padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01, left: MediaQuery.of(context).size.width * 0.13),
                     child: Text(
                       "Password",
                       textDirection: TextDirection.ltr,
@@ -114,7 +110,7 @@ class _login_screenState extends State<login_screen> {
                 ),
                 Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
+                      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.01, right: MediaQuery.of(context).size.width * 0.13),
                       child: TextField(
                         controller: passwordController,
                         keyboardType: TextInputType.text,
@@ -135,7 +131,7 @@ class _login_screenState extends State<login_screen> {
             Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
+                  padding: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.05),
                   child: Button_Login(),
                 ),
               ],
@@ -159,8 +155,8 @@ class logo_image_asset extends StatelessWidget {
 
     Image logo_image = Image(
       image: assetImage,
-      width: 300.0,
-      height: 300.0,
+      width: MediaQuery.of(context).size.width / 4 ,
+      height: MediaQuery.of(context).size.height / 3.5,
     );
 
     //the method will return the logo image as a container
@@ -182,8 +178,8 @@ class Button_Login extends StatelessWidget {
           children: <Widget>[
             // The sign in button
             new MaterialButton(
-              minWidth: 200,
-              height: 50,
+              minWidth: MediaQuery.of(context).size.width * 0.30 ,
+              height:  MediaQuery.of(context).size.height * 0.04,
               color: Colors.green,
               child: Text(
                 "Sign In",
@@ -204,8 +200,8 @@ class Button_Login extends StatelessWidget {
             ),
             // Sign up button
             new MaterialButton(
-                minWidth: 200,
-                height: 50,
+                minWidth: MediaQuery.of(context).size.width * 0.30 ,
+                height:  MediaQuery.of(context).size.height * 0.04,
                 color: Colors.green,
                 child: Text(
                   "Sign Up",

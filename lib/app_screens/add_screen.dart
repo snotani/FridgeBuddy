@@ -88,7 +88,7 @@ class _add_screenState extends State<add_screen>{
   var _currentShop = _ShopsList[0];
   var _currentItemList = _ItemsList[0];
 
-  var _formKey = GlobalKey<FormState>();
+  var _addItemFormKey = GlobalKey<FormState>();
 
   final TOP_PADDING = 40.0;
   final LEFT_PADDING = 50.0;
@@ -101,7 +101,7 @@ class _add_screenState extends State<add_screen>{
         title: Text("Add Item"),
       ),
       body: Form(
-        key: _formKey,
+        key: _addItemFormKey,
         child: Padding(
             padding: EdgeInsets.only(top: TOP_PADDING),
             child: ListView(
@@ -381,7 +381,7 @@ class _add_screenState extends State<add_screen>{
                           ),
                           //elevation: 6.0,
                           onPressed: () {
-                            if (_formKey.currentState.validate()) {
+                            if (_addItemFormKey.currentState.validate()) {
                               var currentQuantity;
                               Firestore.instance
                                   .collection('Items')

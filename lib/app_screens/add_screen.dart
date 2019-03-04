@@ -212,7 +212,7 @@ class _add_screenState extends State<add_screen> {
                         child: IconButton(
                             icon: Icon(Icons.add_circle),
                             onPressed: () {
-                              add_alert(context);
+                              add_alert_fridge(context);
                             }),
                       ),
                     ],
@@ -264,7 +264,7 @@ class _add_screenState extends State<add_screen> {
                         child: IconButton(
                             icon: Icon(Icons.add_circle),
                             onPressed: () {
-                              add_alert(context);
+                              add_alert_shops(context);
                             }),
                       ),
                     ],
@@ -535,6 +535,102 @@ void add_alert(BuildContext context) {
                 'Fridge': fridgeLocation,
                 'Donator': donator,
                 'Quantity': quantity = 0,
+              });
+            });
+            Navigator.pop(context);
+            Navigator.pop(context);
+            createItemNote(context);
+          }),
+      FlatButton(
+        child: Text("No"),
+        onPressed: () {
+          //pop the alert from the stack and goes back to the home screen
+          Navigator.pop(context);
+        },
+      )
+    ],
+  );
+
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void add_alert_fridge(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Add A New Fridge"),
+    content: Row(
+      children: <Widget>[
+        new Expanded(
+          child: new TextField(
+              autofocus: true,
+              decoration: new InputDecoration(
+                  labelText: 'Fridge name', hintText: 'Location'),
+              onChanged: (current) {
+                name = current;
+              }),
+        )
+      ],
+    ),
+    actions: <Widget>[
+      FlatButton(
+          child: Text("Yes"),
+          onPressed: () {
+            Firestore.instance.runTransaction((transaction) async {
+              await transaction
+                  .set(Firestore.instance.collection("Fridges").document(name), {
+                'Name': name,
+              });
+            });
+            Navigator.pop(context);
+            Navigator.pop(context);
+            createItemNote(context);
+          }),
+      FlatButton(
+        child: Text("No"),
+        onPressed: () {
+          //pop the alert from the stack and goes back to the home screen
+          Navigator.pop(context);
+        },
+      )
+    ],
+  );
+
+  showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void add_alert_shops(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Add A New Donating Shop"),
+    content: Row(
+      children: <Widget>[
+        new Expanded(
+          child: new TextField(
+              autofocus: true,
+              decoration: new InputDecoration(
+                  labelText: 'Shop Name', hintText: 'Spar'),
+              onChanged: (current) {
+                name = current;
+              }),
+        )
+      ],
+    ),
+    actions: <Widget>[
+      FlatButton(
+          child: Text("Yes"),
+          onPressed: () {
+            Firestore.instance.runTransaction((transaction) async {
+              await transaction
+                  .set(Firestore.instance.collection("Shops").document(name), {
+                'Name': name,
               });
             });
             Navigator.pop(context);

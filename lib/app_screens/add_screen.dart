@@ -109,12 +109,11 @@ class _add_screenState extends State<add_screen> {
                   child: Text(
                     "Add Items",
                     textDirection: TextDirection.ltr,
+                    textScaleFactor: 3.9,
                     style: TextStyle(
-                      fontSize: 50.0,
                     ),
                   ),
                 ),
-
                 //Item name
                 Padding(
                   padding: EdgeInsets.only(
@@ -129,8 +128,8 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Item Name",
                             textDirection: TextDirection.ltr,
+                            textScaleFactor: 3,
                             style: TextStyle(
-                              fontSize: 40.0,
                             ),
                           ),
                         ),
@@ -203,8 +202,8 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Donating Shop",
                             textDirection: TextDirection.ltr,
+                            textScaleFactor: 2.9,
                             style: TextStyle(
-                              fontSize: 40.0,
                             ),
                           ),
                         ),
@@ -276,8 +275,8 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Fridge",
                             textDirection: TextDirection.ltr,
+                            textScaleFactor: 3,
                             style: TextStyle(
-                              fontSize: 40.0,
                             ),
                           ),
                         ),
@@ -350,8 +349,8 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Quantity",
                             textDirection: TextDirection.ltr,
+                            textScaleFactor: 3,
                             style: TextStyle(
-                              fontSize: 40.0,
                             ),
                           ),
                         ),
@@ -400,8 +399,9 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Confirm",
                             textDirection: TextDirection.ltr,
+                            textScaleFactor: 3,
                             style:
-                                TextStyle(color: Colors.green, fontSize: 40.0),
+                                TextStyle(color: Colors.green),
                           ),
                           //elevation: 6.0,
                           onPressed: () {

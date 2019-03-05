@@ -86,23 +86,21 @@ class _verify_accounts_screenState extends State<verify_accounts_screen> {
           Expanded(
             child: Text(
               document['name'],
-              style: Theme.of(context).textTheme.headline,
+              style: TextStyle(fontSize: MediaQuery.of(context).size.height / 40),
             ),
           ),
 
           Container(
-            padding: const EdgeInsets.all(10.0),
-            margin: const EdgeInsets.only(top: 15.0),
             child: Text(
               document['role'].toString(),
-              style: Theme.of(context).textTheme.headline,
+              style: TextStyle(fontSize: MediaQuery.of(context).size.width / 20),
             ),
           ),
         ],
       ),
       trailing: IconButton(
         icon: Icon(Icons.adjust),
-        iconSize: 50.0,
+        iconSize: MediaQuery.of(context).size.width / 11,
         color: Colors.green[700],
         onPressed: () {
           //If user to change is admin, only another admin can change their role.
@@ -276,7 +274,7 @@ class _verify_accounts_screenState extends State<verify_accounts_screen> {
         }),
       subtitle: new Text(
         document['email'],
-        style: Theme.of(context).textTheme.subhead,
+        style: TextStyle(fontSize: MediaQuery.of(context).size.width / 28),
       ),
     );
 

@@ -9,7 +9,7 @@ void main(){
       MaterialApp(
         debugShowCheckedModeBanner: false,
         title: "FridgeBuddy",
-        home: Admin_home_screen(),
+        home: user_update_screen(),
         theme: ThemeData(
           primaryColor: Colors.blue,
           accentColor: Colors.blueAccent,

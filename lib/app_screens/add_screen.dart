@@ -452,7 +452,7 @@ class _add_screenState extends State<add_screen> {
             )),
       ),
       bottomNavigationBar: Container(
-        height: MediaQuery.of(context).size.height / 20,
+        height: MediaQuery.of(context).size.height / 17.5,
         child: new BottomAppBar(
           color: Colors.blue,
           child: new Row(

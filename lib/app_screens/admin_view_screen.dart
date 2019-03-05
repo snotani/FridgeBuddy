@@ -13,10 +13,9 @@ class _admin_view_screenState extends State<admin_view_screen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70.0), // here the desired height
-          child: new AppBar(
-            title: new Text("View Fridge Items", style: TextStyle(fontSize: 40.0)),
+        appBar:
+          new AppBar(
+            title: new Text("View Fridge Items", style: TextStyle(fontSize: MediaQuery.of(context).size.width/20)),
             centerTitle: true,
             elevation: 10.0,
             leading: IconButton(
@@ -27,9 +26,8 @@ class _admin_view_screenState extends State<admin_view_screen> {
               },
             ),
           ),
-        ),
         bottomNavigationBar: Container(
-          height: 70.0,
+          height: MediaQuery.of(context).size.height/17.5,
           child: new BottomAppBar(
             color: Colors.blue,
             child: new Row(
@@ -37,7 +35,7 @@ class _admin_view_screenState extends State<admin_view_screen> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.update, color: Colors.white),
-                  iconSize: 50.0,
+                  iconSize: MediaQuery.of(context).size.height/23.5,
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.push(context,
@@ -46,14 +44,14 @@ class _admin_view_screenState extends State<admin_view_screen> {
                 ),
                 IconButton(
                   icon: Icon(Icons.home, color: Colors.white),
-                  iconSize: 50.0,
+                  iconSize: MediaQuery.of(context).size.height/23.5,
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.add, color: Colors.white),
-                  iconSize: 50.0,
+                  iconSize: MediaQuery.of(context).size.height/23.5,
                   onPressed: () {
                     Navigator.pop(context);
                     Navigator.push(context,
@@ -91,27 +89,25 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
         Expanded(
           child: Text(
             document['Item name'],
-            style: Theme.of(context).textTheme.headline,
+            style: TextStyle(fontSize: MediaQuery.of(context).size.height / 40),
           ),
         ),
         Container(
-          padding: const EdgeInsets.all(10.0),
-          margin: const EdgeInsets.only(top: 15.0),
           child: Text(
             document['Quantity'].toString(),
-            style: Theme.of(context).textTheme.display1,
+            style: TextStyle(fontSize: MediaQuery.of(context).size.width / 17.5),
           ),
         ),
       ],
     ),
     leading: new Icon(
       Icons.fastfood,
-      size: 40.0,
+      size: MediaQuery.of(context).size.width / 10,
       color: Colors.blue[700],
     ),
     subtitle: new Text(
       document['Donator'],
-      style: Theme.of(context).textTheme.subhead,
+      style: TextStyle(fontSize: MediaQuery.of(context).size.height / 50),
     ),
   );
 }

@@ -97,6 +97,7 @@ class _add_screenState extends State<add_screen> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
         title: Text("Add Item"),
+        centerTitle: true,
       ),
       body: Form(
         key: _addItemFormKey,

@@ -53,7 +53,7 @@ class _login_screenState extends State<login_screen> {
         margin: EdgeInsets.only(
             top: MediaQuery.of(context).size.height / 35,
         ),
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Center(
               child: Text(

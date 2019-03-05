@@ -61,7 +61,7 @@ class _sign_up_screenState extends State<sign_up_screen> {
         key: _signUpFormKey,
         child: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 40),
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Center(
               child: Text(

@@ -28,9 +28,8 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
           children: <Widget>[
             Center(
               child: Text(
-                "FridgeBuddy Admin Home",
+                "FridgeBuddy Admin Home",style: TextStyle(fontSize: MediaQuery.of(context).size.width / 14),
                 textDirection: TextDirection.ltr,
-                textScaleFactor: 4,
               ),
             ),
             Column(
@@ -68,8 +67,7 @@ class Button_add extends StatelessWidget {
           child: Text(
             "Add Item",
             textDirection: TextDirection.ltr,
-            textScaleFactor: 3,
-            style: TextStyle(color: Colors.green),
+            style: TextStyle(color: Colors.green,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             //action will go here for the next screen
@@ -97,8 +95,7 @@ class Button_view extends StatelessWidget {
           child: Text(
             "View Items",
             textDirection: TextDirection.ltr,
-            textScaleFactor: 3,
-            style: TextStyle(color: Colors.amber),
+            style: TextStyle(color: Colors.amber,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             goToViewScreen(context);
@@ -125,8 +122,7 @@ class Button_update extends StatelessWidget {
           child: Text(
             "Update list",
             textDirection: TextDirection.ltr,
-            textScaleFactor: 3,
-            style: TextStyle(color: Colors.orange),
+            style: TextStyle(color: Colors.orange,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             goToUpdateScreen(context);
@@ -144,17 +140,16 @@ class Button_LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
       child: Container(
-        width: MediaQuery.of(context).size.width / 1.5 ,
+        width: MediaQuery.of(context).size.width / 2 ,
         height: MediaQuery.of(context).size.height / 16 ,
         child: OutlineButton(
           color: Colors.redAccent,
           child: Text(
             "Log Out",
             textDirection: TextDirection.ltr,
-            textScaleFactor: 3,
-            style: TextStyle(color: Colors.red),
+            style: TextStyle(color: Colors.red,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             log_out_alert(context);
@@ -181,8 +176,7 @@ class Button_verify extends StatelessWidget {
           child: Text(
             "Verify users",
             textDirection: TextDirection.ltr,
-            textScaleFactor: 3,
-            style: TextStyle(color: Colors.blue),
+            style: TextStyle(color: Colors.blue,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             getCurrentUser();

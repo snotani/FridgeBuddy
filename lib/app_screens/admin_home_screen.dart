@@ -24,7 +24,7 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
               })),
       body: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 30),
-        child: Column(
+        child: ListView(
           children: <Widget>[
             Center(
               child: Text(
@@ -140,7 +140,7 @@ class Button_LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 3),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 4.5),
       child: Container(
         width: MediaQuery.of(context).size.width / 2 ,
         height: MediaQuery.of(context).size.height / 16 ,

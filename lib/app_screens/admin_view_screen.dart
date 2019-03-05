@@ -93,6 +93,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
           ),
         ),
         Container(
+          padding: EdgeInsets.only(right: MediaQuery.of(context).size.height / 50),
           child: Text(
             document['Quantity'].toString(),
             style: TextStyle(fontSize: MediaQuery.of(context).size.width / 17.5),

@@ -14,26 +14,28 @@ class _user_update_screen extends State<user_update_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(70.0), // here the desired height
-          child: new AppBar(
-            title: new Text("Update Fridge Items", style: TextStyle(fontSize: 40.0)),
+        appBar:
+           new AppBar(
+            title: new Text("Update Fridge Items", style: TextStyle(fontSize: MediaQuery.of(context).size.width/20)),
             centerTitle: true,
             elevation: 10.0,
             actions:  <Widget> [
-              IconButton(
-                tooltip: 'Admin Login',
-                icon: const Icon(Icons.person_add),
-                iconSize: 50.0,
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> login_screen()));
-                },
+              Padding(
+                padding: EdgeInsets.only(
+                  right: MediaQuery.of(context).size.width/60                ),
+                child: IconButton(
+                  tooltip: 'Admin Login',
+                  icon: const Icon(Icons.person_add),
+                  iconSize: MediaQuery.of(context).size.height/25,
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=> login_screen()));
+                  },
+                ),
               ),
             ],
-          ),
-        ),
+           ),
         bottomNavigationBar: Container(
-          height: 70.0,
+          height: MediaQuery.of(context).size.height/17.5,
           child: new BottomAppBar(
             color: Colors.blue,
             child: new Row(
@@ -41,14 +43,14 @@ class _user_update_screen extends State<user_update_screen> {
               children: <Widget>[
                 IconButton(
                   icon: Icon(Icons.feedback, color: Colors.white),
-                  iconSize: 50.0,
+                  iconSize: MediaQuery.of(context).size.height/23.5,
                   onPressed: () {
                     feedbackDialog(context);
                   },
                 ),
                 IconButton(
                   icon: Icon(Icons.insert_chart, color: Colors.white),
-                  iconSize: 50.0,
+                  iconSize: MediaQuery.of(context).size.height/23.5,
                   onPressed: () {
                     // add analytics- TBD
                     statisticsDialog(context);
@@ -56,7 +58,7 @@ class _user_update_screen extends State<user_update_screen> {
                 ),
                 IconButton(
                   icon: Icon(Icons.help, color: Colors.white),
-                  iconSize: 50.0,
+                  iconSize: MediaQuery.of(context).size.height/23.5,
                   onPressed: () {
                     helpDialog(context);
                   },
@@ -99,12 +101,12 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
         Expanded(
           child: Text(
             document['Item name'],
-            style: Theme.of(context).textTheme.headline,
+            style: TextStyle(fontSize: MediaQuery.of(context).size.height / 40),
           ),
         ),
         IconButton(
           icon: Icon(Icons.remove_circle),
-          iconSize: 50.0,
+          iconSize: MediaQuery.of(context).size.width / 10,
           color: Colors.blue[700],
           onPressed: () {
             // remove one from quantity
@@ -126,30 +128,28 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
           },
         ),
         Container(
-          padding: const EdgeInsets.all(10.0),
-          margin: const EdgeInsets.only(top: 15.0),
           child: Text(
             document['Quantity'].toString(),
-            style: Theme.of(context).textTheme.display1,
+            style: TextStyle(fontSize: MediaQuery.of(context).size.width / 17.5),
           ),
 
         ),
         IconButton(
           icon: Icon(Icons.add_circle),
           color: Colors.blue[700],
-          iconSize: 50.0,
+          iconSize: MediaQuery.of(context).size.width / 10,
           //onPressed: (quantity_check == 0) ? () => increase_quantity(document, quantity_check) : null,
         ),
       ],
     ),
     leading: new Icon(
         Icons.fastfood,
-        size: 40.0,
+        size: MediaQuery.of(context).size.width / 10,
         color: Colors.blue[700],
     ),
     subtitle: new Text(
         document['Donator'],
-        style: Theme.of(context).textTheme.subhead,
+        style: TextStyle(fontSize: MediaQuery.of(context).size.height / 50),
     ),
   );
 }
@@ -158,16 +158,16 @@ class Button_confirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 30.0),
+      padding: EdgeInsets.only(bottom: MediaQuery.of(context).size.height/23.5),
       child: Container(
-        width: 450.0,
-        height: 80.0,
+        width: MediaQuery.of(context).size.width/2.45,
+        height: MediaQuery.of(context).size.height/13,
         child: OutlineButton(
           color: Colors.green,
           child: Text(
             "Confirm",
             textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.green, fontSize: 40.0),
+            style: TextStyle(color: Colors.green, fontSize: MediaQuery.of(context).size.width / 16.5),
           ),
           onPressed: () {
             confirmDialog(context);

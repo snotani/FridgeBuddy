@@ -22,6 +22,39 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
               onPressed: () {
                 log_out_alert(context);
               })),
+      bottomNavigationBar: Container(
+        height: MediaQuery.of(context).size.height/17.5,
+        child: new BottomAppBar(
+          color: Colors.blue,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.feedback, color: Colors.white),
+                iconSize: MediaQuery.of(context).size.height/23.5,
+                onPressed: () {
+                  feedbackDialog(context);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.insert_chart, color: Colors.white),
+                iconSize: MediaQuery.of(context).size.height/23.5,
+                onPressed: () {
+                  // add analytics- TBD
+                  statisticsDialog(context);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.help, color: Colors.white),
+                iconSize: MediaQuery.of(context).size.height/23.5,
+                onPressed: () {
+                  helpDialog(context);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Container(
         margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 30),
         child: ListView(
@@ -189,6 +222,59 @@ class Button_verify extends StatelessWidget {
       ),
     );
   }
+}
+
+void feedbackDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: new Text("Feedback"),
+    content: new Column(
+      children: <Widget>[
+        TextField(
+          decoration: InputDecoration(hintText: 'Enter feedback here...'),
+          onChanged: (value) {
+
+          },
+        ),
+        SizedBox(height: 10.0,)
+      ],
+    ),
+
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void statisticsDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: new Text("Statistics"),
+    content: new Text("Add statistics page here - Pull data of analytics from Firebase"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void helpDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: Text("Help"),
+    content: Text("FridgeBuddy is a project where we aim to reduce food wastage in the university. "
+        "The project would do this by helping both staff and students monitor the contents of the Community Fridge. "
+        "This will also include statistics about the Community Fridge usage to reduce even more food waste within the University.",
+        style: TextStyle(height: 2.0)),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
 }
 
 void log_out_alert(BuildContext context) {

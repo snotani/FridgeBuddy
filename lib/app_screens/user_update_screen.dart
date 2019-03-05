@@ -19,6 +19,7 @@ class _user_update_screen extends State<user_update_screen> {
             title: new Text("Update Fridge Items", style: TextStyle(fontSize: MediaQuery.of(context).size.width/20)),
             centerTitle: true,
             elevation: 10.0,
+            leading: logo_image_asset(),
             actions:  <Widget> [
               Padding(
                 padding: EdgeInsets.only(

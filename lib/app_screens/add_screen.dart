@@ -109,8 +109,8 @@ class _add_screenState extends State<add_screen> {
                   child: Text(
                     "Add Items",
                     textDirection: TextDirection.ltr,
-                    textScaleFactor: 3.9,
                     style: TextStyle(
+                      fontSize: MediaQuery.of(context).size.width / 12,
                     ),
                   ),
                 ),
@@ -128,8 +128,8 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Item Name",
                             textDirection: TextDirection.ltr,
-                            textScaleFactor: 3,
                             style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width / 17.5,
                             ),
                           ),
                         ),
@@ -202,8 +202,8 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Donating Shop",
                             textDirection: TextDirection.ltr,
-                            textScaleFactor: 2.9,
                             style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width / 18,
                             ),
                           ),
                         ),
@@ -275,8 +275,8 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Fridge",
                             textDirection: TextDirection.ltr,
-                            textScaleFactor: 3,
                             style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width / 17.5,
                             ),
                           ),
                         ),
@@ -349,8 +349,8 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Quantity",
                             textDirection: TextDirection.ltr,
-                            textScaleFactor: 3,
                             style: TextStyle(
+                              fontSize: MediaQuery.of(context).size.width / 17.5,
                             ),
                           ),
                         ),
@@ -374,7 +374,7 @@ class _add_screenState extends State<add_screen> {
                               hintText: "e.g. 9",
                               errorStyle: TextStyle(
                                 color: Colors.yellowAccent,
-                                fontSize: 15,
+                                fontSize: MediaQuery.of(context).size.width / 50,
                               ),
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0))),
@@ -389,7 +389,7 @@ class _add_screenState extends State<add_screen> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.height / 5
+                          top: MediaQuery.of(context).size.height / 7
                       ),
                       child: Container(
                         width: MediaQuery.of(context).size.width / 2.45,
@@ -399,9 +399,10 @@ class _add_screenState extends State<add_screen> {
                           child: Text(
                             "Confirm",
                             textDirection: TextDirection.ltr,
-                            textScaleFactor: 3,
                             style:
-                                TextStyle(color: Colors.green),
+                                TextStyle(color: Colors.green,
+                                  fontSize: MediaQuery.of(context).size.width / 16.5,
+                          ),
                           ),
                           //elevation: 6.0,
                           onPressed: () {

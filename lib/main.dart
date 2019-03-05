@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import './app_screens/user_update_screen.dart';
+import './app_screens/add_screen.dart';
+import './app_screens/admin_home_screen.dart';
+
 
 void main(){
   runApp(

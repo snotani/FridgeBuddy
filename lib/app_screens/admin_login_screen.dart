@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'sign_up_screen.dart';
 
+
 final FirebaseAuth auth = FirebaseAuth.instance;
 String emailAddress;
 String password;
@@ -49,112 +50,127 @@ class _login_screenState extends State<login_screen> {
       body: Form(
         key: _LoginFormKey,
         child: Container(
-        margin: EdgeInsets.only(top: 40.0),
-        child: Column(
+        margin: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height / 35,
+        ),
+        child: ListView(
           children: <Widget>[
             Center(
               child: Text(
                 "FridgeBuddy Login",
                 textDirection: TextDirection.ltr,
-                style: TextStyle(fontSize: 50.0),
+                style: TextStyle(fontSize:MediaQuery.of(context).size.width / 12,
+                ),
               ),
             ),
-
             //Row widget which has the image
             Row(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(left: 230.0, top: 20.0),
-                  child: logo_image_asset(),
+                Expanded(
+                  child: Center(child: logo_image_asset()),
                 ),
               ],
             ),
 
             //Row which has the username text and text field
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 100.0,
-                    ),
-                    child: Text(
-                      "Email",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
+            Padding(
+              padding:  EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 20
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 7.2
+                      ),
+                      child: Text(
+                        "Email",
+                        textDirection: TextDirection.ltr,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width / 17
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: new TextFormField(
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                            labelText: "Email",
-                            hintText: "example@google.com",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        textInputAction: TextInputAction.done,
-                        validator: (value){
-                          if(value.length < 1 || value == null || value.contains("@") == false || isEmail(value) == false){
-                            return ('Please enter a valid email');
-                          }
-                        },
-                      ),
-                    ))
-              ],
+                  Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            right:MediaQuery.of(context).size.width / 15
+                        ),
+                        child: new TextFormField(
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                              labelText: "Email",
+                              hintText: "example@google.com",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0))),
+                          textInputAction: TextInputAction.done,
+                          validator: (value){
+                            if(value.length < 1 || value == null || value.contains("@") == false || isEmail(value) == false){
+                              return ('Please enter a valid email');
+                            }
+                          },
+                        ),
+                      ))
+                ],
+              ),
             ),
 
             //Row which has the password text and the text field
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 100.0,
-                    ),
-                    child: Text(
-                      "Password",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
+            Padding(
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 50
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 7.2
+                      ),
+                      child: Text(
+                        "Password",
+                        textDirection: TextDirection.ltr,
+                        style: TextStyle(
+                          fontSize: MediaQuery.of(context).size.width / 17,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: new TextFormField(
-                        controller: passwordController,
-                        keyboardType: TextInputType.text,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            labelText: "Password",
-                            hintText: "",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        textInputAction: TextInputAction.done,
-                        validator: (value){
-                          if(value.length < 1 || value == null){
-                            return ('Please enter a valid password');
-                          }
-                        },
-                      ),
-                    ))
-              ],
+                  Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            right:MediaQuery.of(context).size.width / 15
+                        ),
+                        child: new TextFormField(
+                          controller: passwordController,
+                          keyboardType: TextInputType.text,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              labelText: "Password",
+                              hintText: "",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0))),
+                          textInputAction: TextInputAction.done,
+                          validator: (value){
+                            if(value.length < 1 || value == null){
+                              return ('Please enter a valid password');
+                            }
+                          },
+                        ),
+                      ))
+                ],
+              ),
             ),
             //log in button
             Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
+                  padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height / 35
+                  ),
                   child: Button_Login(),
                 ),
               ],
@@ -179,8 +195,8 @@ class logo_image_asset extends StatelessWidget {
 
     Image logo_image = Image(
       image: assetImage,
-      width: 300.0,
-      height: 300.0,
+      width: MediaQuery.of(context).size.width / 2,
+      height: MediaQuery.of(context).size.width / 2,
     );
 
     //the method will return the logo image as a container
@@ -195,20 +211,18 @@ class logo_image_asset extends StatelessWidget {
 class Button_Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 30.0),
-        child: new Column(
+    return new Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // The sign in button
             new MaterialButton(
-              minWidth: 300,
-              height: 80,
+                minWidth: MediaQuery.of(context).size.width / 2.4,
+                height: MediaQuery.of(context).size.height / 15,
               color: Colors.green,
               child: Text(
                 "Log In",
                 textDirection: TextDirection.ltr,
-                style: TextStyle(color: Colors.black, fontSize: 40.0),
+                style: TextStyle(color: Colors.black, fontSize: MediaQuery.of(context).size.width / 18),
               ),
               onPressed: () {
                 emailAddress = emailController.text;
@@ -224,24 +238,25 @@ class Button_Login extends StatelessWidget {
                 }
               }),
             Padding(
-              padding: const EdgeInsets.only(top: 30.0),
+              padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).size.height / 50
+              ),
             ),
             // Sign up button
             new MaterialButton(
-                minWidth: 300,
-                height: 80,
+                minWidth: MediaQuery.of(context).size.width / 2.4,
+                height: MediaQuery.of(context).size.height / 15,
                 color: Colors.green,
                 child: Text(
                   "Sign Up",
                   textDirection: TextDirection.ltr,
-                  style: TextStyle(color: Colors.black, fontSize: 40.0),
+                  style: TextStyle(color: Colors.black, fontSize: MediaQuery.of(context).size.width / 18),
                 ),
                 onPressed: () {
                   Navigator.push(context, new MaterialPageRoute(builder: (context) => new sign_up_screen()));
                 }),
           ]
-        )
-    );
+        );
   }
 
   authorizeAccess(BuildContext context){

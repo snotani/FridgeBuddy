@@ -60,138 +60,158 @@ class _sign_up_screenState extends State<sign_up_screen> {
       body: Form(
         key: _signUpFormKey,
         child: Container(
-        margin: EdgeInsets.only(top: 40.0),
-        child: Column(
+        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 40),
+        child: ListView(
           children: <Widget>[
             Center(
               child: Text(
                 "Volunteer Sign Up",
                 textDirection: TextDirection.ltr,
-                style: TextStyle(fontSize: 50.0),
+                style: TextStyle(fontSize: MediaQuery.of(context).size.width / 9),
               ),
             ),
 
             //Row which has the name text and text field
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 100.0,
-                    ),
-                    child: Text(
-                      "Name",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 25,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 15,
+                      ),
+                      child: Text(
+                        "Name",
+                        textDirection: TextDirection.ltr,
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 11
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: TextFormField(
-                        controller: nameController,
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                            labelText: "Name",
-                            hintText: "John Smith",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        validator: (value){
-                          if(value.length < 1 || value == null){
-                            return ('Please enter a valid name');
-                          }
-                        },
-                      ),
-                    ))
-              ],
+                  Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 20,
+                          right: MediaQuery.of(context).size.width / 15,
+                        ),
+                        child: TextFormField(
+                          controller: nameController,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                              labelText: "Name",
+                              hintText: "John Smith",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0))),
+                          validator: (value){
+                            if(value.length < 1 || value == null){
+                              return ('Please enter a valid name');
+                            }
+                          },
+                        ),
+                      ))
+                ],
+              ),
             ),
 
             //Row which has the username text and text field
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 100.0,
-                    ),
-                    child: Text(
-                      "Email",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 25,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 15,
+                      ),
+                      child: Text(
+                        "Email",
+                        textDirection: TextDirection.ltr,
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 11
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: new TextFormField(
-                        controller: emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                            labelText: "Email",
-                            hintText: "example@google.com",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        validator: (value){
-                          if(value.length < 1 || value == null || value.contains("@") == false || isEmail(value) == false){
-                            return ('Please enter a valid email');
-                          }
-                        },
-                      ),
-                    ))
-              ],
+                  Expanded(
+                      child: Padding(
+                        padding:  EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width / 20,
+                          right: MediaQuery.of(context).size.width / 15,
+                        ),
+                        child: new TextFormField(
+                          controller: emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                              labelText: "Email",
+                              hintText: "example@google.com",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0))),
+                          validator: (value){
+                            if(value.length < 1 || value == null || value.contains("@") == false || isEmail(value) == false){
+                              return ('Please enter a valid email');
+                            }
+                          },
+                        ),
+                      ))
+                ],
+              ),
             ),
 
             //Row which has the password text and the text field
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                      top: 35.0,
-                      left: 100.0,
-                    ),
-                    child: Text(
-                      "Password",
-                      textDirection: TextDirection.ltr,
-                      style: TextStyle(
-                        fontSize: 40.0,
+            Padding(
+              padding: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height / 25,
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: MediaQuery.of(context).size.width / 15,
+                      ),
+                      child: Text(
+                        "Password",
+                        textDirection: TextDirection.ltr,
+                        style: TextStyle(
+                            fontSize: MediaQuery.of(context).size.width / 11
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 35.0, right: 50.0),
-                      child: new TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            labelText: "Password",
-                            hintText: "",
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.0))),
-                        validator: (value){
-                          if(value.length < 1 || value == null){
-                            return ('Please enter a valid password');
-                          }
-                        },
-                      ),
-                    ))
-              ],
+                  Expanded(
+                      child: Padding(
+                        padding: EdgeInsets.only(left: MediaQuery.of(context).size.width / 20,
+                            right: MediaQuery.of(context).size.width / 15,
+                        ),
+                        child: new TextFormField(
+                          controller: passwordController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              labelText: "Password",
+                              hintText: "",
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.0))),
+                          validator: (value){
+                            if(value.length < 1 || value == null){
+                              return ('Please enter a valid password');
+                            }
+                          },
+                        ),
+                      ))
+                ],
+              ),
             ),
             //log in button
             Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
+                  padding:  EdgeInsets.only(top: MediaQuery.of(context).size.width / 5),
                   child: Button_Login(),
                 ),
               ],
@@ -208,23 +228,19 @@ class _sign_up_screenState extends State<sign_up_screen> {
 class Button_Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
-        child: new Column(
+    return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(top: 20.0),
-            ),
             // Sign up button
             new MaterialButton(
-                minWidth: 200,
-                height: 50,
+                minWidth: MediaQuery.of(context).size.width / 2.3,
+                height: MediaQuery.of(context).size.height / 15,
                 color: Colors.green,
                 child: Text(
                   "Sign Up",
                   textDirection: TextDirection.ltr,
-                  style: TextStyle(color: Colors.black, fontSize: 40.0),
+                  style: TextStyle(color: Colors.black, fontSize: MediaQuery.of(context).size.width / 15,
+                  ),
                 ),
                 onPressed: () {
                   emailAddress = emailController.text;
@@ -266,8 +282,7 @@ class Button_Login extends StatelessWidget {
                   }
                 }),
           ]
-        )
-    );
+        );
   }
 
 }

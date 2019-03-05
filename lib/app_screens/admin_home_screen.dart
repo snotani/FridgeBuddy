@@ -5,7 +5,6 @@ import 'admin_view_screen.dart';
 import 'add_screen.dart';
 import 'verify_accounts_screen.dart';
 
-
 class Admin_home_screen extends StatefulWidget {
   @override
   _Admin_home_screenState createState() => _Admin_home_screenState();
@@ -18,47 +17,35 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
           title: Text("Admin HomePage"),
-          leading: IconButton(icon: Icon(
-              Icons.exit_to_app),
+          leading: IconButton(
+              icon: Icon(Icons.exit_to_app),
               onPressed: () {
                 log_out_alert(context);
-              }
-          )
-      ),
+              })),
       body: Container(
-        margin: EdgeInsets.only(top: 40.0),
-        child: Column(
+        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height / 30),
+        child: ListView(
           children: <Widget>[
             Center(
               child: Text(
-                "FridgeBuddy Admin Home", textDirection: TextDirection.ltr,
-                style: TextStyle(fontSize: 50.0),
+                "FridgeBuddy Admin Home",style: TextStyle(fontSize: MediaQuery.of(context).size.width / 14),
+                textDirection: TextDirection.ltr,
               ),
             ),
             Column(
-              children: <Widget>[
-                Button_view()
-              ],
+              children: <Widget>[Button_view()],
             ),
             Column(
-              children: <Widget>[
-                Button_add()
-              ],
+              children: <Widget>[Button_add()],
             ),
             Column(
-              children: <Widget>[
-                Button_update()
-              ],
+              children: <Widget>[Button_update()],
             ),
             Column(
-              children: <Widget>[
-                Button_verify()
-              ],
+              children: <Widget>[Button_verify()],
             ),
             Column(
-              children: <Widget>[
-                Button_LogOut()
-              ],
+              children: <Widget>[Button_LogOut()],
             )
           ],
         ),
@@ -71,24 +58,25 @@ class Button_add extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
       child: Container(
-        width: 450.0,
-        height: 80.0,
+        width: MediaQuery.of(context).size.width / 1.5 ,
+        height: MediaQuery.of(context).size.height / 16 ,
         child: OutlineButton(
           color: Colors.green,
           child: Text(
             "Add Item",
             textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.green, fontSize: 40.0),
+            style: TextStyle(color: Colors.green,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             //action will go here for the next screen
             goToAddScreen(context);
           },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.green,width: 5.0),),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.green, width: 5.0),
+        ),
       ),
     );
   }
@@ -98,23 +86,24 @@ class Button_view extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
       child: Container(
-        width: 450.0,
-        height: 80.0,
+        width: MediaQuery.of(context).size.width / 1.5 ,
+        height: MediaQuery.of(context).size.height / 16 ,
         child: OutlineButton(
           color: Colors.amber,
           child: Text(
             "View Items",
             textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.amber, fontSize: 40.0),
+            style: TextStyle(color: Colors.amber,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             goToViewScreen(context);
           },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.amber,width: 5.0),),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.amber, width: 5.0),
+        ),
       ),
     );
   }
@@ -124,23 +113,24 @@ class Button_update extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
       child: Container(
-        width: 450.0,
-        height: 80.0,
+        width: MediaQuery.of(context).size.width / 1.5 ,
+        height: MediaQuery.of(context).size.height / 16 ,
         child: OutlineButton(
           color: Colors.orangeAccent,
           child: Text(
             "Update list",
             textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.orange, fontSize: 40.0),
+            style: TextStyle(color: Colors.orange,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             goToUpdateScreen(context);
           },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.orange,width: 5.0),),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.orange, width: 5.0),
+        ),
       ),
     );
   }
@@ -150,23 +140,24 @@ class Button_LogOut extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 4.5),
       child: Container(
-        width: 250.0,
-        height: 80.0,
+        width: MediaQuery.of(context).size.width / 2 ,
+        height: MediaQuery.of(context).size.height / 16 ,
         child: OutlineButton(
           color: Colors.redAccent,
           child: Text(
             "Log Out",
             textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.red, fontSize: 40.0),
+            style: TextStyle(color: Colors.red,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             log_out_alert(context);
           },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.red,width: 5.0),),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.red, width: 5.0),
+        ),
       ),
     );
   }
@@ -176,24 +167,25 @@ class Button_verify extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
+      padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 25),
       child: Container(
-        width: 450.0,
-        height: 80.0,
+        width: MediaQuery.of(context).size.width / 1.5,
+        height: MediaQuery.of(context).size.height / 16,
         child: OutlineButton(
           color: Colors.blue,
           child: Text(
             "Verify users",
             textDirection: TextDirection.ltr,
-            style: TextStyle(color: Colors.blue, fontSize: 40.0),
+            style: TextStyle(color: Colors.blue,fontSize: MediaQuery.of(context).size.width / 18),
           ),
           onPressed: () {
             getCurrentUser();
             goToVerifyScreen(context);
           },
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0)),
-          borderSide: BorderSide(color: Colors.blue,width: 5.0),),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.blue, width: 5.0),
+        ),
       ),
     );
   }
@@ -204,12 +196,14 @@ void log_out_alert(BuildContext context) {
     title: Text("LogOut"),
     content: Text("Do you wish to log out?"),
     actions: <Widget>[
-      FlatButton(child: Text("Yes"),
+      FlatButton(
+        child: Text("Yes"),
         onPressed: () {
           logging_out(context);
         },
       ),
-      FlatButton(child: Text("No"),
+      FlatButton(
+        child: Text("No"),
         onPressed: () {
           leave_alert(context);
         },
@@ -222,8 +216,7 @@ void log_out_alert(BuildContext context) {
       context: context,
       builder: (BuildContext context) {
         return alertDialog;
-      }
-  );
+      });
 }
 
 void logging_out(BuildContext context) {
@@ -237,28 +230,28 @@ void leave_alert(BuildContext context) {
   Navigator.pop(context);
 }
 
-void goToAddScreen(context){
-  try{
+void goToAddScreen(context) {
+  try {
     getItems();
     getFridges();
     getShops();
   } finally {
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => add_screen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => add_screen()));
   }
 }
 
-void goToUpdateScreen(context){
-  Navigator.push(context,
-      MaterialPageRoute(builder: (context) => admin_update_screen()));
+void goToUpdateScreen(context) {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => admin_update_screen()));
 }
 
-void goToViewScreen(context){
-  Navigator.push(context,
-      MaterialPageRoute(builder: (context) => admin_view_screen()));
+void goToViewScreen(context) {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => admin_view_screen()));
 }
 
-void goToVerifyScreen(context){
+void goToVerifyScreen(context) {
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => verify_accounts_screen()));
 }

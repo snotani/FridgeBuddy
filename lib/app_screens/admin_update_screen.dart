@@ -56,24 +56,31 @@ class _admin_update_screenState extends State<admin_update_screen> {
             ),
           ),
         ),
-        body: StreamBuilder(
-            stream: Firestore.instance.collection('Items').snapshots(),
-            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) return new Text('Loading...');
-              return ListView.separated(
-                separatorBuilder: (context, index) => Divider(
-                  color: Colors.black,
-                ),
-                itemCount: snapshot.data.documents.length,
-                itemBuilder: (context, index) =>
-                    _buildListItem(context, snapshot.data.documents[index]),
-              );
-            }),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              child: StreamBuilder(
+                  stream: Firestore.instance.collection('Items').snapshots(),
+                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) return new Text('Loading...');
+                    return ListView.separated(
+                      separatorBuilder: (context, index) => Divider(
+                        color: Colors.black,
+                      ),
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) =>
+                          _buildListItem(context, snapshot.data.documents[index], snapshot.data.documents[index].documentID),
+                    );
+                  }),
+            ),
+            Button_confirm()
+          ],
+        ),
       );
   }
 }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
+Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
 
   int quantity_check = 0;
 
@@ -105,8 +112,7 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
             }
             // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
             if (document['Quantity'] == 1){
-
-              //delete_field_alert(context);
+              delete_field_alert(context, docID);
             }
           },
         ),
@@ -138,6 +144,32 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
   );
 }
 
+class Button_confirm extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30.0),
+      child: Container(
+        width: 450.0,
+        height: 80.0,
+        child: OutlineButton(
+          color: Colors.green,
+          child: Text(
+            "Confirm",
+            textDirection: TextDirection.ltr,
+            style: TextStyle(color: Colors.green, fontSize: 40.0),
+          ),
+          onPressed: () {
+            confirmDialog(context);
+          },
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15.0)),
+          borderSide: BorderSide(color: Colors.green,width: 5.0),),
+      ),
+    );
+  }
+}
+
 void increase_quantity (DocumentSnapshot document,quantity_check) {
   // add one to quantity
   Firestore.instance.runTransaction((transaction) async {
@@ -149,4 +181,61 @@ void increase_quantity (DocumentSnapshot document,quantity_check) {
     // Add variable for count and disable add button
     // Initially disabled add button but once the counter is not 0, enable it
   });
+}
+
+void confirmDialog(BuildContext context) {
+  var alertDialog = AlertDialog(
+    title: new Text("Successfull!"),
+    content: new Text("You have successfully updated the fridge!"),
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alertDialog;
+      });
+}
+
+void delete_field_alert (BuildContext context, docID) {
+  var alertDialog = AlertDialog(
+    title: Text("Delete Item"),
+    content: Text("Do you wish to retrieve this last item?"),
+    actions: <Widget>[
+      FlatButton( child: Text("Yes"),
+        onPressed: (){
+          delete_field(docID);
+          Navigator.pop(context);
+        },
+      ),
+      FlatButton(child: Text("No"),
+        onPressed: (){
+          stay_on_page(context);
+        },
+      )
+    ],
+  );
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context){
+        return alertDialog;
+
+      }
+  );
+}
+
+//This will delete the item field requested
+void delete_field(docID) {
+  Firestore.instance
+      .collection('Items')
+      .document(docID)
+      .delete()
+      .catchError((error){
+    print(error);
+  });
+}
+
+// This will remain on the page
+void stay_on_page(BuildContext context){
+  Navigator.pop(context);
 }

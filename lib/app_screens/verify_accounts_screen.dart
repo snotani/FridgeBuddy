@@ -29,10 +29,9 @@ class _verify_accounts_screenState extends State<verify_accounts_screen> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(70.0),
-        child: new AppBar(
-          title: new Text("Verify Users", style: TextStyle(fontSize: 40.0)),
+      appBar:
+        new AppBar(
+          title: new Text("Verify Users", style:  TextStyle(fontSize: MediaQuery.of(context).size.width/20)),
           centerTitle: true,
           elevation: 10.0,
           leading: IconButton(
@@ -43,8 +42,24 @@ class _verify_accounts_screenState extends State<verify_accounts_screen> {
             },
           ),
         ),
+      bottomNavigationBar: Container(
+        height: MediaQuery.of(context).size.height/17.5,
+        child: new BottomAppBar(
+          color: Colors.blue,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.home, color: Colors.white),
+                iconSize: MediaQuery.of(context).size.height/23.5,
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
       ),
-
       //Stream a list of each user present in the "users" collection
       body: StreamBuilder(
           stream: Firestore.instance.collection('users').snapshots(),

@@ -94,7 +94,11 @@ class _user_update_screen extends State<user_update_screen> {
 
 Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
 
-  int quantity_check = 0;
+  bool _isButtonDisabled = true;
+  int local_quantity = 5;
+  int quantity_count = 0;
+  local_quantity = document['Quantity'];
+  quantity_count = document['Quantity'] - local_quantity;
 
   return ListTile(
     title: Row(
@@ -110,27 +114,13 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
           iconSize: MediaQuery.of(context).size.width / 10,
           color: Colors.blue[700],
           onPressed: () {
-            // remove one from quantity
-            if(document['Quantity'] > 1) {
-              quantity_check--;
-              print(quantity_check);
-              Firestore.instance.runTransaction((transaction) async {
-                DocumentSnapshot freshSnap =
-                await transaction.get(document.reference);
-                await transaction.update(freshSnap.reference, {
-                  'Quantity': freshSnap['Quantity'] - 1,
-                });
-              });
-            }
-            // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
-            if (document['Quantity'] == 1){
-              delete_field_alert(context, docID);
-            }
+            // remove one from local quantity
+            local_quantity--;
           },
         ),
         Container(
           child: Text(
-            document['Quantity'].toString(),
+            local_quantity.toString(),
             style: TextStyle(fontSize: MediaQuery.of(context).size.width / 17.5),
           ),
 
@@ -139,7 +129,12 @@ Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
           icon: Icon(Icons.add_circle),
           color: Colors.blue[700],
           iconSize: MediaQuery.of(context).size.width / 10,
-          //onPressed: (quantity_check == 0) ? () => increase_quantity(document, quantity_check) : null,
+          //disabledColor: Colors.grey[600],
+          onPressed: !_isButtonDisabled ? null : () {
+            if(quantity_count > 0){
+              local_quantity++;
+            }
+          },
         ),
       ],
     ),
@@ -181,17 +176,21 @@ class Button_confirm extends StatelessWidget {
   }
 }
 
-void increase_quantity (DocumentSnapshot document,quantity_check) {
-  // add one to quantity
-  Firestore.instance.runTransaction((transaction) async {
-    DocumentSnapshot freshSnap =
-    await transaction.get(document.reference);
-    await transaction.update(freshSnap.reference, {
-      'Quantity': freshSnap['Quantity'] + 1,
+void confirm_quantity_changes (DocumentSnapshot document,quantity) {
+
+  if(document['Quantity'] > 1) {
+    Firestore.instance.runTransaction((transaction) async {
+      DocumentSnapshot freshSnap =
+      await transaction.get(document.reference);
+      await transaction.update(freshSnap.reference, {
+        'Quantity': freshSnap['Quantity'] - 1,
+      });
     });
-    // Add variable for count and disable add button
-    // Initially disabled add button but once the counter is not 0, enable it
-  });
+  }
+  if (document['Quantity'] == 1){
+    // DELETES THE FIELD IN THIS FUNCTION
+    //delete_field_alert(context, docID);
+  }
 }
 
 void confirmDialog(BuildContext context) {

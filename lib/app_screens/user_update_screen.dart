@@ -20,6 +20,7 @@ class _user_update_screen extends State<user_update_screen> {
   void initState() {
     super.initState();
 
+
   }
 
   Widget build(BuildContext context) {
@@ -104,33 +105,53 @@ class _user_update_screen extends State<user_update_screen> {
       body: Column(
         children: <Widget>[
           Flexible(
+              child: StreamBuilder(
+                  stream: Firestore.instance.collection('Items').snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) return new Text('Loading...');
+                    if(snapshot.hasError) return new Text(snapshot.error);
+
+                    for(int i=0; i < snapshot.data.documents.length; i++) {
+                      localCount.putIfAbsent(snapshot.data.documents[i]['Item name'], () => snapshot.data.documents[i]['Quantity']);
+                      eachItem.putIfAbsent(snapshot.data.documents[i]['Item name'], () => 0);
+                      itemBool.putIfAbsent(snapshot.data.documents[i]['Item name'], () => true);
+                      buttonColour.putIfAbsent(snapshot.data.documents[i]['Item name'], () => Colors.grey[600]);
+                    }
+
+                    return ListView.separated(
+                      separatorBuilder: (context, index) =>
+                          Divider(
+                            color: Colors.black,
+                          ),
+                      itemCount: snapshot.data.documents.length,
+                      itemBuilder: (context, index) =>
+                          _buildListItem(context, snapshot.data.documents[index],
+                              snapshot.data.documents[index].documentID),
+                    );
+                  }),
+          ),
+          Flexible(
             child: StreamBuilder(
                 stream: Firestore.instance.collection('Items').snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) return new Text('Loading...');
+                  if(snapshot.hasError) return new Text(snapshot.error);
 
-                  for(int i=0;i<snapshot.data.documents.length;i++)
-                  {
+                  for(int i=0; i < snapshot.data.documents.length; i++) {
                     localCount.putIfAbsent(snapshot.data.documents[i]['Item name'], () => snapshot.data.documents[i]['Quantity']);
                     eachItem.putIfAbsent(snapshot.data.documents[i]['Item name'], () => 0);
                     itemBool.putIfAbsent(snapshot.data.documents[i]['Item name'], () => true);
                     buttonColour.putIfAbsent(snapshot.data.documents[i]['Item name'], () => Colors.grey[600]);
-                  }
 
-                  return ListView.separated(
-                    separatorBuilder: (context, index) =>
-                        Divider(
-                          color: Colors.black,
-                        ),
-                    itemCount: snapshot.data.documents.length,
-                    itemBuilder: (context, index) =>
-                        _buildListItem(context, snapshot.data.documents[index],
-                            snapshot.data.documents[index].documentID),
-                  );
-                }),
+                    print(localCount[snapshot.data.documents[i]['Item name']]);
+                    print(snapshot.data.documents[i].data['Quantity']);
+                    return Button_confirm(snapshot.data.documents[i], snapshot.data.documents[i].data['Quantity'], eachItem[snapshot.data.documents[i]['Item name']]);
+                  }
+                }
+            ),
           ),
-          Button_confirm(),
         ],
       ),
     );
@@ -221,7 +242,7 @@ class _user_update_screen extends State<user_update_screen> {
     );
   }
 
-  Widget Button_confirm() {
+  Widget Button_confirm(DocumentSnapshot document, int oldQuantity, int newQuantity) {
     return Padding(
       padding: EdgeInsets.only(bottom: MediaQuery
           .of(context)
@@ -247,7 +268,7 @@ class _user_update_screen extends State<user_update_screen> {
                 .width / 16.5),
           ),
           onPressed: () {
-            //confirm_quantity_changes(document, quantity);
+            confirm_quantity_changes(document, oldQuantity, newQuantity);
             confirmDialog(context);
           },
           shape: RoundedRectangleBorder(
@@ -257,17 +278,47 @@ class _user_update_screen extends State<user_update_screen> {
     );
   }
 
-  void confirm_quantity_changes(DocumentSnapshot document, quantity) {
-    Firestore.instance.runTransaction((transaction) async {
-      DocumentSnapshot freshSnap =
-      await transaction.get(document.reference);
-      await transaction.update(freshSnap.reference, {
-        'Quantity': freshSnap['Quantity'] - quantity,
+  void confirm_quantity_changes(DocumentSnapshot document, int oldQuantity, int newQuantity) {
+
+    /*int quantity_count = 0;
+    Map<String,int> localCount = new Map();
+    Map<String,int> eachItem = new Map();
+    Map<String,bool> itemBool = new Map();
+    Map<String,Color> buttonColour = new Map();*/
+
+    setState(() {
+      Firestore.instance.runTransaction((transaction) async {
+        DocumentSnapshot freshSnap =
+        await transaction.get(document.reference);
+        await transaction.update(freshSnap.reference, {
+          'Quantity': oldQuantity - newQuantity,
+        });
+        //quantity_count = document['Quantity'];
+        //quantity_count = localCount[document['Item name']] - eachItem[document['Item name']];
+      });
+    });
+    
+   /* eachItem.forEach((k,v) {
+      setState(() {
+        eachItem.update(k, (value) => 0);
+      });
+    });*/
+
+    itemBool.forEach((k,v) {
+      setState(() {
+        itemBool.update(k, (value) => true);
       });
     });
 
-    initState();
-    if (quantity == 1) {
+    buttonColour.forEach((k,v) {
+      setState(() {
+        buttonColour.update(k, (value) => Colors.grey[600]);
+      });
+    });
+
+
+    //initState();
+    if (newQuantity == 1) {
       // DELETES THE FIELD INSIDE THIS FUNCTION
       //hide_field_alert(context, docID);
     }

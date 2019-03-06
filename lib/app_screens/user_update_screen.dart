@@ -8,149 +8,214 @@ class user_update_screen extends StatefulWidget {
   _user_update_screen createState() => _user_update_screen();
 }
 
-
 class _user_update_screen extends State<user_update_screen> {
-
   @override
+  void initState(){
+    super.initState();
+
+
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar:
-           new AppBar(
-            title: new Text("Update Fridge Items", style: TextStyle(fontSize: MediaQuery.of(context).size.width/20)),
-            centerTitle: true,
-            elevation: 10.0,
-            leading: logo_image_asset(),
-            actions:  <Widget> [
-              Padding(
-                padding: EdgeInsets.only(
-                  right: MediaQuery.of(context).size.width/60                ),
-                child: IconButton(
-                  tooltip: 'Admin Login',
-                  icon: const Icon(Icons.person_add),
-                  iconSize: MediaQuery.of(context).size.height/25,
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=> login_screen()));
-                  },
-                ),
-              ),
-            ],
-           ),
-        bottomNavigationBar: Container(
-          height: MediaQuery.of(context).size.height/17.5,
-          child: new BottomAppBar(
-            color: Colors.blue,
-            child: new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.feedback, color: Colors.white),
-                  iconSize: MediaQuery.of(context).size.height/23.5,
-                  onPressed: () {
-                    feedbackDialog(context);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.insert_chart, color: Colors.white),
-                  iconSize: MediaQuery.of(context).size.height/23.5,
-                  onPressed: () {
-                    // add analytics- TBD
-                    statisticsDialog(context);
-                  },
-                ),
-                IconButton(
-                  icon: Icon(Icons.help, color: Colors.white),
-                  iconSize: MediaQuery.of(context).size.height/23.5,
-                  onPressed: () {
-                    helpDialog(context);
-                  },
-                ),
-              ],
+      appBar:
+      new AppBar(
+        title: new Text(
+            "Update Fridge Items", style: TextStyle(fontSize: MediaQuery
+            .of(context)
+            .size
+            .width / 20)),
+        centerTitle: true,
+        elevation: 10.0,
+        leading: logo_image_asset(),
+        actions: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(
+                right: MediaQuery
+                    .of(context)
+                    .size
+                    .width / 60),
+            child: IconButton(
+              tooltip: 'Admin Login',
+              icon: const Icon(Icons.person_add),
+              iconSize: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 25,
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => login_screen()));
+              },
             ),
           ),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        height: MediaQuery
+            .of(context)
+            .size
+            .height / 17.5,
+        child: new BottomAppBar(
+          color: Colors.blue,
+          child: new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              IconButton(
+                icon: Icon(Icons.feedback, color: Colors.white),
+                iconSize: MediaQuery
+                    .of(context)
+                    .size
+                    .height / 23.5,
+                onPressed: () {
+                  feedbackDialog(context);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.insert_chart, color: Colors.white),
+                iconSize: MediaQuery
+                    .of(context)
+                    .size
+                    .height / 23.5,
+                onPressed: () {
+                  // add analytics- TBD
+                  statisticsDialog(context);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.help, color: Colors.white),
+                iconSize: MediaQuery
+                    .of(context)
+                    .size
+                    .height / 23.5,
+                onPressed: () {
+                  helpDialog(context);
+                },
+              ),
+            ],
+          ),
         ),
-        body: Column(
-          children: <Widget>[
-            Flexible(
-              child: StreamBuilder(
-                  stream: Firestore.instance.collection('Items').snapshots(),
-                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) return new Text('Loading...');
-                    return ListView.separated(
-                      separatorBuilder: (context, index) => Divider(
-                        color: Colors.black,
-                      ),
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (context, index) =>
-                          _buildListItem(context, snapshot.data.documents[index], snapshot.data.documents[index].documentID),
-                    );
-                  }),
+      ),
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            child: StreamBuilder(
+                stream: Firestore.instance.collection('Items').snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) return new Text('Loading...');
+                  return ListView.separated(
+                    separatorBuilder: (context, index) =>
+                        Divider(
+                          color: Colors.black,
+                        ),
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (context, index) =>
+                        _buildListItem(context, snapshot.data.documents[index],
+                            snapshot.data.documents[index].documentID),
+                  );
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+
+
+  Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
+    bool _isButtonDisabled = true;
+    int local_quantity = 0;
+    int quantity_count = 0;
+    local_quantity = document['Quantity'];
+    quantity_count = document['Quantity'] - local_quantity;
+    Color disabledButton = Colors.grey[600];
+
+    return ListTile(
+      title: Row(
+        children: [
+          Expanded(
+            child: Text(
+              document['Item name'],
+              style: TextStyle(fontSize: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 40),
             ),
-            Button_confirm()
-          ],
-        ),
-      );
+          ),
+          IconButton(
+            icon: Icon(Icons.remove_circle),
+            iconSize: MediaQuery
+                .of(context)
+                .size
+                .width / 10,
+            color: Colors.blue[700],
+            onPressed: () {
+              // remove one from local quantity
+              //local_quantity--;
+              setState(() {
+                local_quantity--;
+              });
+              print(document['Quantity']);
+              print(local_quantity);
+              quantity_count = document['Quantity'] - local_quantity;
+              print(quantity_count);
+            },
+          ),
+          Container(
+            child: Text(
+              '$local_quantity',
+              style: TextStyle(fontSize: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 17.5),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.add_circle),
+            color: disabledButton,
+            iconSize: MediaQuery
+                .of(context)
+                .size
+                .width / 10,
+            //disabledColor: Colors.grey[600],
+            onPressed: () {
+              if (quantity_count > 0) {
+                local_quantity++;
+                print(local_quantity);
+              }
+              else {
+                setState(() {
+                  disabledButton = Colors.blue[700];
+                });
+              }
+            },
+          ),
+        ],
+      ),
+      leading: new Icon(
+        Icons.fastfood,
+        size: MediaQuery
+            .of(context)
+            .size
+            .width / 10,
+        color: Colors.blue[700],
+      ),
+      subtitle: new Text(
+        document['Donator'],
+        style: TextStyle(fontSize: MediaQuery
+            .of(context)
+            .size
+            .height / 50),
+      ),
+    );
   }
 }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
-
-  bool _isButtonDisabled = true;
-  int local_quantity = 5;
-  int quantity_count = 0;
-  local_quantity = document['Quantity'];
-  quantity_count = document['Quantity'] - local_quantity;
-
-  return ListTile(
-    title: Row(
-      children: [
-        Expanded(
-          child: Text(
-            document['Item name'],
-            style: TextStyle(fontSize: MediaQuery.of(context).size.height / 40),
-          ),
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle),
-          iconSize: MediaQuery.of(context).size.width / 10,
-          color: Colors.blue[700],
-          onPressed: () {
-            // remove one from local quantity
-            local_quantity--;
-          },
-        ),
-        Container(
-          child: Text(
-            local_quantity.toString(),
-            style: TextStyle(fontSize: MediaQuery.of(context).size.width / 17.5),
-          ),
-
-        ),
-        IconButton(
-          icon: Icon(Icons.add_circle),
-          color: Colors.blue[700],
-          iconSize: MediaQuery.of(context).size.width / 10,
-          //disabledColor: Colors.grey[600],
-          onPressed: !_isButtonDisabled ? null : () {
-            if(quantity_count > 0){
-              local_quantity++;
-            }
-          },
-        ),
-      ],
-    ),
-    leading: new Icon(
-        Icons.fastfood,
-        size: MediaQuery.of(context).size.width / 10,
-        color: Colors.blue[700],
-    ),
-    subtitle: new Text(
-        document['Donator'],
-        style: TextStyle(fontSize: MediaQuery.of(context).size.height / 50),
-    ),
-  );
-}
-
 class Button_confirm extends StatelessWidget {
+  const Button_confirm({DocumentSnapshot this.document, int this.quantity});
+
+  final DocumentSnapshot document;
+  final int quantity;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -166,6 +231,7 @@ class Button_confirm extends StatelessWidget {
             style: TextStyle(color: Colors.green, fontSize: MediaQuery.of(context).size.width / 16.5),
           ),
           onPressed: () {
+            confirm_quantity_changes(this.document, this.quantity);
             confirmDialog(context);
           },
           shape: RoundedRectangleBorder(
@@ -176,20 +242,19 @@ class Button_confirm extends StatelessWidget {
   }
 }
 
-void confirm_quantity_changes (DocumentSnapshot document,quantity) {
+void confirm_quantity_changes (DocumentSnapshot document, quantity) {
 
-  if(document['Quantity'] > 1) {
     Firestore.instance.runTransaction((transaction) async {
       DocumentSnapshot freshSnap =
       await transaction.get(document.reference);
       await transaction.update(freshSnap.reference, {
-        'Quantity': freshSnap['Quantity'] - 1,
+        'Quantity': freshSnap['Quantity'] - quantity,
       });
     });
-  }
-  if (document['Quantity'] == 1){
-    // DELETES THE FIELD IN THIS FUNCTION
-    //delete_field_alert(context, docID);
+
+  if (quantity == 1){
+    // DELETES THE FIELD INSIDE THIS FUNCTION
+    //hide_field_alert(context, docID);
   }
 }
 
@@ -214,7 +279,6 @@ void feedbackDialog(BuildContext context) {
         TextField(
           decoration: InputDecoration(hintText: 'Enter feedback here...'),
           onChanged: (value) {
-
           },
         ),
         SizedBox(height: 10.0,)
@@ -259,14 +323,14 @@ void helpDialog(BuildContext context) {
       });
 }
 
-void delete_field_alert (BuildContext context, docID) {
+void hide_field_alert (BuildContext context, docID) {
   var alertDialog = AlertDialog(
     title: Text("Delete Item"),
     content: Text("Do you wish to retrieve this last item?"),
     actions: <Widget>[
       FlatButton( child: Text("Yes"),
         onPressed: (){
-          delete_field(docID);
+          //delete_field(docID);
           Navigator.pop(context);
         },
       ),

@@ -45,7 +45,8 @@ class _login_screenState extends State<login_screen> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
-        title: Text("Add Item"),
+        title: Text("Admin Login"),
+        centerTitle: true,
       ),
       body: Form(
         key: _LoginFormKey,

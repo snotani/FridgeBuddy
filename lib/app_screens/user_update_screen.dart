@@ -19,8 +19,6 @@ class _user_update_screen extends State<user_update_screen> {
   @override
   void initState() {
     super.initState();
-
-
   }
 
   Widget build(BuildContext context) {
@@ -105,6 +103,7 @@ class _user_update_screen extends State<user_update_screen> {
       body: Column(
         children: <Widget>[
           Flexible(
+            flex: 20,
               child: StreamBuilder(
                   stream: Firestore.instance.collection('Items').snapshots(),
                   builder: (BuildContext context,
@@ -132,6 +131,7 @@ class _user_update_screen extends State<user_update_screen> {
                   }),
           ),
           Flexible(
+            flex: 3,
             child: StreamBuilder(
                 stream: Firestore.instance.collection('Items').snapshots(),
                 builder: (BuildContext context,
@@ -147,7 +147,12 @@ class _user_update_screen extends State<user_update_screen> {
 
                     print(localCount[snapshot.data.documents[i]['Item name']]);
                     print(snapshot.data.documents[i].data['Quantity']);
-                    return Button_confirm(snapshot.data.documents[i], snapshot.data.documents[i].data['Quantity'], eachItem[snapshot.data.documents[i]['Item name']]);
+                    return Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        child: Button_confirm(snapshot.data.documents[i], snapshot.data.documents[i].data['Quantity'], eachItem[snapshot.data.documents[i]['Item name']]),
+                      ),
+                    );
                   }
                 }
             ),
@@ -297,7 +302,7 @@ class _user_update_screen extends State<user_update_screen> {
         //quantity_count = localCount[document['Item name']] - eachItem[document['Item name']];
       });
     });
-    
+
    /* eachItem.forEach((k,v) {
       setState(() {
         eachItem.update(k, (value) => 0);

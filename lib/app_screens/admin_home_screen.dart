@@ -17,6 +17,7 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
           title: Text("Admin HomePage"),
+          centerTitle: true,
           leading: IconButton(
               icon: Icon(Icons.exit_to_app),
               onPressed: () {

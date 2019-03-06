@@ -137,7 +137,7 @@ class _user_update_screen extends State<user_update_screen> {
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
-    quantity_count = localCount[document['Item name']] - eachItem[document['Item name']];;
+    quantity_count = localCount[document['Item name']] - eachItem[document['Item name']];
 
     return ListTile(
       title: Row(
@@ -160,12 +160,17 @@ class _user_update_screen extends State<user_update_screen> {
             color: Colors.blue[700],
             onPressed: () {
               // remove one from local quantity
+              var maximum = document['Quantity']-1;
               setState(() {
-                eachItem[document['Item name']]++;
+                if(eachItem[document['Item name']] < maximum) {
+                  eachItem[document['Item name']]++;
+                }
                 if (eachItem[document['Item name']] > 0) {
                   itemBool[document['Item name']] = false;
                   buttonColour[document['Item name']] = Colors.blue[700];
                 }
+
+
               });
             },
           ),

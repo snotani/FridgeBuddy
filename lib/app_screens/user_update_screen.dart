@@ -104,31 +104,31 @@ class _user_update_screen extends State<user_update_screen> {
         children: <Widget>[
           Flexible(
             flex: 20,
-              child: StreamBuilder(
-                  stream: Firestore.instance.collection('Items').snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) return new Text('Loading...');
-                    if(snapshot.hasError) return new Text(snapshot.error);
+            child: StreamBuilder(
+                stream: Firestore.instance.collection('Items').snapshots(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) return new Text('Loading...');
+                  if(snapshot.hasError) return new Text(snapshot.error);
 
-                    for(int i=0; i < snapshot.data.documents.length; i++) {
-                      localCount.putIfAbsent(snapshot.data.documents[i]['Item name'], () => snapshot.data.documents[i]['Quantity']);
-                      eachItem.putIfAbsent(snapshot.data.documents[i]['Item name'], () => 0);
-                      itemBool.putIfAbsent(snapshot.data.documents[i]['Item name'], () => true);
-                      buttonColour.putIfAbsent(snapshot.data.documents[i]['Item name'], () => Colors.grey[600]);
-                    }
+                  for(int i=0; i < snapshot.data.documents.length; i++) {
+                    localCount.putIfAbsent(snapshot.data.documents[i]['Item name'], () => snapshot.data.documents[i]['Quantity']);
+                    eachItem.putIfAbsent(snapshot.data.documents[i]['Item name'], () => 0);
+                    itemBool.putIfAbsent(snapshot.data.documents[i]['Item name'], () => true);
+                    buttonColour.putIfAbsent(snapshot.data.documents[i]['Item name'], () => Colors.grey[600]);
+                  }
 
-                    return ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          Divider(
-                            color: Colors.black,
-                          ),
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (context, index) =>
-                          _buildListItem(context, snapshot.data.documents[index],
-                              snapshot.data.documents[index].documentID),
-                    );
-                  }),
+                  return ListView.separated(
+                    separatorBuilder: (context, index) =>
+                        Divider(
+                          color: Colors.black,
+                        ),
+                    itemCount: snapshot.data.documents.length,
+                    itemBuilder: (context, index) =>
+                        _buildListItem(context, snapshot.data.documents[index],
+                            snapshot.data.documents[index].documentID),
+                  );
+                }),
           ),
           Flexible(
             flex: 3,
@@ -186,7 +186,8 @@ class _user_update_screen extends State<user_update_screen> {
             color: Colors.blue[700],
             onPressed: () {
               // remove one from local quantity
-              var maximum = document['Quantity']-1;
+              var maximum = document['Quantity'] - 1;
+
               setState(() {
                 if(eachItem[document['Item name']] < maximum) {
                   eachItem[document['Item name']]++;
@@ -195,8 +196,6 @@ class _user_update_screen extends State<user_update_screen> {
                   itemBool[document['Item name']] = false;
                   buttonColour[document['Item name']] = Colors.blue[700];
                 }
-
-
               });
             },
           ),
@@ -299,11 +298,11 @@ class _user_update_screen extends State<user_update_screen> {
           'Quantity': oldQuantity - newQuantity,
         });
         //quantity_count = document['Quantity'];
-        //quantity_count = localCount[document['Item name']] - eachItem[document['Item name']];
       });
+      quantity_count = localCount[document['Item name']];
     });
 
-   /* eachItem.forEach((k,v) {
+    /* eachItem.forEach((k,v) {
       setState(() {
         eachItem.update(k, (value) => 0);
       });

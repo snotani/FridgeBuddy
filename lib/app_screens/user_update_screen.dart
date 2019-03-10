@@ -75,14 +75,18 @@ class _user_update_screen extends State<user_update_screen> {
                   stream: Firestore.instance.collection('Items').snapshots(),
                   builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) return new Text('Loading...');
-                    return ListView.separated(
-                      separatorBuilder: (context, index) => Divider(
-                        color: Colors.black,
-                      ),
-                      itemCount: snapshot.data.documents.length,
-                      itemBuilder: (context, index) =>
-                          _buildListItem(context, snapshot.data.documents[index], snapshot.data.documents[index].documentID),
-                    );
+                      return ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            Divider(
+                              color: Colors.black,
+                            ),
+                        itemCount: snapshot.data.documents.length,
+                        itemBuilder: (context, index) =>
+                            _buildListItem(
+                                snapshot.data.documents[index]['Quantity'],
+                                context, snapshot.data.documents[index],
+                                snapshot.data.documents[index].documentID),
+                      );
                   }),
             ),
             Button_confirm()
@@ -92,67 +96,88 @@ class _user_update_screen extends State<user_update_screen> {
   }
 }
 
-Widget _buildListItem(BuildContext context, DocumentSnapshot document, docID) {
+Widget _buildListItem(var numOfItems, BuildContext context, DocumentSnapshot document, docID) {
 
   int quantity_check = 0;
-
-  return ListTile(
-    title: Row(
-      children: [
-        Expanded(
-          child: Text(
-            document['Item name'],
-            style: TextStyle(fontSize: MediaQuery.of(context).size.height / 40),
+  if(document['Quantity'] != 0) {
+    return ListTile(
+      title: Row(
+        children: [
+          Expanded(
+            child: Text(
+              document['Item name'],
+              style: TextStyle(fontSize: MediaQuery
+                  .of(context)
+                  .size
+                  .height / 40),
+            ),
           ),
-        ),
-        IconButton(
-          icon: Icon(Icons.remove_circle),
-          iconSize: MediaQuery.of(context).size.width / 10,
-          color: Colors.blue[700],
-          onPressed: () {
-            // remove one from quantity
-            if(document['Quantity'] > 1) {
-              quantity_check--;
-              print(quantity_check);
-              Firestore.instance.runTransaction((transaction) async {
-                DocumentSnapshot freshSnap =
-                await transaction.get(document.reference);
-                await transaction.update(freshSnap.reference, {
-                  'Quantity': freshSnap['Quantity'] - 1,
+          IconButton(
+            icon: Icon(Icons.remove_circle),
+            iconSize: MediaQuery
+                .of(context)
+                .size
+                .width / 10,
+            color: Colors.blue[700],
+            onPressed: () {
+              // remove one from quantity
+              if (document['Quantity'] > 1) {
+                quantity_check--;
+                print(quantity_check);
+                Firestore.instance.runTransaction((transaction) async {
+                  DocumentSnapshot freshSnap =
+                  await transaction.get(document.reference);
+                  await transaction.update(freshSnap.reference, {
+                    'Quantity': freshSnap['Quantity'] - 1,
+                  });
                 });
-              });
-            }
-            // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
-            if (document['Quantity'] == 1){
-              delete_field_alert(context, docID);
-            }
-          },
-        ),
-        Container(
-          child: Text(
-            document['Quantity'].toString(),
-            style: TextStyle(fontSize: MediaQuery.of(context).size.width / 17.5),
+              }
+              // Add if statement to check if quantity reaches 0 and then pop up "Are you sure message" to delete the field
+              if (document['Quantity'] == 1) {
+                delete_field_alert(context, docID, document);
+              }
+            },
           ),
+          Container(
+            child: Text(
+              document['Quantity'].toString(),
+              style: TextStyle(fontSize: MediaQuery
+                  .of(context)
+                  .size
+                  .width / 17.5),
+            ),
 
-        ),
-        IconButton(
-          icon: Icon(Icons.add_circle),
-          color: Colors.blue[700],
-          iconSize: MediaQuery.of(context).size.width / 10,
-          //onPressed: (quantity_check == 0) ? () => increase_quantity(document, quantity_check) : null,
-        ),
-      ],
-    ),
-    leading: new Icon(
+          ),
+          IconButton(
+            icon: Icon(Icons.add_circle),
+            color: Colors.blue[700],
+            iconSize: MediaQuery
+                .of(context)
+                .size
+                .width / 10,
+            //onPressed: (quantity_check == 0) ? () => increase_quantity(document, quantity_check) : null,
+          ),
+        ],
+      ),
+      leading: new Icon(
         Icons.fastfood,
-        size: MediaQuery.of(context).size.width / 10,
+        size: MediaQuery
+            .of(context)
+            .size
+            .width / 10,
         color: Colors.blue[700],
-    ),
-    subtitle: new Text(
+      ),
+      subtitle: new Text(
         document['Donator'],
-        style: TextStyle(fontSize: MediaQuery.of(context).size.height / 50),
-    ),
-  );
+        style: TextStyle(fontSize: MediaQuery
+            .of(context)
+            .size
+            .height / 50),
+      ),
+    );
+  } else{
+    return ListTile( );
+  }
 }
 
 class Button_confirm extends StatelessWidget {
@@ -260,14 +285,14 @@ void helpDialog(BuildContext context) {
       });
 }
 
-void delete_field_alert (BuildContext context, docID) {
+void delete_field_alert (BuildContext context, docID, document) {
   var alertDialog = AlertDialog(
     title: Text("Delete Item"),
     content: Text("Do you wish to retrieve this last item?"),
     actions: <Widget>[
       FlatButton( child: Text("Yes"),
         onPressed: (){
-          delete_field(docID);
+          delete_field(docID, document);
           Navigator.pop(context);
         },
       ),
@@ -289,13 +314,13 @@ void delete_field_alert (BuildContext context, docID) {
 }
 
 //This will delete the item field requested
-void delete_field(docID) {
-  Firestore.instance
-      .collection('Items')
-      .document(docID)
-      .delete()
-      .catchError((error){
-    print(error);
+void delete_field(docID, document) {
+  Firestore.instance.runTransaction((transaction) async {
+    DocumentSnapshot freshSnap =
+    await transaction.get(document.reference);
+    await transaction.update(freshSnap.reference, {
+      'Quantity': freshSnap['Quantity'] - 1,
+    });
   });
 }
 

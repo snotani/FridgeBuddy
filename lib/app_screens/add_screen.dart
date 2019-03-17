@@ -125,12 +125,12 @@ class _add_screenState extends State<add_screen> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 15),
+                              left: MediaQuery.of(context).size.width / 25),
                           child: Text(
                             "Item Name",
                             textDirection: TextDirection.ltr,
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width / 17.5,
+                              fontSize: MediaQuery.of(context).size.width / 22.5,
                             ),
                           ),
                         ),
@@ -138,8 +138,8 @@ class _add_screenState extends State<add_screen> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 18,
-                              right: MediaQuery.of(context).size.width / 40),
+                              left: MediaQuery.of(context).size.width / 200,
+                              right: MediaQuery.of(context).size.width / 100),
                           child: new FormField<String>(
                             builder: (FormFieldState<String> state) {
                               return InputDecorator(
@@ -149,6 +149,9 @@ class _add_screenState extends State<add_screen> {
                                 ),
                                 child: new DropdownButtonHideUnderline(
                                   child: DropdownButton<String>(
+                                    style: TextStyle(
+                                      fontSize: MediaQuery.of(context).size.width / 30,
+                                    ),
                                     value: _currentItemList,
                                     isDense: true,
                                     onChanged: (String newValue) {
@@ -199,12 +202,12 @@ class _add_screenState extends State<add_screen> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 15),
+                              left: MediaQuery.of(context).size.width / 25),
                           child: Text(
                             "Donating Shop",
                             textDirection: TextDirection.ltr,
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width / 18,
+                              fontSize: MediaQuery.of(context).size.width / 22.5,
                             ),
                           ),
                         ),
@@ -212,8 +215,8 @@ class _add_screenState extends State<add_screen> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 18,
-                              right: MediaQuery.of(context).size.width / 40),
+                              left: MediaQuery.of(context).size.width / 200,
+                              right: MediaQuery.of(context).size.width / 100),
                           child: new FormField<String>(
                             builder: (FormFieldState<String> state) {
                               return InputDecorator(
@@ -225,6 +228,9 @@ class _add_screenState extends State<add_screen> {
                                   child: new DropdownButton<String>(
                                     value: _currentShop,
                                     isDense: true,
+                                    style: TextStyle(
+                                      fontSize: MediaQuery.of(context).size.width / 30,
+                                    ),
                                     onChanged: (String newValue) {
                                       setState(() {
                                         whenShopDropButton(newValue);
@@ -272,12 +278,12 @@ class _add_screenState extends State<add_screen> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 15),
+                              left: MediaQuery.of(context).size.width / 25),
                           child: Text(
                             "Fridge",
                             textDirection: TextDirection.ltr,
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width / 17.5,
+                              fontSize: MediaQuery.of(context).size.width / 22.5,
                             ),
                           ),
                         ),
@@ -285,8 +291,8 @@ class _add_screenState extends State<add_screen> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
-                              left: MediaQuery.of(context).size.width / 18,
-                              right: MediaQuery.of(context).size.width / 40),
+                              left: MediaQuery.of(context).size.width / 200,
+                              right: MediaQuery.of(context).size.width / 100),
                           child: new FormField<String>(
                             builder: (FormFieldState<String> state) {
                               return InputDecorator(
@@ -298,6 +304,9 @@ class _add_screenState extends State<add_screen> {
                                   child: new DropdownButton<String>(
                                     value: _currentFridgeLocation,
                                     isDense: true,
+                                    style: TextStyle(
+                                      fontSize: MediaQuery.of(context).size.width / 30,
+                                    ),
                                     onChanged: (String newValue) {
                                       setState(() {
                                         whenFridgeDropButton(newValue);
@@ -345,22 +354,22 @@ class _add_screenState extends State<add_screen> {
                       Expanded(
                         child: Padding(
                           padding: EdgeInsets.only(
-                            left: MediaQuery.of(context).size.width / 15,
+                            left: MediaQuery.of(context).size.width / 25,
                           ),
                           child: Text(
                             "Quantity",
                             textDirection: TextDirection.ltr,
                             style: TextStyle(
-                              fontSize: MediaQuery.of(context).size.width / 17.5,
+                              fontSize: MediaQuery.of(context).size.width / 22.5,
                             ),
                           ),
                         ),
                       ),
                       Expanded(
                           child: Padding(
-                        padding: EdgeInsets.only(
-                          right: MediaQuery.of(context).size.width / 7,
-                        ),
+                            padding: EdgeInsets.only(
+                                left: MediaQuery.of(context).size.width / 200,
+                                right: MediaQuery.of(context).size.width / 100),
                         child: TextFormField(
                           keyboardType: TextInputType.number,
                           controller: number_items_controller,
@@ -372,6 +381,9 @@ class _add_screenState extends State<add_screen> {
                           },
                           decoration: InputDecoration(
                               labelText: "Number of items",
+                              labelStyle: TextStyle(
+                                fontSize: MediaQuery.of(context).size.width / 25,
+                              ),
                               hintText: "e.g. 9",
                               errorStyle: TextStyle(
                                 color: Colors.yellowAccent,
@@ -380,7 +392,12 @@ class _add_screenState extends State<add_screen> {
                               border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(5.0))),
                         ),
-                      ))
+                      ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            right : MediaQuery.of(context).size.width / 5),
+                      ),
                     ],
                   ),
                 ),

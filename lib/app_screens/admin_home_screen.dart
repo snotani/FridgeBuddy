@@ -4,6 +4,7 @@ import 'admin_update_screen.dart';
 import 'admin_view_screen.dart';
 import 'add_screen.dart';
 import 'verify_accounts_screen.dart';
+import 'feedback_page.dart';
 
 class Admin_home_screen extends StatefulWidget {
   @override
@@ -34,7 +35,7 @@ class _Admin_home_screenState extends State<Admin_home_screen> {
                 icon: Icon(Icons.feedback, color: Colors.white),
                 iconSize: MediaQuery.of(context).size.height/23.5,
                 onPressed: () {
-                  feedbackDialog(context);
+                  goToFeedbackScreen(context);
                 },
               ),
               IconButton(
@@ -225,30 +226,6 @@ class Button_verify extends StatelessWidget {
   }
 }
 
-void feedbackDialog(BuildContext context) {
-  var alertDialog = AlertDialog(
-    title: new Text("Feedback"),
-    content: new Column(
-      children: <Widget>[
-        TextField(
-          decoration: InputDecoration(hintText: 'Enter feedback here...'),
-          onChanged: (value) {
-
-          },
-        ),
-        SizedBox(height: 10.0,)
-      ],
-    ),
-
-  );
-
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alertDialog;
-      });
-}
-
 void statisticsDialog(BuildContext context) {
   var alertDialog = AlertDialog(
     title: new Text("Statistics"),
@@ -341,4 +318,9 @@ void goToViewScreen(context) {
 void goToVerifyScreen(context) {
   Navigator.push(context,
       MaterialPageRoute(builder: (context) => verify_accounts_screen()));
+}
+
+void goToFeedbackScreen(context) {
+  Navigator.push(context,
+      MaterialPageRoute(builder: (context) => feedback_page()));
 }

@@ -43,13 +43,6 @@ class _user_update_screen extends State<user_update_screen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 IconButton(
-                  icon: Icon(Icons.feedback, color: Colors.white),
-                  iconSize: MediaQuery.of(context).size.height/23.5,
-                  onPressed: () {
-                    feedbackDialog(context);
-                  },
-                ),
-                IconButton(
                   icon: Icon(Icons.insert_chart, color: Colors.white),
                   iconSize: MediaQuery.of(context).size.height/23.5,
                   onPressed: () {
@@ -223,30 +216,6 @@ void confirmDialog(BuildContext context) {
   var alertDialog = AlertDialog(
     title: new Text("Successfull!"),
     content: new Text("You have successfully updated the fridge!"),
-  );
-
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alertDialog;
-      });
-}
-
-void feedbackDialog(BuildContext context) {
-  var alertDialog = AlertDialog(
-    title: new Text("Feedback"),
-    content: new Column(
-      children: <Widget>[
-        TextField(
-          decoration: InputDecoration(hintText: 'Enter feedback here...'),
-          onChanged: (value) {
-
-          },
-        ),
-        SizedBox(height: 10.0,)
-      ],
-    ),
-
   );
 
   showDialog(
